@@ -35,7 +35,6 @@ class LoginViewModel(
     private fun manageSpotifyResponse(spotifyResponse: Response<SpotifyJson>) {
         if (spotifyResponse.isSuccessful && spotifyResponse.body() != null) {
             val searchString = cifraUseCase.createSearchString(spotifyResponse.body())
-            _toastMessage.postValue("Procurando por $searchString")
             _currentlyPlaying.postValue(searchString)
         } else {
             handleSpotifyResponseError(spotifyResponse.code(), spotifyResponse.errorBody())

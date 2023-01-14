@@ -18,6 +18,7 @@ class CifraMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_cifra)
         logInSpotify()
         toastObserver()
+        supportActionBar?.hide()
     }
 
     private fun logInSpotify() {
@@ -31,6 +32,7 @@ class CifraMainActivity : AppCompatActivity() {
         AuthorizationClient.openLoginActivity(this, CifraConstants.REQUEST_CODE, request)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == CifraConstants.REQUEST_CODE) {

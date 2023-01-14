@@ -1,6 +1,7 @@
 package com.example.cifrafinder.presenter.webview
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +17,14 @@ class WebViewModel(
 ) : ViewModel() {
 
     private var _searchUrl = MutableLiveData<String>()
-    var searchUrl = _searchUrl
+    var searchUrl: LiveData<String> = _searchUrl
 
-    fun getSongUrl(artistAndSong: String) = viewModelScope.launch {
+    private var _toastMessage = MutableLiveData<String>()
+    var toastMessage: LiveData<String> = _toastMessage
+
+    fun getSongUrl(artistAndSong: String) {
+        _toastMessage.postValue("Procurando por $artistAndSong")
+        viewModelScope.launch {
             try {
                 val response = cifraUseCase.getGoogleSearchResult(
                     googleSearchUrl,
@@ -31,12 +37,15 @@ class WebViewModel(
                 Log.e("searchResult", ex.toString())
             }
         }
+    }
 
     private fun manageGoogleResponse(googleResponse: Response<GoogleJson>) {
         if (googleResponse.isSuccessful) {
             _searchUrl.postValue(googleResponse.body()?.items?.first()?.link)
         } else {
+            _toastMessage.postValue(googleResponse.message())
             Log.e(javaClass.simpleName, googleResponse.errorBody().toString())
         }
     }
 }
+

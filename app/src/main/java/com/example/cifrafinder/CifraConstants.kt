@@ -2,7 +2,7 @@ package com.example.cifrafinder
 
 object CifraConstants {
 
-    const val googleSearchUrl = "https://customsearch.googleapis.com/customsearch/v1/siterestrict"
+    const val googleSearchUrl = "https://customsearch.googleapis.com/customsearch/v1/"
 
     const val spotifyClientId = "b2e7d8972f6e4d70af76b860de39cdcc"
     const val googleApiKey1 = "AIzaSyBq9jaN45ksUTMvTwEYSKFPUQCsBxb6oV4"

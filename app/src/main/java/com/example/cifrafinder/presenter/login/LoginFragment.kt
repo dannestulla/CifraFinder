@@ -61,8 +61,6 @@ class LoginFragment : Fragment() {
             if (viewModel.spotifyToken.value?.isNotEmpty() == true) {
                 viewModel.getCurrentlyPlaying()
             }
-            spotifyLogin.setOnClickListener {
-                print("erro") }//logInSpotify() }
         }
     }
 

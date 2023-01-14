@@ -1,17 +1,14 @@
 package com.example.cifrafinder.presenter.webview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.addCallback
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cifrafinder.CifraConstants
-import com.example.cifrafinder.R
 import com.example.cifrafinder.databinding.FragmentWebViewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,20 +33,20 @@ class WebFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         applyBinding()
         setSearchObserver()
-        getSongUrl()
-        setBackButton()
-    }
-
-    private fun setBackButton() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_cifraWebFragment_to_cifraMenuFragment)
+        setToast()
+        val searchQuery = getTrackArguments()
+        if (searchQuery != null) {
+            viewModel.getSongUrl(searchQuery)
         }
     }
 
-    private fun getSongUrl() {
-        val searchText = this.arguments?.getString(CifraConstants.searchText)
-        searchText?.let { viewModel.getSongUrl(it) }
+    private fun setToast() {
+        viewModel.toastMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        }
     }
+
+    private fun getTrackArguments(): String? = arguments?.getString(CifraConstants.searchText)
 
     private fun setSearchObserver() =
         viewModel.searchUrl.observe(viewLifecycleOwner) { searchUrl ->
@@ -59,7 +56,9 @@ class WebFragment : Fragment() {
         }
 
     private fun applyBinding() = with(viewBinding) {
-        refreshButton.setOnClickListener { webView.reload() }
+        refreshButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
         webView.webViewClient = WebViewClient()
     }
 
