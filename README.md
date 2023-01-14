@@ -25,8 +25,3 @@ To test this app you need to unlock Developer mode in your android:
 
 4. The "**Developer options**" menu will now appear in your **Settings** menu.
 
-   
-
-*Download Link*
-https://drive.google.com/file/d/1PZsmUYD9n1uPE1P--FdyGkpu9vMDAkiX/view?usp=sharing
-
