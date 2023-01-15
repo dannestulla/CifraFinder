@@ -89,6 +89,9 @@ class WebFragment : Fragment() {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
         }
+        optionsButton.setOnClickListener {
+
+        }
     }
 
     override fun onResume() {
