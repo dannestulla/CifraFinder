@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.model
+package br.gohan.cifrafinder.domain
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -12,8 +12,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.databinding.FragmentWebViewBinding
-import br.gohan.cifrafinder.model.CifraScheduler
-import br.gohan.cifrafinder.model.CurrentSong
+import br.gohan.cifrafinder.domain.CifraScheduler
+import br.gohan.cifrafinder.domain.CurrentSong
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.*
 import java.util.concurrent.TimeUnit

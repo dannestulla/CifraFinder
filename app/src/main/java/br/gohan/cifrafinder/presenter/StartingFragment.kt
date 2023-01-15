@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.databinding.FragmentLoginBinding
-import br.gohan.cifrafinder.model.CurrentSong
+import br.gohan.cifrafinder.domain.CurrentSong
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StartingFragment : Fragment() {

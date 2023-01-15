@@ -5,12 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.WorkManager
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.data.remote.model.GoogleJson
 import br.gohan.cifrafinder.data.remote.model.SpotifyJson
-import br.gohan.cifrafinder.model.CifraUseCase
-import br.gohan.cifrafinder.model.CurrentSong
+import br.gohan.cifrafinder.domain.CifraUseCase
+import br.gohan.cifrafinder.domain.CurrentSong
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response

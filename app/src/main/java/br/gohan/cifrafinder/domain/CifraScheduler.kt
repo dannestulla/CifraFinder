@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.model
+package br.gohan.cifrafinder.domain
 
 import android.content.Context
 import androidx.work.Worker

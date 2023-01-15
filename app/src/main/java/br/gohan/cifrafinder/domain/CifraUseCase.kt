@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.model
+package br.gohan.cifrafinder.domain
 
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.remote.model.SpotifyJson
