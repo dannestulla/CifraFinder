@@ -17,7 +17,7 @@ class CifraUseCase(
         val artistName = responseBody?.artists?.first()?.name
         val songName = responseBody?.name
         val result = "$artistName $songName"
-        return "$result"
+        return " $result "
     }
 
     fun filterSearch(artistAndSong: String) =
