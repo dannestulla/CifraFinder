@@ -1,4 +1,4 @@
-package com.example.cifrafinder
+package br.gohan.cifrafinder
 
 object CifraConstants {
 

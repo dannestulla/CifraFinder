@@ -1,4 +1,4 @@
-package com.example.cifrafinder.presenter.login
+package br.gohan.cifrafinder.presenter.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.cifrafinder.CifraConstants
-import com.example.cifrafinder.R
-import com.example.cifrafinder.databinding.FragmentLoginBinding
+import br.gohan.cifrafinder.CifraConstants
+import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.databinding.FragmentLoginBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class LoginFragment : Fragment() {

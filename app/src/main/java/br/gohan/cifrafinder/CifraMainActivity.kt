@@ -1,10 +1,11 @@
-package com.example.cifrafinder
+package br.gohan.cifrafinder
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cifrafinder.presenter.login.LoginViewModel
+import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.presenter.login.LoginViewModel
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse

@@ -1,4 +1,4 @@
-package com.example.cifrafinder
+package br.gohan.cifrafinder
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext

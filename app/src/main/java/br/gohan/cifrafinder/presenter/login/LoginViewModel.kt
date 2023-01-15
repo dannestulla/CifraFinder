@@ -1,11 +1,11 @@
-package com.example.cifrafinder.presenter.login
+package br.gohan.cifrafinder.presenter.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cifrafinder.data.remote.model.SpotifyJson
-import com.example.cifrafinder.model.CifraUseCase
+import br.gohan.cifrafinder.data.remote.model.SpotifyJson
+import br.gohan.cifrafinder.model.CifraUseCase
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Response

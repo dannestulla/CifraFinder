@@ -1,13 +1,13 @@
-package com.example.cifrafinder.presenter.webview
+package br.gohan.cifrafinder.presenter.webview
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cifrafinder.CifraConstants
-import com.example.cifrafinder.data.remote.model.GoogleJson
-import com.example.cifrafinder.model.CifraUseCase
+import br.gohan.cifrafinder.CifraConstants
+import br.gohan.cifrafinder.data.remote.model.GoogleJson
+import br.gohan.cifrafinder.model.CifraUseCase
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

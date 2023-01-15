@@ -1,7 +1,7 @@
-package com.example.cifrafinder.model
+package br.gohan.cifrafinder.model
 
-import com.example.cifrafinder.data.CifraRepository
-import com.example.cifrafinder.data.remote.model.SpotifyJson
+import br.gohan.cifrafinder.data.CifraRepository
+import br.gohan.cifrafinder.data.remote.model.SpotifyJson
 
 class CifraUseCase(
     private val cifraRepository: CifraRepository

@@ -1,6 +1,6 @@
-package com.example.cifrafinder.data
+package br.gohan.cifrafinder.data
 
-import com.example.cifrafinder.data.remote.CifraApi
+import br.gohan.cifrafinder.data.remote.CifraApi
 
 class CifraRepository(
     private val cifraApi: CifraApi
