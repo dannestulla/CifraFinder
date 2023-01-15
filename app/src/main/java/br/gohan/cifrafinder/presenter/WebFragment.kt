@@ -1,25 +1,31 @@
-package br.gohan.cifrafinder.presenter.webview
+package br.gohan.cifrafinder.presenter
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.databinding.FragmentWebViewBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import br.gohan.cifrafinder.model.CifraScheduler
+import br.gohan.cifrafinder.model.CurrentSong
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WebFragment : Fragment() {
 
     private var _viewBinding: FragmentWebViewBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel: WebViewModel by viewModel()
+    private val viewModel: MusicFetchViewModel by activityViewModel()
+
+    private lateinit var workManager: WorkManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,13 +39,17 @@ class WebFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         applyBinding()
-        setSearchObserver()
         setToast()
-        val searchQuery = getTrackArguments()
-        if (searchQuery != null) {
-            viewModel.getSongUrl(searchQuery)
+        workManager = WorkManager.getInstance(requireContext())
+        val args = getUserArguments()
+        if (args != null) {
+            val id = createRefreshSchedule(getRemainingTime(args.durationMs, args.progressMs))
+            setObservers(id)
+            viewModel.getSongUrl(args.searchString)
         }
     }
+
+    private fun getRemainingTime(durationMs: Long, progressMs: Long): Long = (durationMs - progressMs) + 5000L
 
     private fun setToast() {
         viewModel.toastMessage.observe(viewLifecycleOwner) {
@@ -47,14 +57,28 @@ class WebFragment : Fragment() {
         }
     }
 
-    private fun getTrackArguments(): String? = arguments?.getString(CifraConstants.searchText)
+    private fun getUserArguments() : CurrentSong? = arguments?.getParcelable(CifraConstants.searchText)
 
-    private fun setSearchObserver() =
+    private fun setObservers(id: UUID) {
         viewModel.searchUrl.observe(viewLifecycleOwner) { searchUrl ->
             if (!searchUrl.isNullOrEmpty()) {
                 viewBinding.webView.loadUrl(searchUrl)
             }
         }
+        workManager.getWorkInfoByIdLiveData(id).observe(viewLifecycleOwner) {
+            if (it.state.isFinished) {
+                viewModel.getCurrentlyPlaying()
+            }
+        }
+    }
+
+    private fun createRefreshSchedule(refreshTime: Long): UUID {
+        val wakeUpSchedule = OneTimeWorkRequestBuilder<CifraScheduler>()
+            .setInitialDelay(refreshTime, TimeUnit.MILLISECONDS)
+            .build()
+        workManager.enqueue(wakeUpSchedule)
+        return wakeUpSchedule.id
+    }
 
     private fun applyBinding() = with(viewBinding) {
         refreshButton.setOnClickListener {
@@ -63,14 +87,13 @@ class WebFragment : Fragment() {
         webView.apply {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
-            settings.javaScriptCanOpenWindowsAutomatically = true;
             settings.domStorageEnabled = true
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshPage()
+        viewModel.getCurrentlyPlaying()
     }
 
     override fun onDestroyView() {

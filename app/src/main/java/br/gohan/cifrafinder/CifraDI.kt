@@ -3,8 +3,7 @@ package br.gohan.cifrafinder
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.remote.CifraApi
 import br.gohan.cifrafinder.model.CifraUseCase
-import br.gohan.cifrafinder.presenter.login.LoginViewModel
-import br.gohan.cifrafinder.presenter.webview.WebViewModel
+import br.gohan.cifrafinder.presenter.MusicFetchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -13,11 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val myModule = module {
 
         viewModel {
-            LoginViewModel(get())
-        }
-
-        viewModel {
-            WebViewModel(get())
+            MusicFetchViewModel(get())
         }
 
         factory {

@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.login
+package br.gohan.cifrafinder.presenter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,14 @@ import androidx.navigation.fragment.findNavController
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.databinding.FragmentLoginBinding
+import br.gohan.cifrafinder.model.CurrentSong
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class LoginFragment : Fragment() {
+class StartingFragment : Fragment() {
 
     private var _viewBinding: FragmentLoginBinding? = null
     private val viewBinding get() = _viewBinding!!
-    private val viewModel: LoginViewModel by activityViewModel()
+    private val viewModel: MusicFetchViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,25 +33,25 @@ class LoginFragment : Fragment() {
         setObservers()
     }
 
-    private fun setObservers() {
-        viewModel.currentlyPlaying.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
+    private fun setObservers() = with(viewModel) {
+        currentSong.observe(viewLifecycleOwner) {
+            if (it.searchString.isNotEmpty()) {
                 findNavController().navigate(
                     R.id.action_cifraMenuFragment_to_cifraWebFragment,
                     createBundle(it)
                 )
             }
         }
-        viewModel.spotifyToken.observe(viewLifecycleOwner) { token ->
+        spotifyToken.observe(viewLifecycleOwner) { token ->
             if (token.isNullOrBlank().not()) {
                 viewModel.getCurrentlyPlaying()
             }
         }
     }
 
-    private fun createBundle(searchText: String): Bundle {
+    private fun createBundle(searchText: CurrentSong): Bundle {
         val bundle = Bundle()
-        bundle.putString(
+        bundle.putParcelable(
             CifraConstants.searchText, searchText
         )
         return bundle

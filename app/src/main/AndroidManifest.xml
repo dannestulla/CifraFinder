@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CifraFinder"
         tools:targetApi="m">
-        <activity android:name="br.gohan.cifrafinder.CifraMainActivity"
+        <activity android:name="br.gohan.cifrafinder.CifraLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

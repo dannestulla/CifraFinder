@@ -4,7 +4,7 @@ import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.remote.model.SpotifyJson
 
 class CifraUseCase(
-    private val cifraRepository: CifraRepository
+    private val cifraRepository: CifraRepository,
 ) {
     suspend fun getCurrentlyPlaying(spotifyToken : String) =
         cifraRepository.getCurrentlyPlaying(spotifyToken)
@@ -16,7 +16,8 @@ class CifraUseCase(
         val responseBody = body?.item
         val artistName = responseBody?.artists?.first()?.name
         val songName = responseBody?.name
-        return "$artistName $songName"
+        val result = "$artistName $songName"
+        return "$result"
     }
 
     fun filterSearch(artistAndSong: String) =

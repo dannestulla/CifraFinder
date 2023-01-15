@@ -4,15 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.login.LoginViewModel
+import br.gohan.cifrafinder.presenter.MusicFetchViewModel
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CifraMainActivity : AppCompatActivity() {
-    private val viewModel: LoginViewModel by viewModel()
+class CifraLoginActivity : AppCompatActivity() {
+    private val viewModel: MusicFetchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
