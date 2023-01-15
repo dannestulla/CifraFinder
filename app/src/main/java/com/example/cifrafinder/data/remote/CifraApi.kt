@@ -1,6 +1,5 @@
 package com.example.cifrafinder.data.remote
 
-import com.example.cifrafinder.CifraConstants
 import com.example.cifrafinder.data.remote.model.GoogleJson
 import com.example.cifrafinder.data.remote.model.SpotifyJson
 import retrofit2.Response
@@ -9,9 +8,12 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface APIService {
-    @GET(CifraConstants.spotifyEndPoint)
-    suspend fun getCurrentlyPlaying(@Header("Authorization") myToken: String): Response<SpotifyJson>
+interface CifraApi {
+
+    @GET
+    suspend fun getCurrentlyPlaying(
+        @Url url: String,
+        @Header("Authorization") myToken: String): Response<SpotifyJson>
 
     @GET
     suspend fun getGoogleSearchResult(

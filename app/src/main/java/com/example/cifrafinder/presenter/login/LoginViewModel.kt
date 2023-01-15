@@ -1,6 +1,5 @@
 package com.example.cifrafinder.presenter.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,12 +45,8 @@ class LoginViewModel(
             204 -> "Nenhuma música está sendo tocada no momento"
             else -> "Error code: $code, ${errorBody.toString()}"
         }
-
-        Log.e(javaClass.simpleName, error)
         _toastMessage.postValue(error)
     }
 
-    fun setSpotifyToken(accessToken: String) {
-        _spotifyToken.postValue(accessToken)
-    }
+    fun setSpotifyToken(accessToken: String) = _spotifyToken.postValue(accessToken)
 }

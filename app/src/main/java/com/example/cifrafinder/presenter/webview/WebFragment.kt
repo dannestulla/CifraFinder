@@ -50,7 +50,7 @@ class WebFragment : Fragment() {
 
     private fun setSearchObserver() =
         viewModel.searchUrl.observe(viewLifecycleOwner) { searchUrl ->
-            if (searchUrl.isNotEmpty()) {
+            if (!searchUrl.isNullOrEmpty()) {
                 viewBinding.webView.loadUrl(searchUrl)
             }
         }
@@ -60,6 +60,11 @@ class WebFragment : Fragment() {
             findNavController().popBackStack()
         }
         webView.webViewClient = WebViewClient()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshPage()
     }
 
     override fun onDestroyView() {

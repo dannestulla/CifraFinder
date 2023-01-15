@@ -9,8 +9,8 @@ class CifraUseCase(
     suspend fun getCurrentlyPlaying(spotifyToken : String) =
         cifraRepository.getCurrentlyPlaying(spotifyToken)
 
-    suspend fun getGoogleSearchResult(url: String, apiKey1: String, apiKey2: String, searchInput: String) =
-        cifraRepository.getGoogleSearchResult(url, apiKey1, apiKey2, searchInput)
+    suspend fun getGoogleSearchResult(apiKey1: String, apiKey2: String, searchInput: String) =
+        cifraRepository.getGoogleSearchResult(apiKey1, apiKey2, searchInput)
 
     fun createSearchString(body: SpotifyJson?): String {
         val responseBody = body?.item
@@ -18,4 +18,10 @@ class CifraUseCase(
         val songName = responseBody?.name
         return "$artistName $songName"
     }
+
+    fun filterSearch(artistAndSong: String) =
+        artistAndSong.apply {
+            replace("Ao Vivo", "", ignoreCase = true)
+            replace("-", "")
+        }
 }

@@ -1,7 +1,7 @@
 package com.example.cifrafinder
 
 import com.example.cifrafinder.data.CifraRepository
-import com.example.cifrafinder.data.remote.APIService
+import com.example.cifrafinder.data.remote.CifraApi
 import com.example.cifrafinder.model.CifraUseCase
 import com.example.cifrafinder.presenter.login.LoginViewModel
 import com.example.cifrafinder.presenter.webview.WebViewModel
@@ -29,16 +29,16 @@ val myModule = module {
         }
 
         factory {
-            get<Retrofit>().create(APIService::class.java)
+            get<Retrofit>().create(CifraApi::class.java)
         }
 
         single{
-            provideRetrofit(CifraConstants.spotifyBaseUrl)
+            provideRetrofit()
         }
     }
 
-    private fun provideRetrofit(baseUrl: String) =
+    private fun provideRetrofit() =
         Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("https://api.spotify.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
