@@ -16,6 +16,7 @@ Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para to
 - Novo design com cores novas
 - Achar uma forma de não ter que passar a baseUrl no Retrofit
 - Testes unitários
+- Firebase Analytics e Crashlytics
 
 #### Preview
 
