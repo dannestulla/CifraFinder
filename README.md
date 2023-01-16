@@ -1,27 +1,20 @@
-# CifraFinder - Find your guitar tablature!
+# CifraFinder 
+Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para tocar violão enquanto acompanha a música. 
 
-### About
-
-This Android application finds the related guitar tablature of your currently playing song
-
-### Tools Used
+#### Ferramentas Usadas:
 
 - Spotify API
-- Retrofit to fetch data from an API
+- Google Custom Search API
+- Work Manager
+- Clean Archtechture
+- Koin
+- Android Jetpack
 
-### Preview
+#### Atualizações Futuras:
+- Menu de opções para poder fazer logoff, auto scroll da tela
+- Conversão das telas em xml para Jetpack Compose
+- Novo design com cores novas
 
- ![ Alt text](https://github.com/Dannestulla/AndroidStudioProjects/blob/main/CifraFinder/app/src/main/java/com/example/cifrafinder/previewCifra2.gif)
+#### Preview
 
-### Download Apk Link 
-
-To test this app you need to unlock Developer mode in your android:
-
-1. Go to "**Settings**", then tap "About device" or "About phone".
-
-2. Scroll down, then tap "Build number" seven times. ...
-
-3. Enter your pattern, PIN or password to **enable** the **Developer options** menu.
-
-4. The "**Developer options**" menu will now appear in your **Settings** menu.
-
+#### Download Apk Link 
