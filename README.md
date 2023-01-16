@@ -18,3 +18,4 @@ Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para to
 #### Preview
 
 #### Download Apk Link 
+(em breve na Play Store)
