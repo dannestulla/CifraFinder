@@ -9,10 +9,10 @@ Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para to
 - Clean Archtechture
 - Koin
 - Android Jetpack
+- Compose
 
 #### Atualizações Futuras:
 - Menu de opções para poder fazer logoff, auto scroll da tela
-- Conversão das telas em xml para Jetpack Compose
 - Novo design com cores novas
 - Achar uma forma de não ter que passar a baseUrl no Retrofit
 - Testes unitários
