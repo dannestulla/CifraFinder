@@ -5,20 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.CifraConstants
-import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.CifraScheduler
 import br.gohan.cifrafinder.domain.model.CurrentSongModel
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
@@ -31,7 +22,6 @@ class WebFragment : Fragment() {
     private val viewModel: MusicFetchViewModel by activityViewModel()
     private lateinit var workManager: WorkManager
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,29 +29,7 @@ class WebFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = {
-                                findNavController().popBackStack()
-                            },
-                            shape = RoundedCornerShape(16.dp),
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(20.dp),
-                                painter = painterResource(R.drawable.ic_refresh),
-                                contentDescription = "Content description for visually impaired"
-                            )
-                        }
-                    }, content = { padding ->
-                        Surface(
-                            modifier = Modifier.padding(padding),
-                            color = MaterialTheme.colorScheme.background
-                        ) {
-                            WebScreen(viewModel)
-                        }
-                    })
-
+                WebScreen(viewModel, this@WebFragment)
             }
         }
     }
