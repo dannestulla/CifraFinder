@@ -1,16 +1,18 @@
-package br.gohan.cifrafinder
+package br.gohan.cifrafinder.presenter
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
-import br.gohan.cifrafinder.presenter.MusicFetchViewModel
+import br.gohan.cifrafinder.CifraConstants
+import br.gohan.cifrafinder.R
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CifraLoginActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private val viewModel: MusicFetchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,7 +1,5 @@
 package br.gohan.cifrafinder.data
 
-import br.gohan.cifrafinder.data.remote.CifraApi
-
 class CifraRepository(
     private val cifraApi: CifraApi
 ) {

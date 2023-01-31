@@ -1,7 +1,9 @@
 package br.gohan.cifrafinder.domain
 
 import br.gohan.cifrafinder.data.CifraRepository
-import br.gohan.cifrafinder.data.remote.model.SpotifyJson
+import br.gohan.cifrafinder.data.model.SpotifyJson
+import br.gohan.cifrafinder.domain.model.CurrentSongModel
+import okhttp3.ResponseBody
 
 class CifraUseCase(
     private val cifraRepository: CifraRepository,
@@ -25,4 +27,21 @@ class CifraUseCase(
             replace("Ao Vivo", "", ignoreCase = true)
             replace("-", "")
         }
+
+    fun createCurrentSongData(searchString: String, body: SpotifyJson?): CurrentSongModel {
+        val durationMs = body?.item?.durationMs ?: 0L
+        val progressMs = body?.progressMs ?: 0L
+        return CurrentSongModel(
+            searchString,
+            durationMs,
+            progressMs
+        )
+    }
+
+    fun handleSpotifyError(code: Int, errorBody: ResponseBody?) : String {
+            return when (code) {
+                204 -> "Nenhuma música está sendo tocada no momento"
+                else -> "Error code: $code, ${errorBody.toString()}"
+            }
+    }
 }

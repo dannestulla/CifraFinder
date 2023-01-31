@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cifraMenuFragment"
-        android:name="br.gohan.cifrafinder.presenter.StartingFragment"
+        android:name="br.gohan.cifrafinder.presenter.fragments.StartingFragment"
         android:label="CifraMenuFragment"
         tools:layout="@+id/menuFragment"
         >
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/cifraWebFragment"
-        android:name="br.gohan.cifrafinder.presenter.WebFragment"
+        android:name="br.gohan.cifrafinder.presenter.fragments.WebFragment"
         android:label="CifraWebFragment"
         tools:layout="@+id/webFragment"
         >

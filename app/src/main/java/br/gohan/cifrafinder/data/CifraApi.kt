@@ -1,7 +1,7 @@
-package br.gohan.cifrafinder.data.remote
+package br.gohan.cifrafinder.data
 
-import br.gohan.cifrafinder.data.remote.model.GoogleJson
-import br.gohan.cifrafinder.data.remote.model.SpotifyJson
+import br.gohan.cifrafinder.data.model.GoogleJson
+import br.gohan.cifrafinder.data.model.SpotifyJson
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

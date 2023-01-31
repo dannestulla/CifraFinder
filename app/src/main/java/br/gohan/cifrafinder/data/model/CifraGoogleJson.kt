@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.data.remote.model
+package br.gohan.cifrafinder.data.model
 
 import androidx.annotation.Keep
 
