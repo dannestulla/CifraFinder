@@ -13,19 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavHostController
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
-import br.gohan.cifrafinder.presenter.fragments.WebFragment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WebScreen(viewModel: MusicFetchViewModel, webFragment: WebFragment) {
+fun WebScreen(
+    viewModel: MusicFetchViewModel,
+    navController: NavHostController,
+    ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    findNavController(webFragment).popBackStack()
+                    navController.popBackStack()
                 },
                 shape = RoundedCornerShape(16.dp),
             ) {
