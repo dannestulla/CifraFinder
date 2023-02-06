@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
 

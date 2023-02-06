@@ -1,7 +1,6 @@
 package br.gohan.cifrafinder.presenter
 
 import android.content.Intent
-import android.widget.Toast
 import br.gohan.cifrafinder.CifraConstants
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
@@ -26,20 +25,17 @@ class SpotifyLoginHelper(
         requestCode: Int,
         resultCode: Int,
         intent: Intent?,
-        loginSuccess: (String) -> Unit
+        accessToken: (String?) -> Unit
     ) {
         if (requestCode == CifraConstants.REQUEST_CODE) {
             val response = AuthorizationClient.getResponse(resultCode, intent)
             when (response.type) {
                 AuthorizationResponse.Type.TOKEN -> {
-                    loginSuccess.invoke(response.accessToken)
+                    accessToken.invoke(response.accessToken)
                 }
-                AuthorizationResponse.Type.ERROR -> Toast.makeText(
-                    mainActivity,
-                    response.error,
-                    Toast.LENGTH_SHORT
-                ).show()
-                else -> {}
+                else -> {
+                    accessToken.invoke(null)
+                }
             }
         }
     }

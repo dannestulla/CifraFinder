@@ -3,8 +3,8 @@ package br.gohan.cifrafinder
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.CifraApi
-import br.gohan.cifrafinder.domain.CifraScheduler
-import br.gohan.cifrafinder.domain.CifraUseCase
+import br.gohan.cifrafinder.domain.usecase.FetchGoogleService
+import br.gohan.cifrafinder.domain.usecase.FetchSpotifyService
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val myModule = module {
 
         viewModel {
-            MusicFetchViewModel(get())
+            MusicFetchViewModel(get(), get())
         }
 
         factory {
@@ -23,7 +23,11 @@ val myModule = module {
         }
 
         factory {
-            CifraUseCase(get())
+            FetchGoogleService(get())
+        }
+
+        factory {
+            FetchSpotifyService(get())
         }
 
         factory {

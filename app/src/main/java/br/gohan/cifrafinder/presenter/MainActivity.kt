@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,11 +28,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         spotifyLoginHelper = SpotifyLoginHelper(this)
         viewModel.workManager = WorkManager.getInstance(this)
-        toastObserver()
+        spotifyLoginHelper.logInSpotify()
         setContent {
             CifraFinderTheme {
-                // A surface container using the 'background' color from the theme
                 val navController = rememberNavController()
+                observeActions(navController)
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -41,14 +42,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = "conversation"
                     ) {
                         composable(route = "conversation") {
-                            ConversationScreen(viewModel, spotifyLoginHelper,
-                                logOff = {
-                                    AuthorizationClient.clearCookies(this@MainActivity)
-                                    viewModel.restartConversationStage()
-                            },
-                                navigateToWebView = {
-                                    navController.navigate("webview")
-                            })
+                            ConversationScreen(viewModel)
                         }
                         composable(route = "webview") {
                             WebScreen(viewModel, navController)
@@ -63,14 +57,31 @@ class MainActivity : ComponentActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         spotifyLoginHelper.handleLoginResponse(requestCode, resultCode, intent) { accessToken ->
-            viewModel.setSpotifyToken(accessToken)
-            viewModel.nextConversationStage()
+            if (!accessToken.isNullOrEmpty()) {
+                viewModel.setSpotifyToken(accessToken)
+                viewModel.setConversationStage(3)
+            }
         }
     }
 
-    private fun toastObserver() {
-        viewModel.toastMessage.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+    private fun observeActions(navController: NavHostController) {
+        viewModel.navigationActions.observe(this){
+            when (it) {
+                is NavigationActions.WebView -> {
+                    navController.navigate("webview")
+                }
+                is NavigationActions.LogInSpotify -> spotifyLoginHelper.logInSpotify()
+                is NavigationActions.LogOffSpotify -> {
+                    AuthorizationClient.clearCookies(this@MainActivity)
+                    viewModel.setConversationStage(1)
+                }
+                is NavigationActions.GetCurrentlyPlaying -> {
+                    viewModel.getCurrentlyPlaying()
+                }
+                is NavigationActions.ToastMessage -> {
+                    Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 }

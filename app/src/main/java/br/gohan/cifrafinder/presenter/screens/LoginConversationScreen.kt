@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter.screens
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
@@ -13,24 +12,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
-import br.gohan.cifrafinder.presenter.SpotifyLoginHelper
+import br.gohan.cifrafinder.presenter.NavigationActions
 import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ConversationScreen(
-    viewModel: MusicFetchViewModel,
-    spotifyLoginHelper: SpotifyLoginHelper,
-    navigateToWebView: () -> Unit,
-    logOff: () -> Unit,
+    viewModel: MusicFetchViewModel
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val currentStage = viewModel.currentStage.collectAsState().value
     val currentSong = viewModel.currentSongName.collectAsState().value
+    val searchUrl = viewModel.searchUrl.collectAsState().value
+    val spotifyToken = viewModel.spotifyToken.collectAsState().value
     var firstText = ""
     var secondText = ""
     var buttonText = ""
+    if (currentSong.isNotEmpty() && spotifyToken.isNotEmpty()) {
+        viewModel.setConversationStage(4)
+    } else {
+        viewModel.postAction(NavigationActions.GetCurrentlyPlaying)
+    }
     when (currentStage) {
         1 -> {
             firstText = "Primeiro logue na sua conta do Spotify"
@@ -41,7 +43,7 @@ fun ConversationScreen(
             buttonText = "Logando..."
         }
         3 -> {
-            viewModel.getCurrentlyPlaying()
+            //viewModel.getCurrentlyPlaying()
             secondText = "Comece a tocar uma música no Spotify para buscar sua tablatura"
             buttonText = "Logado no Spotify"
         }
@@ -50,70 +52,68 @@ fun ConversationScreen(
             buttonText = "Logado no Spotify"
         }
     }
-    AnimatedContent(
-        targetState = currentStage,
-        transitionSpec = {
-            fadeIn() with fadeOut()
-        }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(
+            space = 60.dp,
+            alignment = Alignment.CenterVertically
+        ),
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 60.dp,
-                alignment = Alignment.CenterVertically
-            ),
-        ) {
-            Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                text = firstText
-            )
-            if (currentStage == 2) {
-                CircularProgressIndicator()
-            }
-            if (currentStage == 4) {
-                ElevatedButton(
-                    colors =
-                    ButtonDefaults.filledTonalButtonColors(),
-                    onClick = {
-                        navigateToWebView.invoke()
-                    }) {
-                    Text("Buscar tablatura!", fontSize = 20.sp)
-                }
-            }
-            Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                text = secondText
-            )
+        Text(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp,
+            text = firstText
+        )
+        if (currentStage == 2) {
+            CircularProgressIndicator()
+        }
+        if (currentStage >= 3) {
             ElevatedButton(
-                enabled = currentStage != 2,
-                colors = if (currentStage > 2) {
-                    ButtonDefaults.buttonColors()
-                } else {
-                    ButtonDefaults.filledTonalButtonColors()
-                },
+                colors =
+                ButtonDefaults.filledTonalButtonColors(),
                 onClick = {
-                    handleButtonFlow(currentStage, viewModel, spotifyLoginHelper) {
-                        openDialog.value = true
+                    if (searchUrl.isNotEmpty()) {
+                        viewModel.postAction(NavigationActions.WebView)
+                    } else {
+                        viewModel.postAction(NavigationActions.GetCurrentlyPlaying)
                     }
                 }) {
-                if (currentStage > 2) {
-                    Icon(
-                        Icons.Rounded.Check,
-                        contentDescription = "Localized description",
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                }
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    fontSize = 20.sp,
-                    text = buttonText
+                    if (currentStage == 3) "Buscar música!" else "Buscar tablatura!",
+                    fontSize = 20.sp
                 )
             }
+        }
+        Text(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp,
+            text = secondText
+        )
+        ElevatedButton(
+            enabled = currentStage != 2,
+            colors = if (currentStage > 2) {
+                ButtonDefaults.buttonColors()
+            } else {
+                ButtonDefaults.filledTonalButtonColors()
+            },
+            onClick = {
+                handleButtonFlow(currentStage, viewModel, openDialog)
+            }) {
+            if (currentStage > 2) {
+                Icon(
+                    Icons.Rounded.Check,
+                    contentDescription = "Localized description",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+            }
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Text(
+                fontSize = 20.sp,
+                text = buttonText
+            )
         }
     }
     if (openDialog.value) {
@@ -128,7 +128,7 @@ fun ConversationScreen(
                 Button(
                     onClick = {
                         openDialog.value = false
-                        logOff.invoke()
+                        viewModel.postAction(NavigationActions.LogOffSpotify)
                     }) {
                     Text("Sim")
                 }
@@ -141,32 +141,21 @@ fun ConversationScreen(
                 }
             })
     }
-    /* Column(
-         horizontalAlignment = Alignment.CenterHorizontally,
-         verticalArrangement = Arrangement.Bottom
-     ) {
-         Button(onClick = { viewModel.nextConversationStage() }) {
-             Text("passar passo")
-         }
-         Button(onClick = { viewModel.backConversationStage() }) {
-             Text("voltar passo")
-         }
-         Text("currentStage $currentStage")
-     }*/
 }
 
 fun handleButtonFlow(
     currentStage: Int,
     viewModel: MusicFetchViewModel,
-    spotifyLoginHelper: SpotifyLoginHelper,
-    logOff: () -> Unit
+    openDialog: MutableState<Boolean>,
 ) {
     return when (currentStage) {
         1 -> {
             viewModel.nextConversationStage()
-            spotifyLoginHelper.logInSpotify()
+            viewModel.postAction(NavigationActions.LogInSpotify)
         }
-        else -> logOff.invoke()
+        else -> {
+            openDialog.value = true
+        }
     }
 }
 
@@ -180,8 +169,8 @@ fun PreviewConversationScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             ConversationScreen(
-                viewModel,
-                spotifyLoginHelper = SpotifyLoginHelper(null), {}, {})
+                viewModel
+            )
         }
     }
 }
