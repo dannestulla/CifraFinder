@@ -62,13 +62,13 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'br.gohan.cifrafinder'
 }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation "androidx.work:work-runtime-ktx:2.8.0"
 
     def composeBom = platform('androidx.compose:compose-bom:2022.12.00')
     implementation composeBom
