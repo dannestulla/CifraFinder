@@ -45,7 +45,7 @@ fun ConversationScreen(
             buttonText = stringResource(id = R.string.third_step_button)
         }
         4 -> {
-            firstText = stringResource(id = R.string.fourth_step_title)
+            firstText = stringResource(id = R.string.fourth_step_title, currentSong)
             buttonText = stringResource(id = R.string.fourth_step_button)
         }
     }
@@ -79,7 +79,7 @@ fun ConversationScreen(
                 }) {
                 Text(
                     if (currentStage == 3) stringResource(id = R.string.third_step_button_search_music) else stringResource(
-                        id = R.string.third_step_button_search_music
+                        id = R.string.third_step_button_search_tablature
                     ),
                     fontSize = 20.sp
                 )
