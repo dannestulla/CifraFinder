@@ -68,7 +68,7 @@ app:
     MODULE: app
   - opts:
       is_expand: false
-    VARIANT: main
+    VARIANT: release
 trigger_map:
 - push_branch: main
   workflow: deploy
