@@ -68,4 +68,4 @@ app:
     MODULE: app
   - opts:
       is_expand: false
-    VARIANT: production
+    VARIANT: main
