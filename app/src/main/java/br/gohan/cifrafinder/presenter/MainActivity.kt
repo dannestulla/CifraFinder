@@ -81,6 +81,7 @@ class MainActivity : ComponentActivity() {
                 is NavigationActions.ToastMessage -> {
                     Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
                 }
+                else -> {}
             }
         }
     }
