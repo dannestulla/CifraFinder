@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.WorkManager
+import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.screens.ConversationScreen
 import br.gohan.cifrafinder.presenter.screens.WebScreen
 import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
@@ -28,7 +29,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         spotifyLoginHelper = SpotifyLoginHelper(this)
         viewModel.workManager = WorkManager.getInstance(this)
-        spotifyLoginHelper.logInSpotify()
         setContent {
             CifraFinderTheme {
                 val navController = rememberNavController()
@@ -65,12 +65,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun observeActions(navController: NavHostController) {
-        viewModel.navigationActions.observe(this){
+        viewModel.navigationActions.observe(this) {
             when (it) {
                 is NavigationActions.WebView -> {
                     navController.navigate("webview")
                 }
-                is NavigationActions.LogInSpotify -> spotifyLoginHelper.logInSpotify()
+                is NavigationActions.LogInSpotify -> {
+                    spotifyLoginHelper.logInSpotify()
+                }
                 is NavigationActions.LogOffSpotify -> {
                     AuthorizationClient.clearCookies(this@MainActivity)
                     viewModel.setConversationStage(1)
@@ -79,7 +81,11 @@ class MainActivity : ComponentActivity() {
                     viewModel.getCurrentlyPlaying()
                 }
                 is NavigationActions.ToastMessage -> {
-                    Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.toast_no_song_being_played),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 else -> {}
             }

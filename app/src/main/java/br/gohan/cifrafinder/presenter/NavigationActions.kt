@@ -5,5 +5,5 @@ sealed class NavigationActions {
     object WebView : NavigationActions()
     object LogInSpotify : NavigationActions()
     object LogOffSpotify : NavigationActions()
-    data class ToastMessage(val message: String) : NavigationActions()
+    object ToastMessage : NavigationActions()
 }

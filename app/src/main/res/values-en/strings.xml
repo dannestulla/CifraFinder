@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CifraFinder</string>
+    <string name="first_step_title">First log into your Spotify account</string>
+    <string name="first_step_description">This way we know which song is being played so we can get the tablature</string>
+    <string name="first_step_button">Sign in to Spotify</string>
+    <string name="second_step_description">Logging in...</string>
+    <string name="third_step_title">Start playing a song on Spotify to get your tablature</string>
+    <string name="third_step_button">Logged into Spotify</string>
+    <string name="fourth_step_title">Playing: %1$d</string>
+    <string name="fourth_step_button">Logged into Spotify</string>
+    <string name="log_off_dialog_title">Want to log out of Spotify?</string>
+    <string name="log_off_yes">Yes</string>
+    <string name="log_off_no">No</string>
+    <string name="third_step_button_search_music">Search song!</string>
+    <string name="third_step_button_search_tablature">Search tablature!</string>
+    <string name="toast_no_song_being_played">No song being played at the moment</string>
+</resources>

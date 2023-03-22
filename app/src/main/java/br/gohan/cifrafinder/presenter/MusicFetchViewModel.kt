@@ -47,7 +47,7 @@ class MusicFetchViewModel(
                 fetchSpotifyService.invoke(_spotifyToken.value)
             }
             if (songData == null) {
-                postAction(NavigationActions.ToastMessage("Nenhuma música sendo tocada no momento"))
+                postAction(NavigationActions.ToastMessage)
                 return@launch
             }
             _currentSongName.value = songData.songAndArtist
