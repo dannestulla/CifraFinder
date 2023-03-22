@@ -7,10 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
 import br.gohan.cifrafinder.presenter.NavigationActions
 import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
@@ -25,31 +27,26 @@ fun ConversationScreen(
     val currentSong = viewModel.currentSongName.collectAsState().value
     val searchUrl = viewModel.searchUrl.collectAsState().value
     val spotifyToken = viewModel.spotifyToken.collectAsState().value
-    var firstText = ""
-    var secondText = ""
-    var buttonText = ""
-    if (currentSong.isNotEmpty() && spotifyToken.isNotEmpty()) {
-        viewModel.setConversationStage(4)
-    } else {
-        viewModel.postAction(NavigationActions.GetCurrentlyPlaying)
-    }
+    var firstText = String()
+    var secondText = String()
+    var buttonText = String()
     when (currentStage) {
         1 -> {
-            firstText = "Primeiro logue na sua conta do Spotify"
-            secondText = "Assim saberemos qual música está sendo tocada para buscarmos a tablatura"
-            buttonText = "Fazer login no Spotify"
+            firstText = stringResource(id = R.string.first_step_title)
+            secondText = stringResource(id = R.string.first_step_description)
+            buttonText = stringResource(id = R.string.first_step_button)
         }
         2 -> {
-            buttonText = "Logando..."
+            buttonText = stringResource(id = R.string.second_step_description)
         }
         3 -> {
             //viewModel.getCurrentlyPlaying()
-            secondText = "Comece a tocar uma música no Spotify para buscar sua tablatura"
-            buttonText = "Logado no Spotify"
+            secondText = stringResource(id = R.string.third_step_title)
+            buttonText = stringResource(id = R.string.third_step_button)
         }
         4 -> {
-            firstText = "Tocando: $currentSong"
-            buttonText = "Logado no Spotify"
+            firstText = stringResource(id = R.string.fourth_step_title, currentSong)
+            buttonText = stringResource(id = R.string.fourth_step_button)
         }
     }
     Column(
@@ -81,7 +78,9 @@ fun ConversationScreen(
                     }
                 }) {
                 Text(
-                    if (currentStage == 3) "Buscar música!" else "Buscar tablatura!",
+                    if (currentStage == 3) stringResource(id = R.string.third_step_button_search_music) else stringResource(
+                        id = R.string.third_step_button_search_tablature
+                    ),
                     fontSize = 20.sp
                 )
             }
@@ -105,7 +104,7 @@ fun ConversationScreen(
             if (currentStage > 2) {
                 Icon(
                     Icons.Rounded.Check,
-                    contentDescription = "Localized description",
+                    contentDescription = stringResource(id = R.string.description_icon_check),
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
@@ -120,7 +119,7 @@ fun ConversationScreen(
         AlertDialog(onDismissRequest = { openDialog.value = false },
             text = {
                 Text(
-                    text = "Deseja fazer logoff do Spotify?",
+                    text = stringResource(id = R.string.log_off_dialog_title),
                     fontSize = 18.sp
                 )
             },
@@ -130,14 +129,14 @@ fun ConversationScreen(
                         openDialog.value = false
                         viewModel.postAction(NavigationActions.LogOffSpotify)
                     }) {
-                    Text("Sim")
+                    Text(text = stringResource(id = R.string.log_off_yes))
                 }
             }, dismissButton = {
                 Button(
                     onClick = {
                         openDialog.value = false
                     }) {
-                    Text("Não")
+                    Text(text = stringResource(id = R.string.log_off_no))
                 }
             })
     }
