@@ -69,3 +69,8 @@ app:
   - opts:
       is_expand: false
     VARIANT: main
+trigger_map:
+- push_branch: main
+  workflow: deploy
+- pull_request_target_branch: main
+  workflow: primary
