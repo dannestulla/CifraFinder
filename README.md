@@ -6,10 +6,11 @@ Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para to
 - Spotify API
 - Google Custom Search API
 - Work Manager
-- Clean Archtechture
+- Clean architecture
 - Koin
 - Android Jetpack
 - Compose
+- Integração com Bitrise como CI/CD
 
 #### Preview
 <p float="left">
