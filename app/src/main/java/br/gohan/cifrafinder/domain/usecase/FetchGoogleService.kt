@@ -18,13 +18,13 @@ class FetchGoogleService(
         return query?.let { filterSearch(it) }
     }
 
-    private fun filterSearch(artistAndSong: String) =
-        artistAndSong.apply {
-            replace("Ao Vivo", "", ignoreCase = true)
-            replace("-", "")
-        }
+    fun filterSearch(artistAndSong: String): String {
+        return artistAndSong.replace("Ao Vivo", "", ignoreCase = true)
+            .replace("-", "", ignoreCase = true)
+            .replace("  ", " ")
+    }
 
-    private fun handleResult(googleResponse: Response<GoogleJson>): String? {
+    fun handleResult(googleResponse: Response<GoogleJson>): String? {
         return if (googleResponse.isSuccessful) {
             googleResponse.body()?.items?.first()?.link
         } else {
