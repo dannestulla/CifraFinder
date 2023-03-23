@@ -13,7 +13,7 @@ class FetchSpotifyService(
         return handleResponse(response)
     }
 
-    private fun handleResponse(response: Response<SpotifyJson>): CurrentSongModel? {
+    fun handleResponse(response: Response<SpotifyJson>): CurrentSongModel? {
         val responseSuccessful = response.isSuccessful && response.body() != null
         return if (responseSuccessful) {
             val searchString = setSearchString(response.body())
@@ -23,15 +23,19 @@ class FetchSpotifyService(
         }
     }
 
-    private fun setSearchString(body: SpotifyJson?): String {
+    fun setSearchString(body: SpotifyJson?): String {
         val responseBody = body?.item
         val artistName = responseBody?.artists?.first()?.name
         val songName = responseBody?.name
-        val result = "$artistName $songName"
-        return " $result "
+        return addBlankSpaceAroundSearchString("$artistName $songName")
     }
 
-    private fun setCurrentSongData(searchString: String, body: SpotifyJson?): CurrentSongModel {
+    /**
+     * This is done so the search at Cifra Club behaves less buggy
+     */
+    private fun addBlankSpaceAroundSearchString(searchString: String) = " $searchString "
+
+    fun setCurrentSongData(searchString: String, body: SpotifyJson?): CurrentSongModel {
         val durationMs = body?.item?.durationMs ?: 0L
         val progressMs = body?.progressMs ?: 0L
         return CurrentSongModel(
