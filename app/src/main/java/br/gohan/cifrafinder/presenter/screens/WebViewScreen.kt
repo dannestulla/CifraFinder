@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,13 +16,12 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.MusicFetchViewModel
-import br.gohan.cifrafinder.presenter.NavigationActions
+import br.gohan.cifrafinder.presenter.CifraViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WebScreen(
-    viewModel: MusicFetchViewModel,
+    viewModel: CifraViewModel,
     navController: NavHostController,
     ) {
     Scaffold(
@@ -51,7 +49,7 @@ fun WebScreen(
 }
 
 @Composable
-fun WebViewComponent(viewModel: MusicFetchViewModel) {
+fun WebViewComponent(viewModel: CifraViewModel) {
     val userDataState = viewModel.userDataState.collectAsStateWithLifecycle().value
     if (userDataState.currentSongName.isNotBlank()) {
         viewModel.createToast(R.string.searching_for, userDataState.currentSongName)

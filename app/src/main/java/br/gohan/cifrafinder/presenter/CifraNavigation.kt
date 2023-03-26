@@ -10,7 +10,7 @@ import br.gohan.cifrafinder.presenter.screens.ThirdStepScreen
 import br.gohan.cifrafinder.presenter.screens.WebScreen
 
 @Composable
-fun NavHostCifra(navController: NavHostController, viewModel: MusicFetchViewModel) {
+fun NavHostCifra(navController: NavHostController, viewModel: CifraViewModel) {
     NavHost(
         navController = navController,
         startDestination = FIRST_STEP

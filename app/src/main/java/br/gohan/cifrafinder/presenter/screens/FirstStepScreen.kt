@@ -11,14 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.MusicFetchViewModel
+import br.gohan.cifrafinder.presenter.CifraViewModel
 import br.gohan.cifrafinder.presenter.NavigationActions
 import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FirstStepScreen(
-    viewModel: MusicFetchViewModel
+    viewModel: CifraViewModel
 
 ) {
     Column(
@@ -60,7 +60,7 @@ fun FirstStepScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun FirstStepScreenPreview() {
-    val viewModel = koinViewModel<MusicFetchViewModel>()
+    val viewModel = koinViewModel<CifraViewModel>()
     CifraFinderTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),

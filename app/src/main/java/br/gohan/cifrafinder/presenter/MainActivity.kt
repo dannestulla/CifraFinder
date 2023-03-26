@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MusicFetchViewModel by viewModel()
+    private val viewModel: CifraViewModel by viewModel()
     private lateinit var spotifyLoginHelper: SpotifyLoginHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {

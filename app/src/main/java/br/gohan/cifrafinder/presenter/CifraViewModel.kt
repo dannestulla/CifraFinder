@@ -10,7 +10,7 @@ import br.gohan.cifrafinder.domain.usecase.FetchSpotifyService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class MusicFetchViewModel(
+class CifraViewModel(
     private val fetchSpotifyService: FetchSpotifyService,
     private val fetchGoogleService: FetchGoogleService,
     private val app: Application

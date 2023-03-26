@@ -14,14 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.MusicFetchViewModel
+import br.gohan.cifrafinder.presenter.CifraViewModel
 import br.gohan.cifrafinder.presenter.NavigationActions
 import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ThirdStepScreen(
-    viewModel: MusicFetchViewModel
+    viewModel: CifraViewModel
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val userDataState = viewModel.userDataState.collectAsStateWithLifecycle().value
@@ -92,7 +92,7 @@ fun ThirdStepScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ThirdStepScreenPreview() {
-    val viewModel = koinViewModel<MusicFetchViewModel>()
+    val viewModel = koinViewModel<CifraViewModel>()
     CifraFinderTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
