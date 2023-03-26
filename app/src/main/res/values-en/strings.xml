@@ -17,4 +17,7 @@
     <string name="third_step_button_search_tablature">Show tablature!</string>
     <string name="toast_no_song_being_played">No song being played at the moment</string>
     <string name="toast_login_error">Error while login, try again</string>
+    <string name="fetching_query">Searching tablature link</string>
+    <string name="searching_for">Searching %1$s</string>
+    <string name="toast_google_search_error">Error while searching tablature</string>
 </resources>

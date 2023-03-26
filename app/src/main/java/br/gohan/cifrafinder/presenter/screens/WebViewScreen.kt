@@ -52,7 +52,10 @@ fun WebScreen(
 
 @Composable
 fun WebViewComponent(viewModel: MusicFetchViewModel) {
-    val url = viewModel.userDataState.collectAsStateWithLifecycle().value.searchUrl
+    val userDataState = viewModel.userDataState.collectAsStateWithLifecycle().value
+    if (userDataState.currentSongName.isNotBlank()) {
+        viewModel.createToast(R.string.searching_for, userDataState.currentSongName)
+    }
     AndroidView(factory = {
         WebView(it).apply {
             webViewClient = WebViewClient()
@@ -63,9 +66,9 @@ fun WebViewComponent(viewModel: MusicFetchViewModel) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             webViewClient = WebViewClient()
-            loadUrl(url)
+            loadUrl(userDataState.searchUrl)
         }
     }, update = {
-        it.loadUrl(url)
+        viewModel.getCurrentlyPlaying()
     })
 }

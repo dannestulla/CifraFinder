@@ -25,7 +25,6 @@ fun ThirdStepScreen(
 ) {
     val openDialog = remember { mutableStateOf(false) }
     val userDataState = viewModel.userDataState.collectAsStateWithLifecycle().value
-    println("Terceira tela começando")
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,14 +37,15 @@ fun ThirdStepScreen(
             colors = ButtonDefaults.filledTonalButtonColors(),
             onClick = {
                 if (userDataState.currentSongName.isEmpty()) {
-                    viewModel.getCurrentlyPlaying()
                     viewModel.createToast(R.string.toast_no_song_being_played)
-
-                } else if (userDataState.searchUrl.isEmpty()) {
                     viewModel.getCurrentlyPlaying()
+                    return@ElevatedButton
+                } else if (userDataState.searchUrl.isEmpty()) {
                     viewModel.createToast(
-                        R.string.search_empty,
+                        R.string.fetching_query,
                     )
+                    viewModel.getCurrentlyPlaying()
+                    return@ElevatedButton
                 } else {
                     viewModel.postAction(NavigationActions.LastStep)
                 }
@@ -60,7 +60,7 @@ fun ThirdStepScreen(
             textAlign = TextAlign.Center,
             fontSize = 20.sp,
             text = if (userDataState.currentSongName.isNotEmpty()) {
-                stringResource(id =  R.string.fourth_step_title, userDataState.currentSongName)
+                stringResource(id = R.string.fourth_step_title, userDataState.currentSongName)
             } else {
                 stringResource(id = R.string.third_step_title)
             }

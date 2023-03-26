@@ -3,6 +3,8 @@ package br.gohan.cifrafinder.domain.usecase
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.model.SpotifyJson
 import br.gohan.cifrafinder.domain.model.CurrentSongModel
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import retrofit2.Response
 
 class FetchSpotifyService(
@@ -19,7 +21,8 @@ class FetchSpotifyService(
             val searchString = setSearchString(response.body())
             setCurrentSongData(searchString, response.body())
         } else {
-            null
+            Firebase.crashlytics.log("Spotify response error: ${response.raw()}")
+            return null
         }
     }
 

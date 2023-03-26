@@ -12,8 +12,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.R
@@ -33,28 +31,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             CifraFinderTheme {
                 val navController = rememberNavController()
-                observeActions(navController)
+                observeNavigationActions(navController)
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = "firstStep"
-                    ) {
-                        composable(route = "firstStep") {
-                            FirstStepScreen(viewModel)
-                        }
-                        composable(route = "secondStep") {
-                            SecondStepScreen(viewModel)
-                        }
-                        composable(route = "thirdStep") {
-                            ThirdStepScreen(viewModel)
-                        }
-                        composable(route = "webview") {
-                            WebScreen(viewModel, navController)
-                        }
-                    }
+                    NavHostCifra(navController, viewModel)
                 }
             }
         }
@@ -73,32 +55,27 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun observeActions(navController: NavHostController) {
+    private fun observeNavigationActions(navController: NavHostController) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.userDataState.collect {
                     when (it.navigationActions) {
                         // Asks for user to log in Spotify
                         is NavigationActions.FirstStep -> {
-                            navController.navigate("firstStep")
+                            navController.navigate(FIRST_STEP)
                         }
                         // Shows loading screen and opens Spotify Log in
                         is NavigationActions.SecondStep -> {
-                            navController.navigate("secondStep")
+                            navController.navigate(SECOND_STEP)
                             spotifyLoginHelper.logInSpotify()
                         }
                         // Asks for user to play a song and shows get playing song button
                         is NavigationActions.ThirdStep -> {
-                            navController.navigate("thirdStep")
-                            viewModel.getCurrentlyPlaying()
-                        }
-                        // Shows what song is being played and shows get tablature button
-                        is NavigationActions.FourthStep -> {
-                            navController.navigate("fourthStep")
+                            navController.navigate(THIRD_STEP)
                         }
                         // Open Webview with the tablature
                         is NavigationActions.LastStep -> {
-                            navController.navigate("webview")
+                            navController.navigate(LAST_STEP)
                         }
                         else -> {}
                     }
