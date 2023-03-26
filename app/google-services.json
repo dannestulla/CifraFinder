@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1098518630361",
+    "project_id": "cifrafinder-374719",
+    "storage_bucket": "cifrafinder-374719.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098518630361:android:e633ede4b87394626793c8",
+        "android_client_info": {
+          "package_name": "br.gohan.cifrafinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098518630361-e6ctqrl9msj9pcggtbc0aqjv4p23c1ti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvlEMCquGKLR4FuzPQe8XKEGhTtX89mrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098518630361-e6ctqrl9msj9pcggtbc0aqjv4p23c1ti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

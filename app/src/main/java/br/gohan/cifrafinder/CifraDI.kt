@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val myModule = module {
 
         viewModel {
-            MusicFetchViewModel(get(), get())
+            MusicFetchViewModel(get(), get(),get())
         }
 
         factory {

@@ -10,7 +10,9 @@
     <string name="third_step_button_search_music">Buscar música!</string>
     <string name="third_step_button_search_tablature">Mostrar tablatura!</string>
 
-    <string name="fourth_step_title">Tocando %1$s</string>
+    <string name="playing">Tocando:</string>
+
+    <string name="fourth_step_title">Tocando: %1$s</string>
     <string name="fourth_step_button">Logado no Spotify</string>
     <string name="app_name">CifraFinder</string>
 
@@ -21,4 +23,10 @@
     <string name="description_icon_check" translatable="false">Icon check</string>
 
     <string name="toast_no_song_being_played">Nenhuma música sendo tocada no momento</string>
+    <string name="fetching_query">Buscando o link da tablatura</string>
+
+    <string name="searching_for">Buscando por %1$s</string>
+    <string name="toast_login_error">Erro ao fazer login, tente novamente</string>
+
+    <string name="toast_google_search_error">Erro ao buscar a tablatura, tente novamente</string>
 </resources>

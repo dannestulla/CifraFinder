@@ -3,6 +3,8 @@ package br.gohan.cifrafinder.domain.usecase
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.model.GoogleJson
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import retrofit2.Response
 
 class FetchGoogleService(
@@ -12,10 +14,9 @@ class FetchGoogleService(
         val result = repository.getGoogleSearchResult(
             CifraConstants.googleApiKey1,
             CifraConstants.googleApiKey2,
-            searchQuery
+            filterSearch(searchQuery)
         )
-        val query = handleResult(result)
-        return query?.let { filterSearch(it) }
+        return handleResult(result)
     }
 
     fun filterSearch(artistAndSong: String): String {
@@ -28,7 +29,8 @@ class FetchGoogleService(
         return if (googleResponse.isSuccessful) {
             googleResponse.body()?.items?.first()?.link
         } else {
-            null
+            Firebase.crashlytics.log("Google response error: ${googleResponse.raw()}")
+            return null
         }
     }
 }

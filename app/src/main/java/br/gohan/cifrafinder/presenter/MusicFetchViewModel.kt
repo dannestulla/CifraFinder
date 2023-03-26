@@ -1,82 +1,69 @@
 package br.gohan.cifrafinder.presenter
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.widget.Toast
+import androidx.lifecycle.*
 import androidx.work.WorkManager
-import br.gohan.cifrafinder.domain.model.CurrentSongModel
+import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.usecase.FetchGoogleService
 import br.gohan.cifrafinder.domain.usecase.FetchSpotifyService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 class MusicFetchViewModel(
     private val fetchSpotifyService: FetchSpotifyService,
-    private val fetchGoogleService: FetchGoogleService
-) : ViewModel() {
+    private val fetchGoogleService: FetchGoogleService,
+    private val app: Application
+) : AndroidViewModel(app) {
 
-    private var _navigationActions = MutableLiveData<NavigationActions>()
-    var navigationActions: LiveData<NavigationActions> = _navigationActions
+    private var _userDataState = MutableStateFlow(UserDataState())
+    var userDataState = _userDataState.asStateFlow()
 
-    private var _currentStage = MutableStateFlow(1)
-    var currentStage = _currentStage.asStateFlow()
-
-    private var _currentSongName = MutableStateFlow("")
-    var currentSongName = _currentSongName.asStateFlow()
-
-    private var _searchUrl = MutableStateFlow("")
-    var searchUrl = _searchUrl.asStateFlow()
-
-    private var _spotifyToken = MutableStateFlow("")
-    var spotifyToken = _spotifyToken.asStateFlow()
-
-    var songModel = MutableLiveData<CurrentSongModel?>()
+    private var getCurrentPlayingJob : Job? = null
 
     lateinit var workManager: WorkManager
 
     fun getCurrentlyPlaying() {
-        viewModelScope.launch {
-            if (_spotifyToken.value.isBlank()) {
-                return@launch
-            }
-            val songData = withContext(Dispatchers.Default) {
-                fetchSpotifyService.invoke(_spotifyToken.value)
-            }
-            if (songData == null) {
-                postAction(NavigationActions.ToastMessage)
-                return@launch
-            }
-            _currentSongName.value = songData.songAndArtist
-            songModel.postValue(songData)
-
-            val query = withContext(Dispatchers.Default) {
-                fetchGoogleService.invoke(songData.songAndArtist)
-            }
-
-            if (query != null) {
-                _searchUrl.value = query
-                if (currentStage.value < 4) {
-                    nextConversationStage()
+        if (getCurrentPlayingJob == null || getCurrentPlayingJob?.isActive == false) {
+            getCurrentPlayingJob = viewModelScope.launch {
+                val userDataState = _userDataState.value
+                val songData = async {
+                    fetchSpotifyService.invoke(userDataState.spotifyToken)
+                }
+                val songAndArtist = songData.await()?.songAndArtist
+                if (songAndArtist == null) {
+                    createToast(R.string.toast_no_song_being_played)
+                    return@launch
+                }
+                if (songAndArtist != _userDataState.value.currentSongName) {
+                    _userDataState.value = userDataState.copy(currentSongName = songAndArtist)
+                }
+                val query = async {
+                    fetchGoogleService.invoke(songAndArtist)
+                }
+                val queryResult = query.await()
+                if (queryResult != null) {
+                    _userDataState.value = userDataState.copy(searchUrl = queryResult)
+                } else {
+                    createToast(R.string.toast_google_search_error)
                 }
             }
         }
     }
 
     fun postAction(action: NavigationActions) {
-        _navigationActions.postValue(action)
+        _userDataState.value = _userDataState.value.copy(navigationActions = action)
     }
 
     fun setSpotifyToken(accessToken: String) {
-        _spotifyToken.value = accessToken
+        _userDataState.value = userDataState.value.copy(spotifyToken = accessToken)
     }
 
-    fun nextConversationStage() = _currentStage.value++
-
-    fun setConversationStage(stage: Int) {
-        _currentStage.value = stage
+    fun createToast(id : Int, extension: String? = null) {
+            Toast.makeText(
+                app,
+                app.resources.getString(id, extension),
+                Toast.LENGTH_LONG
+            ).show()
     }
 }

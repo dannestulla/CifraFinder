@@ -14,9 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.MusicFetchViewModel
+import br.gohan.cifrafinder.presenter.NavigationActions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +30,7 @@ fun WebScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.popBackStack()
+                    navController.navigate("webview")
                 },
                 shape = RoundedCornerShape(16.dp),
             ) {
@@ -50,7 +52,10 @@ fun WebScreen(
 
 @Composable
 fun WebViewComponent(viewModel: MusicFetchViewModel) {
-    val url = viewModel.searchUrl.collectAsState().value
+    val userDataState = viewModel.userDataState.collectAsStateWithLifecycle().value
+    if (userDataState.currentSongName.isNotBlank()) {
+        viewModel.createToast(R.string.searching_for, userDataState.currentSongName)
+    }
     AndroidView(factory = {
         WebView(it).apply {
             webViewClient = WebViewClient()
@@ -61,9 +66,9 @@ fun WebViewComponent(viewModel: MusicFetchViewModel) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             webViewClient = WebViewClient()
-            loadUrl(url)
+            loadUrl(userDataState.searchUrl)
         }
     }, update = {
-        it.loadUrl(url)
+        viewModel.getCurrentlyPlaying()
     })
 }
