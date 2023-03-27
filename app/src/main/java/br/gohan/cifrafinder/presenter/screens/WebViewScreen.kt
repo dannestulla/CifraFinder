@@ -3,6 +3,7 @@ package br.gohan.cifrafinder.presenter.screens
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.CifraViewModel
+import br.gohan.cifrafinder.presenter.THIRD_STEP
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,11 +26,14 @@ fun WebScreen(
     viewModel: CifraViewModel,
     navController: NavHostController,
     ) {
+    BackHandler {
+        navController.navigate(THIRD_STEP)
+    }
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate("webview")
+                    viewModel.getCurrentlyPlaying()
                 },
                 shape = RoundedCornerShape(16.dp),
             ) {
@@ -59,6 +64,7 @@ fun WebViewComponent(viewModel: CifraViewModel) {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
+            settings.javaScriptCanOpenWindowsAutomatically = true
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -67,6 +73,6 @@ fun WebViewComponent(viewModel: CifraViewModel) {
             loadUrl(userDataState.searchUrl)
         }
     }, update = {
-        viewModel.getCurrentlyPlaying()
+        //it.reload()
     })
 }

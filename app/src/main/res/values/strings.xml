@@ -25,7 +25,7 @@
     <string name="toast_no_song_being_played">Nenhuma música sendo tocada no momento</string>
     <string name="fetching_query">Buscando o link da tablatura</string>
 
-    <string name="searching_for">Buscando por %1$s</string>
+    <string name="searching_for">Buscando por: %1$s</string>
     <string name="toast_login_error">Erro ao fazer login, tente novamente</string>
 
     <string name="toast_google_search_error">Erro ao buscar a tablatura, tente novamente</string>

@@ -36,19 +36,7 @@ fun ThirdStepScreen(
         ElevatedButton(
             colors = ButtonDefaults.filledTonalButtonColors(),
             onClick = {
-                if (userDataState.currentSongName.isEmpty()) {
-                    viewModel.createToast(R.string.toast_no_song_being_played)
-                    viewModel.getCurrentlyPlaying()
-                    return@ElevatedButton
-                } else if (userDataState.searchUrl.isEmpty()) {
-                    viewModel.createToast(
-                        R.string.fetching_query,
-                    )
-                    viewModel.getCurrentlyPlaying()
-                    return@ElevatedButton
-                } else {
-                    viewModel.postAction(NavigationActions.LastStep)
-                }
+                viewModel.getCurrentlyPlaying()
             }) {
             Text(
                 stringResource(id = R.string.third_step_button_search_music),

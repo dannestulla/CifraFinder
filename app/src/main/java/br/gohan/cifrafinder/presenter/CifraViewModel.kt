@@ -1,6 +1,7 @@
 package br.gohan.cifrafinder.presenter
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.work.WorkManager
@@ -31,10 +32,11 @@ class CifraViewModel(
                     fetchSpotifyService.invoke(userDataState.spotifyToken)
                 }
                 val songAndArtist = songData.await()?.songAndArtist
-                if (songAndArtist == null) {
+                if (songAndArtist.isNullOrBlank()) {
                     createToast(R.string.toast_no_song_being_played)
                     return@launch
                 }
+                createToast(R.string.searching_for, songAndArtist)
                 if (songAndArtist != _userDataState.value.currentSongName) {
                     _userDataState.value = userDataState.copy(currentSongName = songAndArtist)
                 }
@@ -44,6 +46,7 @@ class CifraViewModel(
                 val queryResult = query.await()
                 if (queryResult != null) {
                     _userDataState.value = userDataState.copy(searchUrl = queryResult)
+                    postAction(NavigationActions.LastStep)
                 } else {
                     createToast(R.string.toast_google_search_error)
                 }
