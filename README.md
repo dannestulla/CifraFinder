@@ -3,14 +3,13 @@ Encontra a tablatura da música sendo tocada no Spotify, ótimo programa para to
 
 #### Ferramentas Usadas:
 
-- Spotify API
-- Google Custom Search API
+- Spotify API e Google Custom Search API
 - Work Manager
-- Clean architecture
+- Clean architecture, MVVM
 - Koin
-- Android Jetpack
 - Compose
-- Integração com Bitrise como CI/CD
+- Integração com Bitrise como CI/CD com fastlane para deploy para loja
+- Testes unitários
 
 #### Preview
 <p float="left">
