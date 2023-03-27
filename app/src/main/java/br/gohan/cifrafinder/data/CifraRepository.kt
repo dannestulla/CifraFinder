@@ -8,10 +8,10 @@ class CifraRepository(
 
     suspend fun getGoogleSearchResult(
         apiKey1: String,
-        apiKey2: String,
+        searchEngineId: String,
         searchInput: String
     ) =
-        cifraApi.getGoogleSearchResult(googleSearchUrl, apiKey1, apiKey2, searchInput)
+        cifraApi.getGoogleSearchResult(googleSearchUrl, apiKey1, searchEngineId, searchInput)
 
     companion object {
         const val spotifyBaseUrl = "https://api.spotify.com/"

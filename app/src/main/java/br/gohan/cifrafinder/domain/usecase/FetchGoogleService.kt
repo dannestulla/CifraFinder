@@ -13,7 +13,7 @@ class FetchGoogleService(
     suspend fun invoke(searchQuery: String): String? {
         val result = repository.getGoogleSearchResult(
             CifraConstants.googleApiKey1,
-            CifraConstants.googleApiKey2,
+            CifraConstants.searchEngineId,
             filterSearch(searchQuery)
         )
         return handleResult(result)
