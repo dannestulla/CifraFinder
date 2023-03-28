@@ -15,8 +15,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.screens.*
-import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.components.*
+import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

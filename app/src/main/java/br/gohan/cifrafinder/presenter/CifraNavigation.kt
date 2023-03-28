@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import br.gohan.cifrafinder.presenter.screens.FirstStepScreen
-import br.gohan.cifrafinder.presenter.screens.SecondStepScreen
-import br.gohan.cifrafinder.presenter.screens.ThirdStepScreen
-import br.gohan.cifrafinder.presenter.screens.WebScreen
+import br.gohan.cifrafinder.presenter.components.FirstStepScreen
+import br.gohan.cifrafinder.presenter.components.SecondStepScreen
+import br.gohan.cifrafinder.presenter.components.ThirdStepScreen
+import br.gohan.cifrafinder.presenter.components.WebScreen
 
 @Composable
 fun NavHostCifra(navController: NavHostController, viewModel: CifraViewModel) {

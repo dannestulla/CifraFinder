@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens
+package br.gohan.cifrafinder.presenter.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.CifraViewModel
 import br.gohan.cifrafinder.presenter.NavigationActions
-import br.gohan.cifrafinder.presenter.screens.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

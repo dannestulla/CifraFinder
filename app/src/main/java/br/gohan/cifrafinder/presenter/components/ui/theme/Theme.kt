@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens.ui.theme
+package br.gohan.cifrafinder.presenter.components.ui.theme
 
 import android.app.Activity
 import android.os.Build

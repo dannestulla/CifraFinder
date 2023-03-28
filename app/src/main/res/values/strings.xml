@@ -1,11 +1,11 @@
 <resources>
-    <string name="first_step_title">Primeiro logue na sua conta do Spotify</string>
+    <string name="first_step_title">Logue na sua conta do Spotify</string>
     <string name="first_step_description">Assim saberemos qual música está sendo tocada para buscarmos a tablatura</string>
     <string name="first_step_button">Fazer login no Spotify</string>
 
     <string name="second_step_description">Logando…</string>
 
-    <string name="third_step_title">Comece a tocar uma música no Spotify para buscar sua tablatura</string>
+    <string name="third_step_title">Toque uma música no Spotify para buscar sua tablatura</string>
     <string name="third_step_button">Logado no Spotify</string>
     <string name="third_step_button_search_music">Buscar música!</string>
     <string name="third_step_button_search_tablature">Mostrar tablatura!</string>
@@ -20,7 +20,7 @@
     <string name="log_off_yes">Sim</string>
     <string name="log_off_no">Não</string>
 
-    <string name="description_icon_check" translatable="false">Icon check</string>
+    <string name="description_icon_check" translatable="false">Log off spotify</string>
 
     <string name="toast_no_song_being_played">Nenhuma música sendo tocada no momento</string>
     <string name="fetching_query">Buscando o link da tablatura</string>

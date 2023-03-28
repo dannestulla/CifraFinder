@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens
+package br.gohan.cifrafinder.presenter.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -8,7 +8,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.NavigationActions
 
 @Composable
 fun DialogLogoff(
