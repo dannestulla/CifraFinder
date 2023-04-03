@@ -17,7 +17,7 @@ import br.gohan.cifrafinder.R
 @Composable
 fun CifraFAB(type: FABType, callback: () -> Unit) {
     val icon = when (type) {
-        FABType.LOGOFF -> Icons.Rounded.ExitToApp
+        FABType.LOG_OFF -> Icons.Rounded.ExitToApp
         FABType.REFRESH -> Icons.Rounded.Refresh
     }
     FloatingActionButton(
@@ -35,6 +35,6 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
 }
 
 enum class FABType {
-    LOGOFF,
+    LOG_OFF,
     REFRESH
 }

@@ -11,34 +11,34 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
 import retrofit2.Response
 
-class FetchGoogleServiceTest() {
+class GoogleServiceTest() {
     private lateinit var repository: CifraRepository
-    private lateinit var fetchGoogleService: FetchGoogleService
+    private lateinit var googleService: GoogleService
 
     @Before
     fun setup() {
         repository = mockk()
-        fetchGoogleService = FetchGoogleService(repository)
+        googleService = GoogleService(repository)
     }
 
     @Test
     fun `WHEN invoke is called THEN return link`() = runBlocking {
         coEvery { repository.getGoogleSearchResult(any(), any(), any()) } returns Response.success(googleJsonMock)
-        val result = fetchGoogleService.invoke("search")
+        val result = googleService.invoke("search")
         val expected = "link"
         assertEquals(expected, result)
     }
 
     @Test
     fun `WHEN filterSearch is called THEN remove unwanted characters from string`() {
-        val result = fetchGoogleService.filterSearch("Zezé de Camargo e Luciano - Ao vivo - música")
+        val result = googleService.filterSearch("Zezé de Camargo e Luciano - Ao vivo - música")
         val expected = "Zezé de Camargo e Luciano  música"
         assertEquals(expected, result)
     }
 
     @Test
     fun `WHEN handleResult is called and response is successfull THEN return link`() {
-        val result = fetchGoogleService.handleResult(Response.success(googleJsonMock))
+        val result = googleService.handleResult(Response.success(googleJsonMock))
         val expected = "link"
         assertEquals(result, expected)
     }

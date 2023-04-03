@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
 
 @Composable
-fun DialogLogoff(
+fun LogoutDialog(
     isDialogOn: MutableState<Boolean>,
     dialogCallback: () -> Unit
 ) {

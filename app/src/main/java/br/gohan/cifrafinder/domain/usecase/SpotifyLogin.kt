@@ -1,13 +1,15 @@
-package br.gohan.cifrafinder.presenter
+package br.gohan.cifrafinder.domain.usecase
 
 import android.content.Intent
 import br.gohan.cifrafinder.CifraConstants
+import br.gohan.cifrafinder.presenter.MainActivity
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 
-class SpotifyLoginHelper(
-    private val mainActivity: MainActivity?) {
+class SpotifyLogin(
+    private val mainActivity: MainActivity?
+) {
     private val USER_CURRENTLY_READ_PLAYING = "user-read-currently-playing"
 
     fun logInSpotify() {

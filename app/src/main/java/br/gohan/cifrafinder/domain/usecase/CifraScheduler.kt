@@ -1,37 +1,31 @@
 package br.gohan.cifrafinder.domain.usecase
 
 import android.content.Context
-import androidx.work.Worker
-import androidx.work.WorkerParameters
-import br.gohan.cifrafinder.domain.model.CurrentSongModel
+import androidx.work.*
+import br.gohan.cifrafinder.domain.model.SongData
+import org.koin.core.component.KoinComponent
+import java.util.concurrent.TimeUnit
 
 class CifraScheduler(appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
-    override fun doWork(): Result {
+    CoroutineWorker(appContext, workerParams), KoinComponent {
+    override suspend fun doWork(): Result {
         return Result.success()
     }
-    /*
-    private fun setSongRefreshCycle(args: CurrentSongModel) {
-        val workId = createRefreshSchedule(getRemainingTime(args.durationMs, args.progressMs))
-        setObservers(workId)
-    }
+}
 
-    private fun getRemainingTime(durationMs: Long, progressMs: Long): Long =
-        (durationMs - progressMs) + 5000L
+fun setAutoRefresh(songData: SongData, workManager: WorkManager, refresh: () -> Unit) {
+    val refreshTime =  (songData.durationMs - songData.progressMs) + 5000L
+    val wakeUpSchedule = OneTimeWorkRequestBuilder<CifraScheduler>()
+        .setInitialDelay(refreshTime, TimeUnit.MILLISECONDS)
+        .build()
 
-    private fun setObservers(workId: UUID) {
-        workManager.getWorkInfoByIdLiveData(workId).observe(viewLifecycleOwner) {
-            if (it.state.isFinished) {
-                viewModel.getCurrentlyPlaying()
-            }
+    workManager.enqueue(wakeUpSchedule)
+
+    val workId = wakeUpSchedule.id
+
+    workManager.getWorkInfoByIdLiveData(workId).observeForever {
+        if (it.state.isFinished) {
+            refresh.invoke()
         }
     }
-
-    private fun createRefreshSchedule(refreshTime: Long): UUID {
-        val wakeUpSchedule = OneTimeWorkRequestBuilder<CifraScheduler>()
-            .setInitialDelay(refreshTime, TimeUnit.MILLISECONDS)
-            .build()
-        workManager.enqueue(wakeUpSchedule)
-        return wakeUpSchedule.id
-    }*/
 }

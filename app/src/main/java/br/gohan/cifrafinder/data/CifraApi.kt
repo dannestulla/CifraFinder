@@ -9,7 +9,6 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface CifraApi {
-
     @GET
     suspend fun getCurrentlyPlaying(
         @Url url: String,

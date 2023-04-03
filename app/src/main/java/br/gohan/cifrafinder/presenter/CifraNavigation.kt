@@ -1,51 +1,62 @@
 package br.gohan.cifrafinder.presenter
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import br.gohan.cifrafinder.presenter.components.FirstStepScreen
-import br.gohan.cifrafinder.presenter.components.SecondStepScreen
-import br.gohan.cifrafinder.presenter.components.ThirdStepScreen
-import br.gohan.cifrafinder.presenter.components.WebScreen
+import br.gohan.cifrafinder.presenter.screens.*
 
 @Composable
-fun NavHostCifra(navController: NavHostController, viewModel: CifraViewModel) {
+fun NavHostCifra(
+    viewModel: CifraViewModel,
+    navController: NavHostController,
+    snackbarHost: SnackbarHostState,
+    action: (CifraEvents) -> Unit
+) {
     NavHost(
         navController = navController,
-        startDestination = FIRST_STEP
+        startDestination = FIRST_SCREEN
     ) {
-        composable(route = FIRST_STEP) {
-            FirstStepScreen(viewModel)
+        composable(route = FIRST_SCREEN) {
+            FirstScreen(action)
         }
-        composable(route = SECOND_STEP) {
-            SecondStepScreen(viewModel)
+        composable(route = SECOND_SCREEN) {
+            SecondScreen(action, snackbarHost)
         }
-        composable(route = THIRD_STEP) {
-            ThirdStepScreen(viewModel)
+        composable(route = THIRD_SCREEN) {
+            val thirdScreenState = viewModel.screenState.collectAsStateWithLifecycle().value
+            ThirdScreen(thirdScreenState, action, snackbarHost)
         }
-        composable(route = LAST_STEP) {
-            WebScreen(viewModel, navController)
+        composable(route = LAST_SCREEN) {
+            BackHandler {
+                navController.navigate(THIRD_SCREEN)
+            }
+            val webScreenState = viewModel.screenState.collectAsStateWithLifecycle().value
+            WebScreen(webScreenState, action, snackbarHost)
+        }
+
+        composable(route = SETTINGS) {
+            SettingsScreen(action)
         }
     }
 }
 
-sealed class NavigationActions {
+sealed class CifraEvents {
 
-    // Asks for user to log in Spotify
-    object FirstStep : NavigationActions()
-
-    // Shows loading screen and opens Spotify Log in
-    object SecondStep : NavigationActions()
-
-    // Asks for user to play a song and shows get playing song button
-    object ThirdStep : NavigationActions()
-
-    // Open Webview with the tablature
-    object LastStep : NavigationActions()
+    object FirstScreen : CifraEvents()
+    object SecondScreen : CifraEvents()
+    object ThirdScreen : CifraEvents()
+    object WebScreen : CifraEvents()
+    object LogOff : CifraEvents()
+    object StartMusicFetch : CifraEvents()
+    object Settings: CifraEvents()
 }
 
-const val FIRST_STEP = "firstStep"
-const val SECOND_STEP = "secondStep"
-const val THIRD_STEP = "thirdStep"
-const val LAST_STEP = "lastStep"
+const val FIRST_SCREEN = "firstScreen"
+const val SECOND_SCREEN = "secondScreen"
+const val THIRD_SCREEN = "thirdScreen"
+const val LAST_SCREEN = "lastScreen"
+const val SETTINGS = "settings"

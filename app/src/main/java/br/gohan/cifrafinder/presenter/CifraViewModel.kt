@@ -2,71 +2,97 @@ package br.gohan.cifrafinder.presenter
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.*
 import androidx.work.WorkManager
+import br.gohan.cifrafinder.CifraConstants.CIFRADEBUG
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.domain.usecase.FetchGoogleService
-import br.gohan.cifrafinder.domain.usecase.FetchSpotifyService
+import br.gohan.cifrafinder.domain.model.DataState
+import br.gohan.cifrafinder.domain.model.ScreenState
+import br.gohan.cifrafinder.domain.usecase.GoogleService
+import br.gohan.cifrafinder.domain.usecase.SpotifyService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class CifraViewModel(
-    private val fetchSpotifyService: FetchSpotifyService,
-    private val fetchGoogleService: FetchGoogleService,
-    private val app: Application
+    private val spotifyService: SpotifyService,
+    private val googleService: GoogleService,
+    private val app: Application,
+    private val workManager: WorkManager
 ) : AndroidViewModel(app) {
 
-    private var _userDataState = MutableStateFlow(UserDataState())
-    var userDataState = _userDataState.asStateFlow()
+    private var _screenState = MutableStateFlow(ScreenState())
+    var screenState = _screenState.asStateFlow()
 
-    private var getCurrentPlayingJob : Job? = null
+    private var _dataState = MutableStateFlow(DataState())
 
-    lateinit var workManager: WorkManager
+    private var _events = MutableSharedFlow<CifraEvents>(replay = 1)
+    var events = _events.asSharedFlow()
 
-    fun getCurrentlyPlaying() {
-        if (getCurrentPlayingJob == null || getCurrentPlayingJob?.isActive == false) {
-            getCurrentPlayingJob = viewModelScope.launch {
-                val userDataState = _userDataState.value
-                val songData = async {
-                    fetchSpotifyService.invoke(userDataState.spotifyToken)
-                }
-                val songAndArtist = songData.await()?.songAndArtist
-                if (songAndArtist.isNullOrBlank()) {
-                    createToast(R.string.toast_no_song_being_played)
+    private var musicFetchJob: Job? = null
+
+    lateinit var snackbarHost: SnackbarHostState
+
+    lateinit var snackbarScope: CoroutineScope
+
+    private val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
+
+    fun startMusicFetch() {
+        if (shouldFetch) {
+            musicFetchJob = viewModelScope.launch {
+                val screenState = _screenState.value
+                val dataState = _dataState.value
+                val songData = spotifyService.getCurrentPlaying(dataState)
+
+                if (!spotifyService.isSongDataValid(songData, musicFetchJob)) {
+                    showSnackbar(R.string.toast_no_song_being_played)
                     return@launch
-                }
-                createToast(R.string.searching_for, songAndArtist)
-                if (songAndArtist != _userDataState.value.currentSongName) {
-                    _userDataState.value = userDataState.copy(currentSongName = songAndArtist)
-                }
-                val query = async {
-                    fetchGoogleService.invoke(songAndArtist)
-                }
-                val queryResult = query.await()
-                if (queryResult != null) {
-                    _userDataState.value = userDataState.copy(searchUrl = queryResult)
-                    postAction(NavigationActions.LastStep)
                 } else {
-                    createToast(R.string.toast_google_search_error)
+                    updateState(dataState.copy(songData = songData))
+                }
+
+                val tablatureLink = songData?.let { googleService.getTablatureLink(it.songName) }
+
+                if (tablatureLink != null) {
+                    Log.d(CIFRADEBUG, "viewModel chegou aqui")
+                    showSnackbar(
+                        R.string.searching_for,
+                        songData.songName
+                    )
+                    updateState(screenState.copy(
+                        searchUrl = tablatureLink,
+                        songName = songData.songName
+
+                    ))
+                    updateState(CifraEvents.WebScreen)
+                } else {
+                    showSnackbar(R.string.toast_google_search_error)
                 }
             }
         }
     }
 
-    fun postAction(action: NavigationActions) {
-        _userDataState.value = _userDataState.value.copy(navigationActions = action)
+    fun <T> updateState(state: T) {
+        viewModelScope.launch {
+            when (state) {
+                is DataState -> {
+                    _dataState.value = state
+                }
+                is ScreenState -> {
+                    _screenState.value = state
+                }
+                is CifraEvents -> {
+                    _events.emit(state)
+                }
+            }
+        }
     }
 
-    fun setSpotifyToken(accessToken: String) {
-        _userDataState.value = userDataState.value.copy(spotifyToken = accessToken)
-    }
-
-    fun createToast(id : Int, extension: String? = null) {
-            Toast.makeText(
-                app,
-                app.resources.getString(id, extension),
-                Toast.LENGTH_LONG
-            ).show()
+    fun showSnackbar(id: Int, extension: String? = null) {
+        snackbarScope.launch {
+            snackbarHost.showSnackbar(
+                app.resources.getString(id, extension)
+            )
+        }
     }
 }
