@@ -11,8 +11,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 private val LightColorScheme = lightColorScheme(
-    primary = Green,
-    secondary = Orange,
+    primary = Orange ,
+    secondary = Green,
     tertiary = Red,
 )
 
@@ -27,7 +27,7 @@ fun CifraFinderTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
+            (view.context as Activity).window.statusBarColor = colorScheme.secondary.toArgb()
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }

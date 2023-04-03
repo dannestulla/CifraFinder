@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.Green
 import br.gohan.cifrafinder.presenter.ui.theme.Orange
 
 @Composable
@@ -25,8 +26,7 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
         }
     CifraFinderTheme {
         FloatingActionButton(
-
-            containerColor = Orange,
+            containerColor = Green,
             modifier = Modifier.padding(bottom = 20.dp, end = 20.dp).size(70.dp),
             shape = RoundedCornerShape(20.dp),
             onClick = {
