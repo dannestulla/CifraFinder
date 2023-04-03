@@ -23,7 +23,6 @@ fun WebScreen(
     event: (Events) -> Unit,
     snackbarHost: SnackbarHostState,
 ) {
-    Log.d(CifraConstants.CIFRADEBUG, "webview chegou aqui")
     event(Events.ShowSnackbar(
         R.string.searching_for,
         screenState.songName

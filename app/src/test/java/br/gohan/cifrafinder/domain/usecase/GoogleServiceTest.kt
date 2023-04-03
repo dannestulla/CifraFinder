@@ -38,7 +38,7 @@ class GoogleServiceTest() {
 
     @Test
     fun `WHEN handleResult is called and response is successfull THEN return link`() {
-        val result = googleService.handleResult(Response.success(googleJsonMock))
+        val result = googleService.handleResponse(Response.success(googleJsonMock))
         val expected = "link"
         assertEquals(result, expected)
     }

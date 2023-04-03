@@ -12,7 +12,7 @@ class SpotifyLogin(
 ) {
     private val USER_CURRENTLY_READ_PLAYING = "user-read-currently-playing"
 
-    fun logInSpotify() {
+    fun logIn() {
         val request = AuthorizationRequest.Builder(
             CifraConstants.spotifyClientId,
             AuthorizationResponse.Type.TOKEN,
@@ -40,5 +40,10 @@ class SpotifyLogin(
                 }
             }
         }
+    }
+
+    fun logOff() {
+        AuthorizationClient.stopLoginActivity(mainActivity, CifraConstants.REQUEST_CODE)
+        AuthorizationClient.clearCookies(mainActivity)
     }
 }

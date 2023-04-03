@@ -51,8 +51,9 @@ class MainActivity : ComponentActivity(), KoinComponent {
                     update(Events.ThirdScreen)
                     userIsLogged = true
                 } else {
-                    update(Events.FirstScreen)
+                    userIsLogged = false
                     update(SnackBarMessage(R.string.toast_login_error))
+                    update(Events.FirstScreen)
                 }
             }
         }
@@ -76,6 +77,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
                             navController.navigate(LAST_SCREEN)
                         }
                         is Events.LogOff -> {
+                            spotifyLogin.logOff()
                             userIsLogged = false
                             navController.navigate(FIRST_SCREEN)
                         }
@@ -89,7 +91,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
                             showSnackbar(it.id, it.extension)
                         }
                         is Events.SpotifyLogin -> {
-                            spotifyLogin.logInSpotify()
+                            spotifyLogin.logIn()
                         }
                     }
                 }

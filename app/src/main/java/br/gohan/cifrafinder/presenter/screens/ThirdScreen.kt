@@ -28,7 +28,6 @@ fun ThirdScreen(
     snackbarHost: SnackbarHostState
 ) {
     val openDialog = remember { mutableStateOf(false) }
-    Log.d(CifraConstants.CIFRADEBUG, "thirdScreen chegou aqui")
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost)},
         content = { padding ->
@@ -67,7 +66,7 @@ fun ThirdScreen(
                 }
                 if (openDialog.value) {
                     LogoutDialog(openDialog) {
-                        event.invoke(Events.FirstScreen)
+                        event.invoke(Events.LogOff)
                     }
                 }
             }

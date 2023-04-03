@@ -25,7 +25,6 @@ fun SecondScreen(
     snackbarHost: SnackbarHostState,
     event: (Events) -> Unit
 ) {
-    Log.d(CifraConstants.CIFRADEBUG, "secondScreen chegou aqui")
     event.invoke(Events.SpotifyLogin)
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost)},

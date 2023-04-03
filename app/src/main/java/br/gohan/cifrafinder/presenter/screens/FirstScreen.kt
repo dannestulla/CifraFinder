@@ -19,10 +19,11 @@ import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstScreen(
+    snackbarHost: SnackbarHostState,
     action: (Events) -> Unit
 ) {
-    Log.d(CifraConstants.CIFRADEBUG, "firstScreen chegou aqui")
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
         content = { padding ->
             Column(
                 modifier = Modifier.fillMaxSize(),

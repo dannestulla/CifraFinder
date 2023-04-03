@@ -22,7 +22,7 @@ fun NavHostCifra(
         startDestination = if (userIsLoggedIn) SECOND_SCREEN else FIRST_SCREEN
     ) {
         composable(route = FIRST_SCREEN) {
-            FirstScreen(action)
+            FirstScreen(snackbarHost, action)
         }
         composable(route = SECOND_SCREEN) {
             SecondScreen(snackbarHost ,action)
