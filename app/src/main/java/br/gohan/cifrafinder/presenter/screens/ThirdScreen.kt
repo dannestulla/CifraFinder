@@ -24,8 +24,8 @@ import br.gohan.cifrafinder.presenter.model.ScreenState
 @Composable
 fun ThirdScreen(
     screenState: ScreenState,
-    event: (Events) -> Unit,
-    snackbarHost: SnackbarHostState
+    snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
+    event: (Events) -> Unit
 ) {
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
@@ -87,6 +87,7 @@ fun ThirdStepPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+            ThirdScreen(ScreenState("A lua - Xitãozinho e Chororó")) {}
         }
     }
 }

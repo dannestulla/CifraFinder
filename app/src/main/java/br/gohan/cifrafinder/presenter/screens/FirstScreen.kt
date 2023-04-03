@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,7 +20,7 @@ import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstScreen(
-    snackbarHost: SnackbarHostState,
+    snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
     action: (Events) -> Unit
 ) {
     Scaffold(
@@ -68,6 +69,9 @@ fun FirstStepScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
+            FirstScreen() {
+                
+            }
         }
     }
 }

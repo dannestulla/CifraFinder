@@ -25,9 +25,10 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
         }
     CifraFinderTheme {
         FloatingActionButton(
+
             containerColor = Orange,
-            modifier = Modifier.padding(bottom = 20.dp, end = 20.dp),
-            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.padding(bottom = 20.dp, end = 20.dp).size(70.dp),
+            shape = RoundedCornerShape(20.dp),
             onClick = {
 
                 callback.invoke()
@@ -35,7 +36,7 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
             Icon(
                 icon,
                 contentDescription = stringResource(id = R.string.description_icon_check),
-                modifier = Modifier.size(30.dp)
+                modifier = Modifier.size(40.dp)
             )
         }
     }
