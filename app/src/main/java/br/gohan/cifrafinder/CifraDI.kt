@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val myModule = module {
 
         viewModel {
-            CifraViewModel(get(), get(),get(), get())
+            CifraViewModel(get(), get())
         }
 
         factory {

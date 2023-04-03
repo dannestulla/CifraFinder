@@ -12,19 +12,20 @@ import br.gohan.cifrafinder.presenter.screens.*
 @Composable
 fun NavHostCifra(
     viewModel: CifraViewModel,
+    userIsLoggedIn: Boolean,
     navController: NavHostController,
     snackbarHost: SnackbarHostState,
-    action: (CifraEvents) -> Unit
+    action: (Events) -> Unit
 ) {
     NavHost(
         navController = navController,
-        startDestination = FIRST_SCREEN
+        startDestination = if (userIsLoggedIn) SECOND_SCREEN else FIRST_SCREEN
     ) {
         composable(route = FIRST_SCREEN) {
             FirstScreen(action)
         }
         composable(route = SECOND_SCREEN) {
-            SecondScreen(action, snackbarHost)
+            SecondScreen(snackbarHost ,action)
         }
         composable(route = THIRD_SCREEN) {
             val thirdScreenState = viewModel.screenState.collectAsStateWithLifecycle().value
@@ -44,15 +45,16 @@ fun NavHostCifra(
     }
 }
 
-sealed class CifraEvents {
-
-    object FirstScreen : CifraEvents()
-    object SecondScreen : CifraEvents()
-    object ThirdScreen : CifraEvents()
-    object WebScreen : CifraEvents()
-    object LogOff : CifraEvents()
-    object StartMusicFetch : CifraEvents()
-    object Settings: CifraEvents()
+sealed class Events {
+    object FirstScreen : Events()
+    object SecondScreen : Events()
+    object ThirdScreen : Events()
+    object WebScreen : Events()
+    object LogOff : Events()
+    object MusicFetch : Events()
+    object Settings : Events()
+    object SpotifyLogin : Events()
+    data class ShowSnackbar(val id: Int, val extension: String? = null) : Events()
 }
 
 const val FIRST_SCREEN = "firstScreen"

@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.domain.usecase
+package br.gohan.cifrafinder.presenter.helpers
 
 import android.content.Intent
 import br.gohan.cifrafinder.CifraConstants

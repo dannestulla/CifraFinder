@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.gohan.cifrafinder.presenter.CifraEvents
+import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.LogoutDialog
 
 /**
@@ -22,14 +22,14 @@ import br.gohan.cifrafinder.presenter.components.LogoutDialog
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    event: (CifraEvents) -> Unit
+    event: (Events) -> Unit
 ) {
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = { event.invoke(CifraEvents.ThirdScreen) }) {
+                    IconButton(onClick = { event.invoke(Events.ThirdScreen) }) {
                         Icon(imageVector = Icons.Filled.ArrowBack, "back button")
                     }
                 },
@@ -62,7 +62,7 @@ fun SettingsScreen(
         })
     if (openDialog.value) {
         LogoutDialog(openDialog) {
-            event.invoke(CifraEvents.LogOff)
+            event.invoke(Events.LogOff)
         }
     }
 }

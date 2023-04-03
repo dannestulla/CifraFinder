@@ -13,18 +13,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.domain.model.ScreenState
-import br.gohan.cifrafinder.presenter.CifraEvents
+import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
 import br.gohan.cifrafinder.presenter.components.LogoutDialog
 import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.model.ScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThirdScreen(
     screenState: ScreenState,
-    event: (CifraEvents) -> Unit,
+    event: (Events) -> Unit,
     snackbarHost: SnackbarHostState
 ) {
     val openDialog = remember { mutableStateOf(false) }
@@ -57,7 +57,7 @@ fun ThirdScreen(
                     ElevatedButton(
                         colors = ButtonDefaults.buttonColors(),
                         onClick = {
-                            event.invoke(CifraEvents.StartMusicFetch)
+                            event.invoke(Events.MusicFetch)
                         }) {
                         Text(
                             stringResource(id = R.string.third_step_button_search_music),
@@ -67,7 +67,7 @@ fun ThirdScreen(
                 }
                 if (openDialog.value) {
                     LogoutDialog(openDialog) {
-                        event.invoke(CifraEvents.FirstScreen)
+                        event.invoke(Events.FirstScreen)
                     }
                 }
             }

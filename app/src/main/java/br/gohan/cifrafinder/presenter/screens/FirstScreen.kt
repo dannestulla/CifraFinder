@@ -13,16 +13,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.CifraEvents
+import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstScreen(
-    action: (CifraEvents) -> Unit
+    action: (Events) -> Unit
 ) {
     Log.d(CifraConstants.CIFRADEBUG, "firstScreen chegou aqui")
-
     Scaffold(
         content = { padding ->
             Column(
@@ -48,7 +47,7 @@ fun FirstScreen(
                 ElevatedButton(
                     colors = ButtonDefaults.buttonColors(),
                     onClick = {
-                        action.invoke(CifraEvents.SecondScreen)
+                        action.invoke(Events.SecondScreen)
                     }) {
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                     Text(

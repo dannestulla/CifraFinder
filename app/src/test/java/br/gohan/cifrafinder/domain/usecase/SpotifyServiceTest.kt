@@ -41,7 +41,7 @@ class SpotifyServiceTest {
 
     @Test
     fun `WHEN setCurrentSongData is called THEN return currentSongModel`() {
-        val result = spotifyService.setCurrentSongData(" artist songName ", spotifyJsonMock)
+        val result = spotifyService.createModel(spotifyJsonMock)
         val expected = songDataMock
         assertEquals(expected, result)
     }

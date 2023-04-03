@@ -10,25 +10,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import br.gohan.cifrafinder.CifraConstants
-import br.gohan.cifrafinder.domain.model.ScreenState
-import br.gohan.cifrafinder.presenter.CifraEvents
+import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
+import br.gohan.cifrafinder.presenter.model.ScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WebScreen(
     screenState: ScreenState,
-    event: (CifraEvents) -> Unit,
+    event: (Events) -> Unit,
     snackbarHost: SnackbarHostState,
 ) {
     Log.d(CifraConstants.CIFRADEBUG, "webview chegou aqui")
-
+    event(Events.ShowSnackbar(
+        R.string.searching_for,
+        screenState.songName
+    ))
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost)},
         floatingActionButton = {
             CifraFAB(type = FABType.REFRESH) {
-                event.invoke(CifraEvents.StartMusicFetch)
+                event.invoke(Events.MusicFetch)
             }
         }, content = { padding ->
             Surface(

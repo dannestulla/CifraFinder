@@ -1,39 +1,32 @@
 package br.gohan.cifrafinder.presenter
 
-import android.app.Application
 import android.util.Log
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.*
-import androidx.work.WorkManager
 import br.gohan.cifrafinder.CifraConstants.CIFRADEBUG
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.model.DataState
-import br.gohan.cifrafinder.domain.model.ScreenState
 import br.gohan.cifrafinder.domain.usecase.GoogleService
 import br.gohan.cifrafinder.domain.usecase.SpotifyService
+import br.gohan.cifrafinder.presenter.model.ScreenState
+import br.gohan.cifrafinder.presenter.model.SnackBarMessage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class CifraViewModel(
     private val spotifyService: SpotifyService,
     private val googleService: GoogleService,
-    private val app: Application,
-    private val workManager: WorkManager
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private var _screenState = MutableStateFlow(ScreenState())
     var screenState = _screenState.asStateFlow()
 
     private var _dataState = MutableStateFlow(DataState())
+    var dataState = _dataState.asStateFlow()
 
-    private var _events = MutableSharedFlow<CifraEvents>(replay = 1)
+    private var _events = MutableSharedFlow<Events>(extraBufferCapacity = 1)
     var events = _events.asSharedFlow()
 
     private var musicFetchJob: Job? = null
-
-    lateinit var snackbarHost: SnackbarHostState
-
-    lateinit var snackbarScope: CoroutineScope
 
     private val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
 
@@ -42,37 +35,52 @@ class CifraViewModel(
             musicFetchJob = viewModelScope.launch {
                 val screenState = _screenState.value
                 val dataState = _dataState.value
-                val songData = spotifyService.getCurrentPlaying(dataState)
+                val songData = getCurrentPlaying(dataState)
 
-                if (!spotifyService.isSongDataValid(songData, musicFetchJob)) {
-                    showSnackbar(R.string.toast_no_song_being_played)
+                if (songData == null) {
+                    update(Events.ShowSnackbar(R.string.toast_no_song_being_played))
                     return@launch
-                } else {
-                    updateState(dataState.copy(songData = songData))
                 }
+                if (songData.songName == screenState.songName) {
+                    update(Events.WebScreen)
+                    return@launch
+                }
+                update(dataState.copy(songData = songData))
 
-                val tablatureLink = songData?.let { googleService.getTablatureLink(it.songName) }
+                val tablatureLink = getTablatureLink(songData.songName)
 
                 if (tablatureLink != null) {
-                    Log.d(CIFRADEBUG, "viewModel chegou aqui")
-                    showSnackbar(
-                        R.string.searching_for,
-                        songData.songName
-                    )
-                    updateState(screenState.copy(
-                        searchUrl = tablatureLink,
-                        songName = songData.songName
+                    update(
+                        screenState.copy(
+                            searchUrl = tablatureLink,
+                            songName = songData.songName
 
-                    ))
-                    updateState(CifraEvents.WebScreen)
+                        )
+                    )
+                    update(Events.WebScreen)
                 } else {
-                    showSnackbar(R.string.toast_google_search_error)
+                    update(SnackBarMessage(R.string.toast_google_search_error))
                 }
             }
         }
     }
 
-    fun <T> updateState(state: T) {
+    private suspend fun getCurrentPlaying(dataState: DataState) = withContext(Dispatchers.Default) {
+        val songData = async {
+            spotifyService.invoke(dataState.spotifyToken)
+        }
+        return@withContext songData
+    }.await()
+
+    private suspend fun getTablatureLink(songName: String) = withContext(Dispatchers.Default) {
+        val query = async {
+            googleService.invoke(songName)
+        }
+        return@withContext query
+    }.await()
+
+
+    fun <T> update(state: T) {
         viewModelScope.launch {
             when (state) {
                 is DataState -> {
@@ -81,18 +89,10 @@ class CifraViewModel(
                 is ScreenState -> {
                     _screenState.value = state
                 }
-                is CifraEvents -> {
+                is Events -> {
                     _events.emit(state)
                 }
             }
-        }
-    }
-
-    fun showSnackbar(id: Int, extension: String? = null) {
-        snackbarScope.launch {
-            snackbarHost.showSnackbar(
-                app.resources.getString(id, extension)
-            )
         }
     }
 }

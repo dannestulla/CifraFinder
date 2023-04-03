@@ -24,6 +24,7 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
         modifier = Modifier.padding(bottom = 20.dp, end = 20.dp),
         shape = RoundedCornerShape(16.dp),
         onClick = {
+
             callback.invoke()
         }) {
         Icon(

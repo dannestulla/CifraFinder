@@ -16,17 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.CifraEvents
+import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SecondScreen(
-    event: (CifraEvents) -> Unit,
-    snackbarHost: SnackbarHostState
+    snackbarHost: SnackbarHostState,
+    event: (Events) -> Unit
 ) {
     Log.d(CifraConstants.CIFRADEBUG, "secondScreen chegou aqui")
-
+    event.invoke(Events.SpotifyLogin)
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost)},
         content = { padding ->

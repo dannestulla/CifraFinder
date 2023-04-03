@@ -1,7 +1,5 @@
 package br.gohan.cifrafinder
 
-import br.gohan.cifrafinder.domain.model.ScreenState
-
 object CifraConstants {
 
     const val spotifyClientId = "b2e7d8972f6e4d70af76b860de39cdcc"
@@ -14,7 +12,4 @@ object CifraConstants {
 
     const val CIFRADEBUG = "cifradebug"
 
-    val screenStateMock = ScreenState(
-            songName = "Zezé di Camargo",
-    )
 }
