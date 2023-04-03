@@ -1,43 +1,43 @@
 package br.gohan.cifrafinder.presenter
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import androidx.work.WorkManager
+import br.gohan.cifrafinder.CifraConstants.LOGGEDIN
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.components.*
-import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.helpers.SpotifyLogin
+import br.gohan.cifrafinder.presenter.model.SnackBarMessage
+import br.gohan.cifrafinder.presenter.screens.CifraAppCompose
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), KoinComponent {
     private val viewModel: CifraViewModel by viewModel()
-    private lateinit var spotifyLoginHelper: SpotifyLoginHelper
+    private lateinit var spotifyLogin: SpotifyLogin
+    private val sharedPreferences: SharedPreferences by inject()
+
+    private var userIsLogged: Boolean
+        get() = sharedPreferences.getBoolean(LOGGEDIN, false)
+        set(logged) = sharedPreferences.edit().putBoolean(LOGGEDIN, logged).apply()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        spotifyLoginHelper = SpotifyLoginHelper(this)
-        viewModel.workManager = WorkManager.getInstance(this)
+        actionBar?.hide()
+        spotifyLogin = SpotifyLogin(this)
         setContent {
-            CifraFinderTheme {
-                val navController = rememberNavController()
-                observeNavigationActions(navController)
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavHostCifra(navController, viewModel)
-                }
+            CifraAppCompose(viewModel, userIsLogged) {
+                observeEvents(it)
             }
         }
     }
@@ -45,42 +45,70 @@ class MainActivity : ComponentActivity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        spotifyLoginHelper.handleLoginResponse(requestCode, resultCode, intent) { accessToken ->
-            if (!accessToken.isNullOrEmpty()) {
-                viewModel.setSpotifyToken(accessToken)
-            } else {
-                viewModel.postAction(NavigationActions.FirstStep)
-                viewModel.createToast(R.string.toast_login_error)
+        spotifyLogin.handleLoginResponse(requestCode, resultCode, intent) { accessToken ->
+            with(viewModel) {
+                if (!accessToken.isNullOrEmpty()) {
+                    update(dataState.value.copy(spotifyToken = accessToken))
+                    update(Events.ThirdScreen)
+                    userIsLogged = true
+                } else {
+                    userIsLogged = false
+                    update(SnackBarMessage(R.string.toast_login_error))
+                    update(Events.FirstScreen)
+                }
             }
         }
     }
 
-    private fun observeNavigationActions(navController: NavHostController) {
+    private fun observeEvents(navController: NavHostController) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.userDataState.collect {
-                    when (it.navigationActions) {
-                        // Asks for user to log in Spotify
-                        is NavigationActions.FirstStep -> {
-                            navController.navigate(FIRST_STEP)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collectLatest {
+                    when (it) {
+                        is Events.FirstScreen -> {
+                            navController.navigate(FIRST_SCREEN)
                         }
-                        // Shows loading screen and opens Spotify Log in
-                        is NavigationActions.SecondStep -> {
-                            navController.navigate(SECOND_STEP)
-                            spotifyLoginHelper.logInSpotify()
+                        is Events.SecondScreen -> {
+                            navController.navigate(SECOND_SCREEN)
                         }
-                        // Asks for user to play a song and shows get playing song button
-                        is NavigationActions.ThirdStep -> {
-                            navController.navigate(THIRD_STEP)
+                        is Events.ThirdScreen -> {
+                            navController.navigate(THIRD_SCREEN)
                         }
-                        // Open Webview with the tablature
-                        is NavigationActions.LastStep -> {
-                            navController.navigate(LAST_STEP)
+                        is Events.WebScreen -> {
+                            navController.navigate(LAST_SCREEN)
                         }
-                        else -> {}
+                        is Events.LogOff -> {
+                            spotifyLogin.logOff()
+                            userIsLogged = false
+                            navController.navigate(FIRST_SCREEN)
+                        }
+                        is Events.MusicFetch -> {
+                            viewModel.startMusicFetch()
+                        }
+                        is Events.Settings -> {
+                            navController.navigate(SETTINGS)
+                        }
+                        is Events.ShowSnackbar -> {
+                            showSnackbar(it.id, it.extension)
+                        }
+                        is Events.SpotifyLogin -> {
+                            spotifyLogin.logIn()
+                        }
                     }
                 }
             }
         }
     }
+
+    @OptIn(FlowPreview::class)
+    private suspend fun showSnackbar(id: Int, extension: String?) {
+        viewModel.dataState.debounce(1000).collectLatest { snackBar ->
+            snackBar.snackBarScope?.launch {
+                snackBar.snackBarHost?.showSnackbar(
+                    getString(id, extension)
+                )
+            }
+        }
+    }
 }
+
