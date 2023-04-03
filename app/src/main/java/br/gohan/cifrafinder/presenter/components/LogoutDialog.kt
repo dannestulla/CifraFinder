@@ -8,12 +8,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 
 @Composable
 fun LogoutDialog(
     isDialogOn: MutableState<Boolean>,
     dialogCallback: () -> Unit
 ) {
+    CifraFinderTheme {
     AlertDialog(onDismissRequest = { isDialogOn.value = false },
         text = {
             Text(
@@ -36,5 +38,5 @@ fun LogoutDialog(
                 }) {
                 Text(text = stringResource(id = R.string.log_off_no))
             }
-        })
+        })}
 }

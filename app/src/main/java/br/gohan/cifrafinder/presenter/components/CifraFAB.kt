@@ -10,28 +10,34 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.Orange
 
 @Composable
 fun CifraFAB(type: FABType, callback: () -> Unit) {
-    val icon = when (type) {
-        FABType.LOG_OFF -> Icons.Rounded.ExitToApp
-        FABType.REFRESH -> Icons.Rounded.Refresh
-    }
-    FloatingActionButton(
-        modifier = Modifier.padding(bottom = 20.dp, end = 20.dp),
-        shape = RoundedCornerShape(16.dp),
-        onClick = {
+        val icon = when (type) {
+            FABType.LOG_OFF -> Icons.Rounded.ExitToApp
+            FABType.REFRESH -> Icons.Rounded.Refresh
+        }
+    CifraFinderTheme {
+        FloatingActionButton(
+            containerColor = Orange,
+            modifier = Modifier.padding(bottom = 20.dp, end = 20.dp),
+            shape = RoundedCornerShape(16.dp),
+            onClick = {
 
-            callback.invoke()
-        }) {
-        Icon(
-            icon,
-            contentDescription = stringResource(id = R.string.description_icon_check),
-            modifier = Modifier.size(30.dp)
-        )
+                callback.invoke()
+            }) {
+            Icon(
+                icon,
+                contentDescription = stringResource(id = R.string.description_icon_check),
+                modifier = Modifier.size(30.dp)
+            )
+        }
     }
 }
 

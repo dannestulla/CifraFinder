@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        actionBar?.hide()
         spotifyLogin = SpotifyLogin(this)
         setContent {
             CifraAppCompose(viewModel, userIsLogged) {

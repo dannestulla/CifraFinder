@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:exported="true"
-        android:theme="@style/Theme.CifraFinder"
         tools:targetApi="m">
         <activity android:name="br.gohan.cifrafinder.presenter.MainActivity"
             android:exported="true">

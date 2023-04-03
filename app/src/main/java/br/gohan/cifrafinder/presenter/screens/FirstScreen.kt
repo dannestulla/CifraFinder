@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
-import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

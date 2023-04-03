@@ -43,7 +43,7 @@ class SpotifyService(
         val responseBody = body.item
         val artistName = responseBody.artists.first().name
         val songName = responseBody.name
-        return addSpaceAroundSearchString("$artistName $songName")
+        return addSpaceAroundSearchString("$songName - $artistName")
     }
 
     /**

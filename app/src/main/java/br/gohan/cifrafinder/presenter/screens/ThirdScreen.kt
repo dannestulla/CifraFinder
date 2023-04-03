@@ -17,7 +17,7 @@ import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
 import br.gohan.cifrafinder.presenter.components.LogoutDialog
-import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 import br.gohan.cifrafinder.presenter.model.ScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,6 +1,7 @@
 package br.gohan.cifrafinder.presenter.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -13,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import br.gohan.cifrafinder.domain.model.DataState
 import br.gohan.cifrafinder.presenter.CifraViewModel
 import br.gohan.cifrafinder.presenter.NavHostCifra
-import br.gohan.cifrafinder.presenter.components.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 
 @Composable
 fun CifraAppCompose(
@@ -31,7 +32,7 @@ fun CifraAppCompose(
             )
         )
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().fillMaxWidth(),
             color = MaterialTheme.colorScheme.background
         ) {
             NavHostCifra(
