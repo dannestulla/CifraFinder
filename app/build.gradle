@@ -5,9 +5,9 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
-def keystorePropertiesFile = rootProject.file("local.properties");
+/*def keystorePropertiesFile = rootProject.file("local.properties");
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))*/
 
 android {
     compileSdkVersion 33
