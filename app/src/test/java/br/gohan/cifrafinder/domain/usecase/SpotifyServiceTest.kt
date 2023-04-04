@@ -57,5 +57,5 @@ class SpotifyServiceTest {
 
     private val songDataMock = SongData(" artist songName ", 5, 3)
 
-    private val searchStringMock = " artist songName "
+    private val searchStringMock = " songName - artist "
 }
