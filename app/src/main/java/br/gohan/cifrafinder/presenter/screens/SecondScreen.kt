@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,10 +14,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,25 +26,25 @@ fun SecondScreen(
 ) {
     event.invoke(Events.SpotifyLogin)
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 60.dp,
-                alignment = Alignment.CenterVertically
-            ),
-        ) {
-            CircularProgressIndicator()
-            Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                text = stringResource(id = R.string.second_step_description)
-            )
-        }
-    },
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 60.dp,
+                    alignment = Alignment.CenterVertically
+                ),
+            ) {
+                CircularProgressIndicator()
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    text = stringResource(id = R.string.second_step_description)
+                )
+            }
+        },
     )
 }
 
@@ -58,7 +56,7 @@ fun SecondStepScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            SecondScreen() {}
+            SecondScreen {}
         }
     }
 }

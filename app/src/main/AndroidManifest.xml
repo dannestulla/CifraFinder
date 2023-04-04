@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:exported="true"
         tools:targetApi="m">
-        <activity android:name="br.gohan.cifrafinder.presenter.MainActivity"
+        <activity android:name="br.gohan.cifrafinder.presenter.CifraActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

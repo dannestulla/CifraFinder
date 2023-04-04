@@ -25,7 +25,7 @@ fun NavHostCifra(
             FirstScreen(snackbarHost, action)
         }
         composable(route = SECOND_SCREEN) {
-            SecondScreen(snackbarHost ,action)
+            SecondScreen(snackbarHost, action)
         }
         composable(route = THIRD_SCREEN) {
             val thirdScreenState = viewModel.screenState.collectAsStateWithLifecycle().value
@@ -43,18 +43,6 @@ fun NavHostCifra(
             SettingsScreen(action)
         }
     }
-}
-
-sealed class Events {
-    object FirstScreen : Events()
-    object SecondScreen : Events()
-    object ThirdScreen : Events()
-    object WebScreen : Events()
-    object LogOff : Events()
-    object MusicFetch : Events()
-    object Settings : Events()
-    object SpotifyLogin : Events()
-    data class ShowSnackbar(val id: Int, val extension: String? = null) : Events()
 }
 
 const val FIRST_SCREEN = "firstScreen"

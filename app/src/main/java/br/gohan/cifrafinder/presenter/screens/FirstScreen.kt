@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -12,10 +11,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +22,7 @@ fun FirstScreen(
     action: (Events) -> Unit
 ) {
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -69,8 +67,8 @@ fun FirstStepScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            FirstScreen() {
-                
+            FirstScreen {
+
             }
         }
     }

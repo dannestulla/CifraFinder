@@ -35,7 +35,7 @@ class SpotifyServiceTest {
     fun `WHEN invoke is successful THEN return currentSongModel`() = runBlocking {
         coEvery { repository.getCurrentlyPlaying("token") } returns Response.success(spotifyJsonMock)
         val result = spotifyService.invoke("token")
-        val expected =  SongData(searchStringMock, 5, 3)
+        val expected = SongData(" songName - artist ", 5, 3)
         assertEquals(expected, result)
     }
 
@@ -49,13 +49,12 @@ class SpotifyServiceTest {
     @Test
     fun `WHEN setSearchString is called THEN return searched artist and song`() {
         val result = spotifyService.setSearchString(spotifyJsonMock)
-        val expected = searchStringMock
+        val expected = " songName - artist "
         assertEquals(expected, result)
     }
 
     private val spotifyJsonMock = SpotifyJson(Item(listOf(ArtistX("artist")), "songName", 5), 3)
 
-    private val songDataMock = SongData(" artist songName ", 5, 3)
+    private val songDataMock = SongData(" songName - artist ", 5, 3)
 
-    private val searchStringMock = " artist songName "
 }

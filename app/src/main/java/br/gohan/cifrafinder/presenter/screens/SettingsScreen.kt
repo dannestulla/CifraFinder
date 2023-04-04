@@ -43,9 +43,11 @@ fun SettingsScreen(
                 ListItem(
                     headlineText = { Text("Busca automática") },
                     supportingText = { Text("Atualiza o navegador assim que uma nova música tocar") },
-                    trailingContent = { Checkbox(checked = false, onCheckedChange = {
+                    trailingContent = {
+                        Checkbox(checked = false, onCheckedChange = {
 
-                    }) }
+                        })
+                    }
                 )
                 ListItem(
                     headlineText = { Text("Login automático") },
@@ -70,5 +72,5 @@ fun SettingsScreen(
 @Preview
 @Composable
 fun previewSettingsScreen() {
-    SettingsScreen() {}
+    SettingsScreen {}
 }

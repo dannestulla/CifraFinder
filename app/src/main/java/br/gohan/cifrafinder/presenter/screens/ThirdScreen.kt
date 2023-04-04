@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -11,14 +10,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
 import br.gohan.cifrafinder.presenter.components.LogoutDialog
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 import br.gohan.cifrafinder.presenter.model.ScreenState
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +27,7 @@ fun ThirdScreen(
 ) {
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
             Column(
                 modifier = Modifier.fillMaxSize(),

@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.ui.theme
+package br.gohan.cifrafinder.presenter.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 private val LightColorScheme = lightColorScheme(
-    primary = Orange ,
+    primary = Orange,
     secondary = Green,
     tertiary = Red,
 )

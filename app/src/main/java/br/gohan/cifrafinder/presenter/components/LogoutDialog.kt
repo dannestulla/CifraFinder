@@ -8,7 +8,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
 @Composable
 fun LogoutDialog(
@@ -16,27 +16,28 @@ fun LogoutDialog(
     dialogCallback: () -> Unit
 ) {
     CifraFinderTheme {
-    AlertDialog(onDismissRequest = { isDialogOn.value = false },
-        text = {
-            Text(
-                text = stringResource(id = R.string.log_off_dialog_title),
-                fontSize = 18.sp
-            )
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    isDialogOn.value = false
-                    dialogCallback.invoke()
-                }) {
-                Text(text = stringResource(id = R.string.log_off_yes))
-            }
-        }, dismissButton = {
-            Button(
-                onClick = {
-                    isDialogOn.value = false
-                }) {
-                Text(text = stringResource(id = R.string.log_off_no))
-            }
-        })}
+        AlertDialog(onDismissRequest = { isDialogOn.value = false },
+            text = {
+                Text(
+                    text = stringResource(id = R.string.log_off_dialog_title),
+                    fontSize = 18.sp
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        isDialogOn.value = false
+                        dialogCallback.invoke()
+                    }) {
+                    Text(text = stringResource(id = R.string.log_off_yes))
+                }
+            }, dismissButton = {
+                Button(
+                    onClick = {
+                        isDialogOn.value = false
+                    }) {
+                    Text(text = stringResource(id = R.string.log_off_no))
+                }
+            })
+    }
 }
