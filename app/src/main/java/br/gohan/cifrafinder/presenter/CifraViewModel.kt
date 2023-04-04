@@ -1,8 +1,7 @@
 package br.gohan.cifrafinder.presenter
 
-import android.util.Log
-import androidx.lifecycle.*
-import br.gohan.cifrafinder.CifraConstants.CIFRADEBUG
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.model.DataState
 import br.gohan.cifrafinder.domain.usecase.GoogleService
@@ -10,7 +9,10 @@ import br.gohan.cifrafinder.domain.usecase.SpotifyService
 import br.gohan.cifrafinder.presenter.model.ScreenState
 import br.gohan.cifrafinder.presenter.model.SnackBarMessage
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CifraViewModel(
     private val spotifyService: SpotifyService,

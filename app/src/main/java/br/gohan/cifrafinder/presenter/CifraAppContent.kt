@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens
+package br.gohan.cifrafinder.presenter
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import br.gohan.cifrafinder.domain.model.DataState
-import br.gohan.cifrafinder.presenter.CifraViewModel
-import br.gohan.cifrafinder.presenter.NavHostCifra
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
 @Composable
-fun CifraAppCompose(
+fun CifraAppContent(
     viewModel: CifraViewModel,
     userIsLoggedIn: Boolean,
     callback : (NavHostController) -> Unit) {

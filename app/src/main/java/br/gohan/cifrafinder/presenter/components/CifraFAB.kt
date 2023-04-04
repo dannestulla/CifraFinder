@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
-import br.gohan.cifrafinder.presenter.ui.theme.Green
-import br.gohan.cifrafinder.presenter.ui.theme.Orange
+import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.theme.Green
+import br.gohan.cifrafinder.presenter.theme.Orange
 
 @Composable
 fun CifraFAB(type: FABType, callback: () -> Unit) {

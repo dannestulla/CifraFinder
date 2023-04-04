@@ -13,7 +13,6 @@ import br.gohan.cifrafinder.CifraConstants.LOGGEDIN
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.helpers.SpotifyLogin
 import br.gohan.cifrafinder.presenter.model.SnackBarMessage
-import br.gohan.cifrafinder.presenter.screens.CifraAppCompose
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -22,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MainActivity : ComponentActivity(), KoinComponent {
+class CifraActivity : ComponentActivity(), KoinComponent {
     private val viewModel: CifraViewModel by viewModel()
     private lateinit var spotifyLogin: SpotifyLogin
     private val sharedPreferences: SharedPreferences by inject()
@@ -36,7 +35,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
         actionBar?.hide()
         spotifyLogin = SpotifyLogin(this)
         setContent {
-            CifraAppCompose(viewModel, userIsLogged) {
+            CifraAppContent(viewModel, userIsLogged) {
                 observeEvents(it)
             }
         }

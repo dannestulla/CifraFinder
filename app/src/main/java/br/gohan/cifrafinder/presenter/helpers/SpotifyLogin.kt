@@ -2,13 +2,13 @@ package br.gohan.cifrafinder.presenter.helpers
 
 import android.content.Intent
 import br.gohan.cifrafinder.CifraConstants
-import br.gohan.cifrafinder.presenter.MainActivity
+import br.gohan.cifrafinder.presenter.CifraActivity
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 
 class SpotifyLogin(
-    private val mainActivity: MainActivity?
+    private val cifraActivity: CifraActivity?
 ) {
     private val USER_CURRENTLY_READ_PLAYING = "user-read-currently-playing"
 
@@ -20,7 +20,7 @@ class SpotifyLogin(
         ).setScopes(
             arrayOf(USER_CURRENTLY_READ_PLAYING)
         ).build()
-        AuthorizationClient.openLoginActivity(mainActivity, CifraConstants.REQUEST_CODE, request)
+        AuthorizationClient.openLoginActivity(cifraActivity, CifraConstants.REQUEST_CODE, request)
     }
 
     fun handleLoginResponse(
@@ -43,7 +43,7 @@ class SpotifyLogin(
     }
 
     fun logOff() {
-        AuthorizationClient.stopLoginActivity(mainActivity, CifraConstants.REQUEST_CODE)
-        AuthorizationClient.clearCookies(mainActivity)
+        AuthorizationClient.stopLoginActivity(cifraActivity, CifraConstants.REQUEST_CODE)
+        AuthorizationClient.clearCookies(cifraActivity)
     }
 }
