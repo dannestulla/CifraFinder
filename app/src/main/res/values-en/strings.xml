@@ -6,18 +6,13 @@
     <string name="first_step_button">Sign in to Spotify</string>
     <string name="second_step_description">Logging in...</string>
     <string name="third_step_title">Play a song on Spotify to get your tablature</string>
-    <string name="third_step_button">Logged into Spotify</string>
-    <string name="playing">"Playing: "</string>
     <string name="fourth_step_title">%1$s</string>
-    <string name="fourth_step_button">Logged into Spotify</string>
     <string name="log_off_dialog_title">Want to log out of Spotify?</string>
     <string name="log_off_yes">Yes</string>
     <string name="log_off_no">No</string>
     <string name="third_step_button_search_music">Search song!</string>
-    <string name="third_step_button_search_tablature">Show tablature!</string>
     <string name="toast_no_song_being_played">No song being played at the moment</string>
     <string name="toast_login_error">Error while login, try again</string>
-    <string name="fetching_query">Searching tablature link</string>
     <string name="searching_for">Searching %1$s</string>
     <string name="toast_google_search_error">Error while searching tablature</string>
 </resources>
