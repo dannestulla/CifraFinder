@@ -14,6 +14,10 @@ workflows:
     - install-missing-android-tools@3:
         inputs:
         - gradlew_path: $PROJECT_LOCATION/gradlew
+    - file-downloader@1:
+        inputs:
+        - destination: $PROJECT/release.jks
+        - source: $BITRISEIO_ANDROID_KEYSTORE_URL
     - change-android-versioncode-and-versionname@1:
         inputs:
         - build_gradle_path: $PROJECT_LOCATION/$MODULE/build.gradle
