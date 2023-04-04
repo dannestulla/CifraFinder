@@ -6,14 +6,9 @@
     <string name="second_step_description">Logando…</string>
 
     <string name="third_step_title">Toque uma música no Spotify para buscar sua tablatura</string>
-    <string name="third_step_button">Logado no Spotify</string>
     <string name="third_step_button_search_music">Buscar tablatura!</string>
-    <string name="third_step_button_search_tablature">Mostrar tablatura!</string>
-
-    <string name="playing">Tocando:</string>
 
     <string name="fourth_step_title">Tocando: %1$s</string>
-    <string name="fourth_step_button">Logado no Spotify</string>
     <string name="app_name">CifraFinder</string>
 
     <string name="log_off_dialog_title">Deseja fazer logoff do Spotify?</string>
@@ -22,11 +17,7 @@
 
     <string name="description_icon_check" translatable="false">Log off spotify</string>
 
-    <string name="auto_refresh_song">Atualizar automaticamente a música sendo tocada</string>
-    <string name="logoff_user">Fazer o log off desse usuário no Spotify</string>
-
     <string name="toast_no_song_being_played">Nenhuma música sendo tocada no momento</string>
-    <string name="fetching_query">Buscando o link da tablatura</string>
 
     <string name="searching_for"><b>Buscando:</b> %1$s</string>
     <string name="toast_login_error">Erro ao fazer login, tente novamente</string>
