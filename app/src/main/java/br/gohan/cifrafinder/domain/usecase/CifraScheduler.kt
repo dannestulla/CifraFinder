@@ -1,7 +1,10 @@
 package br.gohan.cifrafinder.domain.usecase
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
 import br.gohan.cifrafinder.domain.model.SongData
 import org.koin.core.component.KoinComponent
 import java.util.concurrent.TimeUnit
@@ -14,7 +17,7 @@ class CifraScheduler(appContext: Context, workerParams: WorkerParameters) :
 }
 
 fun setAutoRefresh(songData: SongData, workManager: WorkManager, refresh: () -> Unit) {
-    val refreshTime =  (songData.durationMs - songData.progressMs) + 5000L
+    val refreshTime = (songData.durationMs - songData.progressMs) + 5000L
     val wakeUpSchedule = OneTimeWorkRequestBuilder<CifraScheduler>()
         .setInitialDelay(refreshTime, TimeUnit.MILLISECONDS)
         .build()

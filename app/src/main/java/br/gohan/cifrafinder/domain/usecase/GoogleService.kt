@@ -10,7 +10,7 @@ import retrofit2.Response
 
 class GoogleService(
     private val repository: CifraRepository
-) : FetchService<String, String?>{
+) : FetchService<String, String?> {
 
     override suspend fun invoke(params: String): String? {
         val result = repository.getGoogleSearchResult(

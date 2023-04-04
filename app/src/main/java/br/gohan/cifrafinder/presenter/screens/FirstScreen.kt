@@ -22,7 +22,7 @@ fun FirstScreen(
     action: (Events) -> Unit
 ) {
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -67,8 +67,8 @@ fun FirstStepScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            FirstScreen() {
-                
+            FirstScreen {
+
             }
         }
     }

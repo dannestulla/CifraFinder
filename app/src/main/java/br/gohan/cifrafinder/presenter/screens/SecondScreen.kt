@@ -26,25 +26,25 @@ fun SecondScreen(
 ) {
     event.invoke(Events.SpotifyLogin)
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(
-                space = 60.dp,
-                alignment = Alignment.CenterVertically
-            ),
-        ) {
-            CircularProgressIndicator()
-            Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                text = stringResource(id = R.string.second_step_description)
-            )
-        }
-    },
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 60.dp,
+                    alignment = Alignment.CenterVertically
+                ),
+            ) {
+                CircularProgressIndicator()
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    text = stringResource(id = R.string.second_step_description)
+                )
+            }
+        },
     )
 }
 
@@ -56,7 +56,7 @@ fun SecondStepScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            SecondScreen() {}
+            SecondScreen {}
         }
     }
 }

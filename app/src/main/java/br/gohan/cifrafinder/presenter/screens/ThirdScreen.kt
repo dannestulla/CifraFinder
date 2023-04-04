@@ -27,7 +27,7 @@ fun ThirdScreen(
 ) {
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
             Column(
                 modifier = Modifier.fillMaxSize(),

@@ -25,7 +25,7 @@ fun NavHostCifra(
             FirstScreen(snackbarHost, action)
         }
         composable(route = SECOND_SCREEN) {
-            SecondScreen(snackbarHost ,action)
+            SecondScreen(snackbarHost, action)
         }
         composable(route = THIRD_SCREEN) {
             val thirdScreenState = viewModel.screenState.collectAsStateWithLifecycle().value

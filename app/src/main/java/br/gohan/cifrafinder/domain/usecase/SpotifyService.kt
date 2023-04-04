@@ -10,11 +10,11 @@ import retrofit2.Response
 
 class SpotifyService(
     private val repository: CifraRepository
-) : FetchService <String, SongData?> {
+) : FetchService<String, SongData?> {
     override suspend fun invoke(params: String): SongData? {
-            val response = repository.getCurrentlyPlaying(params)
-            return handleResponse(response)
-        }
+        val response = repository.getCurrentlyPlaying(params)
+        return handleResponse(response)
+    }
 
     override fun handleResponse(response: Response<*>): SongData? {
         val responseSuccessful = response.isSuccessful && response.body() != null

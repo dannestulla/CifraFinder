@@ -12,7 +12,8 @@ interface CifraApi {
     @GET
     suspend fun getCurrentlyPlaying(
         @Url url: String,
-        @Header("Authorization") myToken: String): Response<SpotifyJson>
+        @Header("Authorization") myToken: String
+    ): Response<SpotifyJson>
 
     @GET
     suspend fun getGoogleSearchResult(

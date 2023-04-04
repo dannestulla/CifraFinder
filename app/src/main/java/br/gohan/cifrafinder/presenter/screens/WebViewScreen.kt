@@ -22,12 +22,14 @@ fun WebScreen(
     event: (Events) -> Unit,
     snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
 ) {
-    event(Events.ShowSnackbar(
-        R.string.searching_for,
-        screenState.songName
-    ))
+    event(
+        Events.ShowSnackbar(
+            R.string.searching_for,
+            screenState.songName
+        )
+    )
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost)},
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         floatingActionButton = {
             CifraFAB(type = FABType.REFRESH) {
                 event.invoke(Events.MusicFetch)

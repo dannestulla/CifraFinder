@@ -18,7 +18,8 @@ import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 fun CifraAppContent(
     viewModel: CifraViewModel,
     userIsLoggedIn: Boolean,
-    callback : (NavHostController) -> Unit) {
+    callback: (NavHostController) -> Unit
+) {
     CifraFinderTheme {
         val navController = rememberNavController()
         val snackBarHost = remember { SnackbarHostState() }
@@ -30,7 +31,9 @@ fun CifraAppContent(
             )
         )
         Surface(
-            modifier = Modifier.fillMaxSize().fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxSize()
+                .fillMaxWidth(),
             color = MaterialTheme.colorScheme.background
         ) {
             NavHostCifra(
