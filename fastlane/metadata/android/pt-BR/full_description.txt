@@ -1,0 +1,1 @@
+Procura cifra da música sendo tocada no Spotify. Com esse app você pode acompanhar a música tocando violão junto! :)
