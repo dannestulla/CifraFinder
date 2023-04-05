@@ -40,6 +40,11 @@ workflows:
     - sign-apk@1:
         run_if: '{{getenv "BITRISEIO_ANDROID_KEYSTORE_URL" | ne ""}}'
     - deploy-to-bitrise-io@2: {}
+  fastlane_android_deploy:
+    steps:
+    - fastlane@3:
+        inputs:
+        - lane: android deploy
   primary:
     description: |
       Runs tests.
@@ -59,11 +64,11 @@ workflows:
         - cache_level: none
     - save-gradle-cache@1: {}
     - deploy-to-bitrise-io@2: {}
-  fastlane_android_deploy:
+  fastlane_android_beta:
     steps:
     - fastlane@3:
         inputs:
-        - lane: android deploy
+        - lane: android beta
 meta:
   bitrise.io:
     stack: linux-docker-android-20.04
