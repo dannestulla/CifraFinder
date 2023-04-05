@@ -59,6 +59,11 @@ workflows:
         - cache_level: none
     - save-gradle-cache@1: {}
     - deploy-to-bitrise-io@2: {}
+  fastlane_android_deploy:
+    steps:
+    - fastlane@3:
+        inputs:
+        - lane: android deploy
 meta:
   bitrise.io:
     stack: linux-docker-android-20.04
