@@ -8,7 +8,8 @@ import br.gohan.cifrafinder.domain.model.SongData
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
@@ -31,8 +32,9 @@ class SpotifyServiceTest {
         assertEquals(expected, result)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `WHEN invoke is successful THEN return currentSongModel`() = runBlocking {
+    fun `WHEN invoke is successful THEN return currentSongModel`() = runTest {
         coEvery { repository.getCurrentlyPlaying("token") } returns Response.success(spotifyJsonMock)
         val result = spotifyService.invoke("token")
         val expected = SongData(" songName - artist ", 5, 3)
