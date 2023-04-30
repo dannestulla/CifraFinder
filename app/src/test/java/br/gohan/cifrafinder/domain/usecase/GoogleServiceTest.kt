@@ -5,7 +5,8 @@ import br.gohan.cifrafinder.data.model.GoogleJson
 import br.gohan.cifrafinder.data.model.VItems
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.*
@@ -21,8 +22,9 @@ class GoogleServiceTest() {
         googleService = GoogleService(repository)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `WHEN invoke is called THEN return link`() = runBlocking {
+    fun `WHEN invoke is called THEN return link`() = runTest {
         coEvery { repository.getGoogleSearchResult(any(), any(), any()) } returns Response.success(googleJsonMock)
         val result = googleService.invoke("search")
         val expected = "link"

@@ -11,7 +11,6 @@ import br.gohan.cifrafinder.domain.usecase.GoogleService
 import br.gohan.cifrafinder.domain.usecase.SpotifyService
 import br.gohan.cifrafinder.presenter.model.SCREEN_STATE
 import br.gohan.cifrafinder.presenter.model.ScreenState
-import br.gohan.cifrafinder.presenter.model.SnackBarMessage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,7 +65,7 @@ class CifraViewModel(
                     )
                     update(Events.WebScreen)
                 } else {
-                    update(SnackBarMessage(R.string.toast_google_search_error))
+                    update(Events.ShowSnackbar(R.string.toast_google_search_error))
                 }
             }
             musicFetchJob?.invokeOnCompletion {
@@ -75,14 +74,14 @@ class CifraViewModel(
         }
     }
 
-    private suspend fun getCurrentPlaying(dataState: DataState) = withContext(Dispatchers.Default) {
+    suspend fun getCurrentPlaying(dataState: DataState) = withContext(Dispatchers.Default) {
         val songData = async {
             spotifyService.invoke(dataState.spotifyToken)
         }
         return@withContext songData
     }.await()
 
-    private suspend fun getTablatureLink(songName: String) = withContext(Dispatchers.Default) {
+    suspend fun getTablatureLink(songName: String) = withContext(Dispatchers.Default) {
         val query = async {
             googleService.invoke(songName)
         }
