@@ -13,9 +13,7 @@ import br.gohan.cifrafinder.CifraConstants.LOGGEDIN
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.helpers.SpotifyLogin
 import br.gohan.cifrafinder.presenter.model.SnackBarMessage
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
@@ -99,11 +97,10 @@ class CifraActivity : ComponentActivity(), KoinComponent {
         }
     }
 
-    @OptIn(FlowPreview::class)
     private suspend fun showSnackbar(id: Int, extension: String?) {
-        viewModel.dataState.debounce(1000).collectLatest { snackBar ->
-            snackBar.snackBarScope?.launch {
-                snackBar.snackBarHost?.showSnackbar(
+        viewModel.snackbarScope.launch {
+            if (viewModel.snackbarState.currentSnackbarData == null) {
+                viewModel.snackbarState.showSnackbar(
                     getString(id, extension)
                 )
             }

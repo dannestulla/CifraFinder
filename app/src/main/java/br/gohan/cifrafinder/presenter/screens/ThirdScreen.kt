@@ -52,6 +52,7 @@ fun ThirdScreen(
                         }
                     )
                     ElevatedButton(
+                        enabled = screenState.loading.not(),
                         colors = ButtonDefaults.buttonColors(),
                         onClick = {
                             event.invoke(Events.MusicFetch)
@@ -61,10 +62,15 @@ fun ThirdScreen(
                             fontSize = 20.sp
                         )
                     }
-                }
-                if (openDialog.value) {
-                    LogoutDialog(openDialog) {
-                        event.invoke(Events.LogOff)
+                    if (screenState.loading) {
+                        CircularProgressIndicator()
+                    } else {
+                        Box(modifier = Modifier.size(40.dp))
+                    }
+                    if (openDialog.value) {
+                        LogoutDialog(openDialog) {
+                            event.invoke(Events.LogOff)
+                        }
                     }
                 }
             }

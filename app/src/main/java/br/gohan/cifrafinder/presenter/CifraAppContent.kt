@@ -23,13 +23,9 @@ fun CifraAppContent(
     CifraFinderTheme {
         val navController = rememberNavController()
         val snackBarHost = remember { SnackbarHostState() }
-        val snackBarMessage = rememberCoroutineScope()
-        viewModel.update(
-            DataState(
-                snackBarHost = snackBarHost,
-                snackBarScope = snackBarMessage
-            )
-        )
+        val snackBarScope = rememberCoroutineScope()
+        viewModel.snackbarState = snackBarHost
+        viewModel.snackbarScope = snackBarScope
         Surface(
             modifier = Modifier
                 .fillMaxSize()

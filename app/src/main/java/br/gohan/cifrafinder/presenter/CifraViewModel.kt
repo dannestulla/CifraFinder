@@ -1,59 +1,64 @@
 package br.gohan.cifrafinder.presenter
 
+import androidx.compose.material3.SnackbarHostState
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.gohan.cifrafinder.R
+import br.gohan.cifrafinder.domain.model.DATA_STATE
 import br.gohan.cifrafinder.domain.model.DataState
 import br.gohan.cifrafinder.domain.usecase.GoogleService
 import br.gohan.cifrafinder.domain.usecase.SpotifyService
+import br.gohan.cifrafinder.presenter.model.SCREEN_STATE
 import br.gohan.cifrafinder.presenter.model.ScreenState
 import br.gohan.cifrafinder.presenter.model.SnackBarMessage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class CifraViewModel(
     private val spotifyService: SpotifyService,
     private val googleService: GoogleService,
+    private val savedState: SavedStateHandle,
 ) : ViewModel() {
 
-    private var _screenState = MutableStateFlow(ScreenState())
-    var screenState = _screenState.asStateFlow()
+    var screenState: StateFlow<ScreenState> = savedState.getStateFlow(SCREEN_STATE, ScreenState())
 
-    private var _dataState = MutableStateFlow(DataState())
-    var dataState = _dataState.asStateFlow()
+    var dataState: StateFlow<DataState> = savedState.getStateFlow(DATA_STATE, DataState())
+
+    lateinit var snackbarState : SnackbarHostState
+
+    lateinit var snackbarScope : CoroutineScope
 
     private var _events = MutableSharedFlow<Events>(extraBufferCapacity = 1)
     var events = _events.asSharedFlow()
 
     private var musicFetchJob: Job? = null
 
-    private val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
+    val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
 
     fun startMusicFetch() {
         if (shouldFetch) {
             musicFetchJob = viewModelScope.launch {
-                val screenState = _screenState.value
-                val dataState = _dataState.value
-                val songData = getCurrentPlaying(dataState)
+                update(screenState.value.copy(loading = true))
+                val songData = getCurrentPlaying(dataState.value)
 
                 if (songData == null) {
                     update(Events.ShowSnackbar(R.string.toast_no_song_being_played))
                     return@launch
                 }
-                if (songData.songName == screenState.songName) {
+                if (songData.songName == screenState.value.songName) {
                     update(Events.WebScreen)
                     return@launch
                 }
-                update(dataState.copy(songData = songData))
+                update(dataState.value.copy(songData = songData))
 
                 val tablatureLink = getTablatureLink(songData.songName)
 
                 if (tablatureLink != null) {
                     update(
-                        screenState.copy(
+                        screenState.value.copy(
                             searchUrl = tablatureLink,
                             songName = songData.songName
 
@@ -63,6 +68,9 @@ class CifraViewModel(
                 } else {
                     update(SnackBarMessage(R.string.toast_google_search_error))
                 }
+            }
+            musicFetchJob?.invokeOnCompletion {
+                update(screenState.value.copy(loading = false))
             }
         }
     }
@@ -86,10 +94,10 @@ class CifraViewModel(
         viewModelScope.launch {
             when (state) {
                 is DataState -> {
-                    _dataState.value = state
+                    savedState[DATA_STATE] = state
                 }
                 is ScreenState -> {
-                    _screenState.value = state
+                    savedState[SCREEN_STATE] = state
                 }
                 is Events -> {
                     _events.emit(state)

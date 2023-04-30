@@ -1,6 +1,7 @@
 package br.gohan.cifrafinder
 
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.SavedStateHandle
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.data.CifraApi
 import br.gohan.cifrafinder.data.CifraRepository
@@ -16,8 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val myModule = module {
 
-    viewModel {
-        CifraViewModel(get(), get())
+    viewModel { (savedState: SavedStateHandle) ->
+        CifraViewModel(get(), get(), get())
     }
 
     factory {

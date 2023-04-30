@@ -6,7 +6,6 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import br.gohan.cifrafinder.R
@@ -20,16 +19,18 @@ import br.gohan.cifrafinder.presenter.model.ScreenState
 fun WebScreen(
     screenState: ScreenState,
     event: (Events) -> Unit,
-    snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
+    snackbarState: SnackbarHostState,
 ) {
-    event(
-        Events.ShowSnackbar(
-            R.string.searching_for,
-            screenState.songName
-        )
-    )
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarState)
+            event(
+                Events.ShowSnackbar(
+                    R.string.searching_for,
+                    screenState.songName
+                )
+            )
+                       },
         floatingActionButton = {
             CifraFAB(type = FABType.REFRESH) {
                 event.invoke(Events.MusicFetch)
@@ -42,6 +43,7 @@ fun WebScreen(
                 WebViewComponent(screenState.searchUrl)
             }
         })
+
 }
 
 @Composable
