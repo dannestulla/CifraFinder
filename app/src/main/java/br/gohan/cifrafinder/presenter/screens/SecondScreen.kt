@@ -36,13 +36,13 @@ fun SecondScreen(
                     alignment = Alignment.CenterVertically
                 ),
             ) {
-                CircularProgressIndicator()
                 Text(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                     text = stringResource(id = R.string.second_step_description)
                 )
+                CircularProgressIndicator()
             }
         },
     )

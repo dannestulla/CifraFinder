@@ -26,17 +26,15 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
         FloatingActionButton(
             containerColor = Green,
             modifier = Modifier
-                .padding(bottom = 20.dp, end = 20.dp)
                 .size(70.dp),
             shape = RoundedCornerShape(20.dp),
             onClick = {
-
                 callback.invoke()
             }) {
             Icon(
                 icon,
                 contentDescription = stringResource(id = R.string.description_icon_check),
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(35.dp)
             )
         }
     }
