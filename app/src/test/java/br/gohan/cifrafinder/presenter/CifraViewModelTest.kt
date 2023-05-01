@@ -1,5 +1,6 @@
 package br.gohan.cifrafinder.presenter
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.model.DataState
@@ -11,6 +12,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -23,6 +25,7 @@ class CifraViewModelTest {
     private lateinit var viewModel: CifraViewModel
     private val googleService = mockk<GoogleService>()
     private val spotifyService = mockk<SpotifyService>()
+    private val savedState = SavedStateHandle()
     private val songDataMock = SongData("",1,1)
     private val dataStateMock = DataState("123")
     private val link = "link"
@@ -33,7 +36,7 @@ class CifraViewModelTest {
 
     @Before
     fun setUp() {
-        viewModel = CifraViewModel(spotifyService, googleService)
+        viewModel = CifraViewModel(spotifyService, googleService, savedState)
         coEvery { spotifyService.invoke(spotifyTokenMock) } returns songDataMock
         coEvery { googleService.invoke(spotifyTokenMock) } returns link
     }
