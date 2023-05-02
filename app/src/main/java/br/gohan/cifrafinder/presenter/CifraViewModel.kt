@@ -35,7 +35,7 @@ class CifraViewModel(
 
     private var musicFetchJob: Job? = null
 
-    val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
+    private val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
 
     fun startMusicFetch() {
         if (shouldFetch) {
@@ -49,6 +49,12 @@ class CifraViewModel(
                 }
                 if (songData.songName == screenState.value.songName) {
                     update(Events.WebScreen)
+                    update(
+                        Events.ShowSnackbar(
+                            R.string.searching_for,
+                            songData.songName
+                        )
+                    )
                     return@launch
                 }
                 update(dataState.value.copy(songData = songData))
@@ -64,6 +70,12 @@ class CifraViewModel(
                         )
                     )
                     update(Events.WebScreen)
+                    update(
+                        Events.ShowSnackbar(
+                            R.string.searching_for,
+                            songData.songName
+                        )
+                    )
                 } else {
                     update(Events.ShowSnackbar(R.string.toast_google_search_error))
                 }

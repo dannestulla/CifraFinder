@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
@@ -24,13 +23,7 @@ fun WebScreen(
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarState)
-            event(
-                Events.ShowSnackbar(
-                    R.string.searching_for,
-                    screenState.songName
-                )
-            )
-                       },
+        },
         floatingActionButton = {
             CifraFAB(type = FABType.REFRESH) {
                 event.invoke(Events.MusicFetch)
