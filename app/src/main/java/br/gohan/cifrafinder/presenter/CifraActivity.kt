@@ -50,7 +50,7 @@ class CifraActivity : ComponentActivity(), KoinComponent {
                     userIsLogged = true
                 } else {
                     userIsLogged = false
-                    update(SnackBarMessage(R.string.toast_login_error))
+                    update(Events.ShowSnackbar((R.string.toast_login_error)))
                     update(Events.FirstScreen)
                 }
             }
