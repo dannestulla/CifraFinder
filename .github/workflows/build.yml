@@ -1,4 +1,4 @@
-name: Push branch to GitHub and test
+name: Test
 
 on:
   # Allow this workflow to be called from other workflows.
