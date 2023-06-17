@@ -18,11 +18,14 @@ on:
 
 jobs:
   sonarcloud:
-    name: Run tests, linting and sonar analysis
+    name: Run tests
     runs-on: ubuntu-latest
     steps:
+      - name: Set up ruby
+        uses: ruby/setup-ruby@v1
+
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Execute tests
-        run: fastlane test
+        run: bundle exec fastlane test
