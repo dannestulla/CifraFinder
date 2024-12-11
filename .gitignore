@@ -1,6 +1,7 @@
 /.gradle/
-/.idea/
+/.idea
 *.iml
+.gradle/
 .gradle
 /.idea/workspace.xml
 /.idea/libraries

@@ -41,8 +41,8 @@ fun SettingsScreen(
                     .padding(padding)
             ) {
                 ListItem(
-                    headlineText = { Text("Busca automática") },
-                    supportingText = { Text("Atualiza o navegador assim que uma nova música tocar") },
+                    headlineContent = { Text("Busca automática") },
+                    supportingContent = { Text("Atualiza o navegador assim que uma nova música tocar") },
                     trailingContent = {
                         Checkbox(checked = false, onCheckedChange = {
 
@@ -50,8 +50,8 @@ fun SettingsScreen(
                     }
                 )
                 ListItem(
-                    headlineText = { Text("Login automático") },
-                    supportingText = { Text("Após logado pela primeira vez, entrará automaticamente") },
+                    headlineContent = { Text("Login automático") },
+                    supportingContent = { Text("Após logado pela primeira vez, entrará automaticamente") },
                     trailingContent = { Checkbox(checked = true, onCheckedChange = { }) }
                 )
                 Spacer(modifier = Modifier.padding(top = 10.dp))

@@ -12,7 +12,6 @@ import androidx.navigation.NavHostController
 import br.gohan.cifrafinder.CifraConstants.LOGGEDIN
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.helpers.SpotifyLogin
-import br.gohan.cifrafinder.presenter.model.SnackBarMessage
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
