@@ -9,3 +9,5 @@
 /captures
 .externalNativeBuild
 release.jks
+app/google-services.json
+local.properties
