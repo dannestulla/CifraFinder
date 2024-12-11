@@ -18,13 +18,15 @@ import br.gohan.cifrafinder.presenter.components.LogoutDialog
 import br.gohan.cifrafinder.presenter.model.ScreenState
 import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThirdScreen(
     screenState: ScreenState,
     snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
     event: (Events) -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        event.invoke(Events.MusicFetch)
+    }
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost) },

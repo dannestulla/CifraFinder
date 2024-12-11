@@ -11,7 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import br.gohan.cifrafinder.CifraConstants.LOGGEDIN
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.helpers.SpotifyLogin
+import br.gohan.cifrafinder.presenter.helpers.SpotifyHelper
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +20,7 @@ import org.koin.core.component.inject
 
 class CifraActivity : ComponentActivity(), KoinComponent {
     private val viewModel: CifraViewModel by viewModel()
-    private lateinit var spotifyLogin: SpotifyLogin
+    private lateinit var spotifyHelper: SpotifyHelper
     private val sharedPreferences: SharedPreferences by inject()
 
     private var userIsLogged: Boolean
@@ -30,7 +30,7 @@ class CifraActivity : ComponentActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         actionBar?.hide()
-        spotifyLogin = SpotifyLogin(this)
+        spotifyHelper = SpotifyHelper(this)
         setContent {
             CifraAppContent(viewModel, userIsLogged) {
                 observeEvents(it)
@@ -39,9 +39,9 @@ class CifraActivity : ComponentActivity(), KoinComponent {
     }
 
     @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        spotifyLogin.handleLoginResponse(requestCode, resultCode, intent) { accessToken ->
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        spotifyHelper.handleLoginResponse(requestCode, resultCode, data) { accessToken ->
             with(viewModel) {
                 if (!accessToken.isNullOrEmpty()) {
                     update(dataState.value.copy(spotifyToken = accessToken))
@@ -74,7 +74,7 @@ class CifraActivity : ComponentActivity(), KoinComponent {
                             navController.navigate(LAST_SCREEN)
                         }
                         is Events.LogOff -> {
-                            spotifyLogin.logOff()
+                            spotifyHelper.logOff()
                             userIsLogged = false
                             navController.navigate(FIRST_SCREEN)
                         }
@@ -88,7 +88,10 @@ class CifraActivity : ComponentActivity(), KoinComponent {
                             showSnackbar(it.id, it.extension)
                         }
                         is Events.SpotifyLogin -> {
-                            spotifyLogin.logIn()
+                            spotifyHelper.logIn()
+                        }
+                        is Events.BackScreen -> {
+                            navController.popBackStack()
                         }
                     }
                 }

@@ -3,17 +3,20 @@ package br.gohan.cifrafinder.presenter.screens
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.components.CifraFAB
 import br.gohan.cifrafinder.presenter.components.FABType
 import br.gohan.cifrafinder.presenter.model.ScreenState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WebScreen(
     screenState: ScreenState,
@@ -25,9 +28,16 @@ fun WebScreen(
             SnackbarHost(hostState = snackbarState)
         },
         floatingActionButton = {
-            CifraFAB(type = FABType.REFRESH) {
-                event.invoke(Events.MusicFetch)
+            Column {
+                CifraFAB(type = FABType.BACK) {
+                    event.invoke(Events.BackScreen)
+                }
+                Spacer(Modifier.height(10.dp))
+                CifraFAB(type = FABType.REFRESH) {
+                    event.invoke(Events.MusicFetch)
+                }
             }
+
         }, content = { padding ->
             Surface(
                 modifier = Modifier.padding(padding),

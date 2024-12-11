@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.VariantDimension
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +8,8 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.kotlin.compose)
 }
+
+val localProperties = getLocalPropertiesVariables()
 
 android {
     compileSdk = 35
@@ -36,6 +41,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("debug")
         vectorDrawables.useSupportLibrary = true
+
+        manifestPlaceholders["redirectSchemeName"] = "spotify-sdk"
+        manifestPlaceholders["redirectHostName"] = "auth"
+
+        buildConfigField(
+            "String",
+            "SPOTIFY_CLIENT_ID",
+            localProperties.getProperty("SPOTIFY_CLIENT_ID")
+        )
+        buildConfigField(
+            "String",
+            "GOOGLE_API_KEY",
+            localProperties.getProperty("GOOGLE_API_KEY")
+        )
+        buildConfigField(
+            "String",
+            "SEARCH_ENGINE_ID",
+            localProperties.getProperty("SEARCH_ENGINE_ID")
+        )
     }
 
     buildTypes {
@@ -108,4 +132,13 @@ dependencies {
     testImplementation(libs.arch.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
+}
+
+fun getLocalPropertiesVariables(): Properties {
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(localPropertiesFile.inputStream())
+    }
+    return localProperties
 }

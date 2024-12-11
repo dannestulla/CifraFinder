@@ -4,6 +4,7 @@ sealed class Events {
     object FirstScreen : Events()
     object SecondScreen : Events()
     object ThirdScreen : Events()
+    data object BackScreen : Events()
     object WebScreen : Events()
     object LogOff : Events()
     object MusicFetch : Events()

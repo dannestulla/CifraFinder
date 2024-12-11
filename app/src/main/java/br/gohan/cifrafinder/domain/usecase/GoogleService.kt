@@ -1,5 +1,6 @@
 package br.gohan.cifrafinder.domain.usecase
 
+import br.gohan.cifrafinder.BuildConfig
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.model.GoogleJson
@@ -13,8 +14,8 @@ class GoogleService(
 
     override suspend fun invoke(params: String): String? {
         val result = repository.getGoogleSearchResult(
-            CifraConstants.googleApiKey1,
-            CifraConstants.searchEngineId,
+            BuildConfig.GOOGLE_API_KEY,
+            BuildConfig.SEARCH_ENGINE_ID,
             filterSearch(params)
         )
         return handleResponse(result)

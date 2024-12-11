@@ -15,7 +15,6 @@ import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.Events
 import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstScreen(
     snackbarHost: SnackbarHostState = remember { SnackbarHostState() },

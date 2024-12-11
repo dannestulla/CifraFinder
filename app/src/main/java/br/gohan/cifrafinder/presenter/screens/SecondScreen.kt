@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,9 @@ fun SecondScreen(
     snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
     event: (Events) -> Unit
 ) {
-    event.invoke(Events.SpotifyLogin)
+    LaunchedEffect(Unit) {
+        event.invoke(Events.SpotifyLogin)
+    }
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         content = { padding ->
