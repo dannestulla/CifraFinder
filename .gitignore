@@ -1,11 +1,11 @@
-/.gradle/
-/.idea/
 *.iml
 .gradle
-/.idea/workspace.xml
-/.idea/libraries
+/local.properties
+/.idea/
 .DS_Store
 /build
 /captures
 .externalNativeBuild
-release.jks
+.cxx
+local.properties
+/app/google-services.json

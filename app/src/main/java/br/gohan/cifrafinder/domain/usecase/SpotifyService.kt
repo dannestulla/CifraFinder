@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.domain.usecase
 
-import br.gohan.cifrafinder.BuildConfig
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.model.SpotifyJson
 import br.gohan.cifrafinder.domain.model.SongData
@@ -21,9 +20,9 @@ class SpotifyService(
         return if (responseSuccessful) {
             createModel(response.body())
         } else {
-            if (!BuildConfig.DEBUG) {
+            //if (!BuildConfig.DEBUG) {
                 Firebase.crashlytics.log("Spotify response error: ${response.raw()}")
-            }
+            //}
             return null
         }
     }

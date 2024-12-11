@@ -1,5 +1,7 @@
 package br.gohan.cifrafinder
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.work.WorkManager
@@ -46,7 +48,7 @@ val myModule = module {
     }
 
     single {
-        androidApplication().getSharedPreferences("sharedPref", ComponentActivity.MODE_PRIVATE)
+        androidApplication().getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
     }
 
     factory {

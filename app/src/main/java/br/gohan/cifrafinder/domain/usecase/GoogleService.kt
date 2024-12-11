@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.domain.usecase
 
-import br.gohan.cifrafinder.BuildConfig
 import br.gohan.cifrafinder.CifraConstants
 import br.gohan.cifrafinder.data.CifraRepository
 import br.gohan.cifrafinder.data.model.GoogleJson
@@ -25,9 +24,9 @@ class GoogleService(
         return if (response.isSuccessful) {
             createModel(response.body())
         } else {
-            if (!BuildConfig.DEBUG) {
+            //if (!BuildConfig.DEBUG) {
                 Firebase.crashlytics.log("Google response error: ${response.raw()}")
-            }
+            //}
             return null
         }
     }

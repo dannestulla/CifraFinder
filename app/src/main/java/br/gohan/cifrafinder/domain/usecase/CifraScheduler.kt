@@ -27,7 +27,7 @@ fun setAutoRefresh(songData: SongData, workManager: WorkManager, refresh: () -> 
     val workId = wakeUpSchedule.id
 
     workManager.getWorkInfoByIdLiveData(workId).observeForever {
-        if (it.state.isFinished) {
+        if (it?.state?.isFinished == true) {
             refresh.invoke()
         }
     }
