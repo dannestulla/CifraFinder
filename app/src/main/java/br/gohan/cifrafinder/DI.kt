@@ -1,16 +1,14 @@
 package br.gohan.cifrafinder
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.work.WorkManager
 import br.gohan.cifrafinder.data.CifraApi
-import br.gohan.cifrafinder.data.CifraRepository
+import br.gohan.cifrafinder.data.MainRepository
 import br.gohan.cifrafinder.domain.usecase.CifraScheduler
 import br.gohan.cifrafinder.domain.usecase.GoogleService
 import br.gohan.cifrafinder.domain.usecase.SpotifyService
-import br.gohan.cifrafinder.presenter.CifraViewModel
+import br.gohan.cifrafinder.presenter.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -20,11 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 val myModule = module {
 
     viewModel { (savedState: SavedStateHandle) ->
-        CifraViewModel(get(), get(), get())
+        MainViewModel(get(), get(), get())
     }
 
     factory {
-        CifraRepository(get())
+        MainRepository(get())
     }
 
     factory {

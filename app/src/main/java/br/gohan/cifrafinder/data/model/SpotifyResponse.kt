@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class SpotifyJson(
-    val item: Item,
+    val item: Item?,
     @SerializedName("progress_ms")
     val progressMs: Long
 )

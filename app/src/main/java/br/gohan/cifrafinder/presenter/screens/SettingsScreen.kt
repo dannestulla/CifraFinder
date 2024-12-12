@@ -3,9 +3,13 @@ package br.gohan.cifrafinder.presenter.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -13,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.gohan.cifrafinder.presenter.Events
+import br.gohan.cifrafinder.presenter.AppEvents
 import br.gohan.cifrafinder.presenter.components.LogoutDialog
 
 /**
@@ -22,16 +26,16 @@ import br.gohan.cifrafinder.presenter.components.LogoutDialog
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    event: (Events) -> Unit
+    event: (AppEvents) -> Unit
 ) {
     val openDialog = remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = { event.invoke(Events.ThirdScreen) }) {
+                    /*IconButton(onClick = { event.invoke(AppEvents.WhatIsPlayingScreen) }) {
                         Icon(imageVector = Icons.Filled.ArrowBack, "back button")
-                    }
+                    }*/
                 },
                 title = { Text("Configurações") })
         },
@@ -64,7 +68,7 @@ fun SettingsScreen(
         })
     if (openDialog.value) {
         LogoutDialog(openDialog) {
-            event.invoke(Events.LogOff)
+            event.invoke(AppEvents.LogOff)
         }
     }
 }

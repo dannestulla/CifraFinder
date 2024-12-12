@@ -1,6 +1,6 @@
 package br.gohan.cifrafinder
 
-object CifraConstants {
+object Constants {
     const val spotifyRedirectURI = "yourcustomprotocol://callback"
     const val REQUEST_CODE = 1337
     const val LOGGEDIN = "LoggedIn"

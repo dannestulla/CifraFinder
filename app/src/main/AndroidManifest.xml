@@ -9,7 +9,7 @@
         tools:node="remove" />
 
     <application
-        android:name="br.gohan.cifrafinder.CifraApplication"
+        android:name="br.gohan.cifrafinder.Application"
         android:allowBackup="true"
         android:exported="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="br.gohan.cifrafinder.presenter.CifraActivity"
+            android:name="br.gohan.cifrafinder.presenter.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

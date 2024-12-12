@@ -1,35 +1,35 @@
 package br.gohan.cifrafinder.domain.usecase
 
-import br.gohan.cifrafinder.data.CifraRepository
+import br.gohan.cifrafinder.data.MainRepository
 import br.gohan.cifrafinder.data.model.SpotifyJson
 import br.gohan.cifrafinder.domain.model.SongData
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import retrofit2.Response
 
 class SpotifyService(
-    private val repository: CifraRepository
-) : FetchService<String, SongData?> {
-    override suspend fun invoke(params: String): SongData? {
-        val response = repository.getCurrentlyPlaying(params)
-        return handleResponse(response)
+    private val repository: MainRepository
+) : FetchService<Params, SongData> {
+    override suspend fun invoke(params: Params): Result<SongData> {
+        return try {
+            val response = repository.getCurrentlyPlaying(params)
+            Result.success(handleResponse(response))
+        } catch (error: Throwable) {
+            Result.failure(
+                Throwable("Erro na resposta: ${error.message}")
+            )
+        }
     }
 
-    override fun handleResponse(response: Response<*>): SongData? {
-        val responseSuccessful = response.isSuccessful && response.body() != null
-        return if (responseSuccessful) {
+    override fun handleResponse(response: Response<*>): SongData {
+        return if (response.isSuccessful && response.body() != null) {
             createModel(response.body())
         } else {
-            //if (!BuildConfig.DEBUG) {
-                Firebase.crashlytics.log("Spotify response error: ${response.raw()}")
-            //}
-            return null
+            throw Throwable("Erro na resposta: ${response.code()} - ${response.message()}")
         }
     }
 
     override fun <T> createModel(apiModel: T): SongData {
         val searchString = setSearchString(apiModel as SpotifyJson)
-        val durationMs = apiModel.item.durationMs
+        val durationMs = apiModel.item?.durationMs
         val progressMs = apiModel.progressMs
         return SongData(
             searchString,
@@ -40,8 +40,8 @@ class SpotifyService(
 
     fun setSearchString(body: SpotifyJson): String {
         val responseBody = body.item
-        val artistName = responseBody.artists.first().name
-        val songName = responseBody.name
+        val artistName = responseBody?.artists?.firstOrNull()?.name
+        val songName = responseBody?.name
         return addSpaceAroundSearchString("$songName - $artistName")
     }
 

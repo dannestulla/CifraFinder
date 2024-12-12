@@ -1,6 +1,6 @@
 package br.gohan.cifrafinder.domain.usecase
 
-import br.gohan.cifrafinder.data.CifraRepository
+import br.gohan.cifrafinder.data.MainRepository
 import br.gohan.cifrafinder.data.model.GoogleJson
 import br.gohan.cifrafinder.data.model.VItems
 import io.mockk.coEvery
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions.*
 import retrofit2.Response
 
 class GoogleServiceTest() {
-    private lateinit var repository: CifraRepository
+    private lateinit var repository: MainRepository
     private lateinit var googleService: GoogleService
 
     @Before

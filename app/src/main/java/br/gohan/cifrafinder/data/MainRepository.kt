@@ -1,6 +1,6 @@
 package br.gohan.cifrafinder.data
 
-class CifraRepository(
+class MainRepository(
     private val cifraApi: CifraApi
 ) {
     suspend fun getCurrentlyPlaying(spotifyToken: String) =

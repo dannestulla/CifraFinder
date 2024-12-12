@@ -1,6 +1,6 @@
 package br.gohan.cifrafinder.domain.usecase
 
-import br.gohan.cifrafinder.data.CifraRepository
+import br.gohan.cifrafinder.data.MainRepository
 import br.gohan.cifrafinder.data.model.ArtistX
 import br.gohan.cifrafinder.data.model.Item
 import br.gohan.cifrafinder.data.model.SpotifyJson
@@ -16,12 +16,12 @@ import retrofit2.Response
 
 
 class SpotifyServiceTest {
-    private lateinit var repository: CifraRepository
+    private lateinit var repository: MainRepository
     private lateinit var spotifyService: SpotifyService
 
     @Before
     fun setup() {
-        repository = mockk<CifraRepository>()
+        repository = mockk<MainRepository>()
         spotifyService = SpotifyService(repository)
     }
 

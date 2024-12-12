@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Assertions.*
 import retrofit2.Response
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CifraRepositoryTest() {
+class MainRepositoryTest() {
     private var api = mockk<CifraApi>()
-    private var cifraRepository = CifraRepository(api)
+    private var mainRepository = MainRepository(api)
 
     @Test
     fun `WHEN getCurrently playing is called THEN return SpotifyJson`() = runTest {
@@ -27,7 +27,7 @@ class CifraRepositoryTest() {
             )
         )
         val expected = SpotifyJson(Item(listOf(), "name", 1), 1)
-        val result = cifraRepository.getCurrentlyPlaying("123").body()
+        val result = mainRepository.getCurrentlyPlaying("123").body()
         coVerify(exactly = 1) { api.getCurrentlyPlaying(any(), any()) }
         assertEquals(expected, result)
     }
@@ -40,7 +40,7 @@ class CifraRepositoryTest() {
             )
         )
         val expected =GoogleJson(listOf())
-        val result = cifraRepository.getGoogleSearchResult("123", "123", "123").body()
+        val result = mainRepository.getGoogleSearchResult("123", "123", "123").body()
         coVerify(exactly = 1) { api.getGoogleSearchResult(any(), any(), any(), any()) }
         assertEquals(expected, result)
     }
