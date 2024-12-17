@@ -8,5 +8,6 @@ data class WhatIsPlayingState(
     val songName: String? = null,
     val searchUrl: String? = null,
     val loading: Boolean = false,
-    val musicDurationInSeconds: Int? = null
+    val musicDurationInMiliSec: Int? = null,
+    val artCover: String? = null
 ) : Serializable

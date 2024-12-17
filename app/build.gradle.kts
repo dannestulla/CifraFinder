@@ -132,6 +132,10 @@ dependencies {
     testImplementation(libs.arch.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
+
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
 
 fun getLocalPropertiesVariables(): Properties {

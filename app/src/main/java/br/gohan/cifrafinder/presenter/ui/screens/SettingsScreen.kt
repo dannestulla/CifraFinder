@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens
+package br.gohan.cifrafinder.presenter.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,8 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.AppEvents
-import br.gohan.cifrafinder.presenter.components.LogoutDialog
+import br.gohan.cifrafinder.presenter.ui.components.MessageDialog
 
 /**
  * WORK IN PROGRESS, YET TO BE IMPLEMENTED
@@ -66,10 +67,8 @@ fun SettingsScreen(
                 }
             }
         })
-    if (openDialog.value) {
-        LogoutDialog(openDialog) {
+        MessageDialog(R.string.log_off_dialog_title) { logoff ->
             event.invoke(AppEvents.LogOff)
-        }
     }
 }
 

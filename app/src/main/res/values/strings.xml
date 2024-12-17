@@ -8,7 +8,8 @@
     <string name="third_step_title">Toque uma música no Spotify para buscar sua tablatura</string>
     <string name="third_step_button_search_music">Buscar tablatura!</string>
 
-    <string name="fourth_step_title">Tocando: %1$s</string>
+    <string name="fourth_step_title">%1$s</string>
+    <string name="playing">Tocando:</string>
     <string name="app_name">CifraFinder</string>
 
     <string name="log_off_dialog_title">Deseja fazer logoff do Spotify?</string>
@@ -18,9 +19,14 @@
     <string name="description_icon_check" translatable="false">Log off spotify</string>
 
     <string name="toast_no_song_being_played">Nenhuma música sendo tocada no momento</string>
+    <string name="music_not_found"> Música ou artista não encontrados</string>
 
     <string name="searching_for"><b>Buscando:</b> %1$s</string>
     <string name="toast_login_error">Erro ao fazer login. Certifique-se de que há conexão com a internet ou que seus dados de login estejam certos.</string>
 
     <string name="toast_google_search_error">Erro ao buscar a tablatura, tente novamente</string>
+    <string name="response_error_spotify">Erro no serviço do Spotify  %1$s</string>
+    <string name="response_error_google">Erro no servico do Google, não foi possivel gerar o link para tablatura</string>
+    <string name="response_error_spotify_body_null">, resposta vazia. Nenhuma música tocando foi detectada.</string>
+    <string name="album_cover">"capa do album da musica "</string>
 </resources>

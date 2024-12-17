@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import br.gohan.cifrafinder.Constants.LOGGEDIN
+import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.helpers.SpotifyLoginHelper
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,18 +46,28 @@ class MainActivity : ComponentActivity(), KoinComponent {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         spotifyLoginHelper.handleLoginResponse(requestCode, resultCode, data) { token ->
-            viewModel.handleLoginResponse(token) { isLogged ->
+            handleLoginResponse(token) { isLogged ->
                 userLoggedBefore = isLogged
                 viewModel.updateScreen(WHAT_IS_PLAYING)
             }
         }
     }
 
+    private fun handleLoginResponse(token: String?, userIsLogged: (Boolean) -> Unit) {
+        if (!token.isNullOrEmpty()) {
+            viewModel.update(viewModel.dataState.value.copy(spotifyToken = token))
+            userIsLogged(true)
+        } else {
+            userIsLogged(false)
+            viewModel.update(AppEvents.ShowSnackbar(getString(R.string.toast_login_error)))
+        }
+    }
+
     private fun observeEvents() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.events.collectLatest {
-                    when (it) {
+                viewModel.events.collectLatest { event ->
+                    when (event) {
                         is AppEvents.LogOff -> {
                             spotifyLoginHelper.logOff()
                             userLoggedBefore = false
@@ -72,7 +83,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         }
 
                         is AppEvents.ShowSnackbar -> {
-                            showSnackbar(it.id, it.extension)
+                            showSnackbar(event.message)
                         }
 
                         is AppEvents.SpotifyLogin -> {
@@ -90,12 +101,10 @@ class MainActivity : ComponentActivity(), KoinComponent {
         }
     }
 
-    private fun showSnackbar(id: Int, extension: String?) {
+    private fun showSnackbar(message: String?) {
         viewModel.snackbarScope.launch {
-            if (viewModel.snackbarState.currentSnackbarData == null) {
-                viewModel.snackbarState.showSnackbar(
-                    getString(id, extension)
-                )
+            if (viewModel.snackbarState.currentSnackbarData == null && message.isNullOrEmpty().not()) {
+                viewModel.snackbarState.showSnackbar(message!!)
             }
         }
     }

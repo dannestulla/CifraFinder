@@ -1,5 +1,8 @@
 package br.gohan.cifrafinder.presenter
 
+import android.util.Log
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
@@ -15,11 +18,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.gohan.cifrafinder.presenter.screens.LoginScreen
-import br.gohan.cifrafinder.presenter.screens.SettingsScreen
-import br.gohan.cifrafinder.presenter.screens.TablatureWebScreen
-import br.gohan.cifrafinder.presenter.screens.WhatIsPlayingScreen
-import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.screens.LoginScreen
+import br.gohan.cifrafinder.presenter.ui.screens.SettingsScreen
+import br.gohan.cifrafinder.presenter.ui.screens.TablatureWebScreen
+import br.gohan.cifrafinder.presenter.ui.screens.WhatIsPlayingScreen
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import kotlinx.coroutines.flow.update
 
 @Composable
 fun AppContent(
@@ -44,12 +48,40 @@ fun AppContent(
                 viewModel.whatIsPlayingState.collectAsStateWithLifecycle().value
 
             LaunchedEffect(screen) {
-                navController.navigate(screen)
+                if (screen != POP_BACK_STACK) {
+                    navController.popBackStack()
+                } else {
+                    navController.navigate(screen)
+                }
             }
 
             NavHost(
                 navController = navController,
-                startDestination = screen
+                startDestination = screen,
+                enterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(500)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(500)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(500)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(500)
+                    )
+                }
             ) {
                 composable(route = LOGIN) {
                     LoginScreen(snackBarHost, events)
@@ -59,7 +91,7 @@ fun AppContent(
                 }
                 composable(route = TABLATURE_WEB) {
                     TablatureWebScreen(playingState, snackBarHost, events) {
-                        viewModel.updateScreen(WHAT_IS_PLAYING)
+                        viewModel.currentScreen.update { POP_BACK_STACK }
                     }
                 }
                 composable(route = SETTINGS) {
@@ -70,9 +102,12 @@ fun AppContent(
             }
         }
     }
+
+
 }
 
 const val LOGIN = "LOGIN_SCREEN"
 const val WHAT_IS_PLAYING = "WHAT_IS_PLAYING_SCREEN"
+const val POP_BACK_STACK = "POP_BACK_STACK"
 const val TABLATURE_WEB = "TABLATURE_WEB_SCREEN"
 const val SETTINGS = "settings"

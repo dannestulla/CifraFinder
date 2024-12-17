@@ -1,24 +1,32 @@
 package br.gohan.cifrafinder.data.model
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Keep
 data class SpotifyJson(
     val item: Item?,
-    @SerializedName("progress_ms")
-    val progressMs: Long
+    val progress_ms: Long
 )
 
 @Keep
 data class Item(
     val artists: List<ArtistX>,
     val name: String,
-    @SerializedName("duration_ms")
-    val durationMs: Long
-)
+    val duration_ms: Long,
+    val album: Album,
+    )
 
 @Keep
 data class ArtistX(
     val name: String,
 )
+
+data class Album(
+    val images: List<Image>,
+    val name: String,
+) : Serializable
+
+data class Image(
+    val url: String,
+) : Serializable

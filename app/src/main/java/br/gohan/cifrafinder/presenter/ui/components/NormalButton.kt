@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.components
+package br.gohan.cifrafinder.presenter.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

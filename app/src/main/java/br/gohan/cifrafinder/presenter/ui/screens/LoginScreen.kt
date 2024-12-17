@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.screens
+package br.gohan.cifrafinder.presenter.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.AppEvents
-import br.gohan.cifrafinder.presenter.components.NormalButton
-import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.components.NormalButton
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 
 @Composable
 fun LoginScreen(

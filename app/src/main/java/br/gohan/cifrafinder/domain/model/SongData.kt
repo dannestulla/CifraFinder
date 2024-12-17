@@ -1,12 +1,10 @@
 package br.gohan.cifrafinder.domain.model
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class SongData(
     val name: String,
-    @SerializedName("duration_ms")
-    val durationMs: Long?,
-    @SerializedName("progress_ms")
-    val progressMs: Long
+    val duration: Long?,
+    val progress: Long,
+    val songImage: String?
 ) : Serializable

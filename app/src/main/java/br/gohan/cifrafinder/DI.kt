@@ -26,11 +26,11 @@ val myModule = module {
     }
 
     factory {
-        GoogleService(get())
+        GoogleService(get(), get())
     }
 
     factory {
-        SpotifyService(get())
+        SpotifyService(get(), get())
     }
 
     factory {

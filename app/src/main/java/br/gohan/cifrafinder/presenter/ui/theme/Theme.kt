@@ -1,4 +1,4 @@
-package br.gohan.cifrafinder.presenter.theme
+package br.gohan.cifrafinder.presenter.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

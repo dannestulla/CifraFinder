@@ -1,8 +1,11 @@
-package br.gohan.cifrafinder.presenter.components
+package br.gohan.cifrafinder.presenter.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ExitToApp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -11,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.theme.CifraFinderTheme
-import br.gohan.cifrafinder.presenter.theme.Green
+import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
+import br.gohan.cifrafinder.presenter.ui.theme.Green
 
 @Composable
 fun CifraFAB(type: FABType, callback: () -> Unit) {
@@ -20,6 +23,7 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
         FABType.LOG_OFF -> Icons.AutoMirrored.Rounded.ExitToApp
         FABType.REFRESH -> Icons.Rounded.Refresh
         FABType.BACK -> Icons.AutoMirrored.Rounded.ArrowBack
+        FABType.CONTINUE_SCROLL -> Icons.Rounded.KeyboardArrowDown
     }
 
     CifraFinderTheme {
@@ -43,5 +47,6 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
 enum class FABType {
     LOG_OFF,
     REFRESH,
-    BACK
+    BACK,
+    CONTINUE_SCROLL
 }

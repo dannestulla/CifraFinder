@@ -4,7 +4,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.domain.model.DATA_STATE
 import br.gohan.cifrafinder.domain.model.DataState
 import br.gohan.cifrafinder.domain.model.SongData
@@ -14,12 +13,10 @@ import br.gohan.cifrafinder.presenter.model.SCREEN_STATE
 import br.gohan.cifrafinder.presenter.model.WhatIsPlayingState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -40,41 +37,36 @@ class MainViewModel(
     private var _events = MutableSharedFlow<AppEvents>()
     var events = _events.asSharedFlow()
 
-    private var _currentScreen = MutableStateFlow(LOGIN)
-    var currentScreen = _currentScreen.asStateFlow()
-
-    private var musicFetchJob: Job? = null
-
-    private val shouldFetch = musicFetchJob == null || musicFetchJob?.isActive == false
+    var currentScreen = MutableStateFlow(LOGIN)
 
     fun startMusicFetch() {
-        if (shouldFetch) {
-            musicFetchJob = viewModelScope.launch {
-                update(whatIsPlayingState.value.copy(loading = true))
-                val song = getCurrentPlaying(dataState.value).let { songData ->
-                    update(dataState.value.copy(songData = songData))
-                    songData
-                }
-
-                getTablatureLink(song.name).let { link ->
-                    update(
-                        whatIsPlayingState.value.copy(
-                            searchUrl = link,
-                            songName = song.name,
-                            musicDurationInSeconds = song.durationMs?.toInt()
-                        )
-                    )
-                    _currentScreen.emit(TABLATURE_WEB)
-                    update(
-                        AppEvents.ShowSnackbar(
-                            R.string.searching_for,
-                            song.name
-                        )
-                    )
-                }
+        viewModelScope.launch {
+            update(whatIsPlayingState.value.copy(loading = true))
+            val song = getCurrentPlaying(dataState.value).let { songData ->
+                update(dataState.value.copy(
+                    songData = songData))
+                update(whatIsPlayingState.value.copy(
+                    songName = songData.name,
+                    artCover = songData.songImage
+                ))
+                songData
             }
-        }
-        musicFetchJob?.invokeOnCompletion {
+            getTablatureLink(song.name).let { url ->
+                update(
+                    whatIsPlayingState.value.copy(
+                        searchUrl = url,
+                        songName = song.name,
+                        musicDurationInMiliSec = song.duration?.toInt(),
+                    )
+                )
+                currentScreen.emit(TABLATURE_WEB)
+                /*update(
+                    AppEvents.ShowSnackbar(
+                        R.string.searching_for,
+                        song.name
+                    )
+                )*/
+            }
             update(whatIsPlayingState.value.copy(loading = false))
         }
     }
@@ -85,7 +77,11 @@ class MainViewModel(
                 data
             },
             onFailure = {
-                update(AppEvents.ShowSnackbar(R.string.toast_no_song_being_played, it.message))
+                update(AppEvents.ShowSnackbar(it.message))
+                update(whatIsPlayingState.value.copy(
+                    loading = false,
+                    songName = null
+                ))
                 throw CancellationException("Erro ao buscar a música atual")
             }
         )
@@ -97,7 +93,8 @@ class MainViewModel(
                 data
             },
             onFailure = {
-                update(AppEvents.ShowSnackbar(R.string.toast_google_search_error, it.message))
+                update(AppEvents.ShowSnackbar(it.message))
+                update(whatIsPlayingState.value.copy(loading = false))
                 throw CancellationException("Erro ao buscar a tablatura atual")
             }
         )
@@ -120,18 +117,8 @@ class MainViewModel(
         }
     }
 
-    fun handleLoginResponse(token: String?, userIsLogged: (Boolean) -> Unit) {
-        if (!token.isNullOrEmpty()) {
-            update(dataState.value.copy(spotifyToken = token))
-            userIsLogged(true)
-        } else {
-            userIsLogged(false)
-            update(AppEvents.ShowSnackbar(R.string.toast_login_error))
-        }
-    }
-
     fun updateScreen(screen: String) {
-        _currentScreen.update { screen }
+        currentScreen.update { screen }
     }
 
     fun triggerEvent(event: AppEvents) {
