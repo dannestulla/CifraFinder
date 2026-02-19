@@ -43,6 +43,11 @@ workflows:
     - deploy-to-bitrise-io@2: {}
   fastlane_android_deploy:
     steps:
+    - git-clone@8: {}
+    - file-downloader@1:
+        inputs:
+        - destination: "./fastlane/play-store-key.json"
+        - source: "$BITRISEIO_PLAY_STORE_KEY_URL"
     - fastlane@3:
         inputs:
         - lane: android deploy
@@ -71,6 +76,11 @@ workflows:
     - deploy-to-bitrise-io@2: {}
   fastlane_android_beta:
     steps:
+    - git-clone@8: {}
+    - file-downloader@1:
+        inputs:
+        - destination: "./fastlane/play-store-key.json"
+        - source: "$BITRISEIO_PLAY_STORE_KEY_URL"
     - fastlane@3:
         inputs:
         - lane: android beta
