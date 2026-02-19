@@ -11,6 +11,10 @@ workflows:
       - [Set up code signing with *Android Sign* Step](https://devcenter.bitrise.io/en/code-signing/android-code-signing/android-code-signing-using-the-android-sign-step.html).
     steps:
     - git-clone@8: {}
+    - file-downloader@1:
+        inputs:
+        - destination: $PROJECT_LOCATION/$MODULE/google-services.json
+        - source: $BITRISEIO_GOOGLE_SERVICES_JSON_URL
     - install-missing-android-tools@3:
         inputs:
         - gradlew_path: $PROJECT_LOCATION/gradlew
@@ -53,6 +57,10 @@ workflows:
       - Check out [Getting started with Android apps](https://devcenter.bitrise.io/en/getting-started/getting-started-with-android-apps.html).
     steps:
     - git-clone@8: {}
+    - file-downloader@1:
+        inputs:
+        - destination: $PROJECT_LOCATION/$MODULE/google-services.json
+        - source: $BITRISEIO_GOOGLE_SERVICES_JSON_URL
     - restore-gradle-cache@1: {}
     - install-missing-android-tools@3:
         inputs:
