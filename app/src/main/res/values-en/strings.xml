@@ -15,4 +15,10 @@
     <string name="toast_login_error">Error while login, try again</string>
     <string name="searching_for">Searching %1$s</string>
     <string name="toast_google_search_error">Error while searching tablature</string>
+    <string name="playing">Playing:</string>
+    <string name="music_not_found">Song or artist not found</string>
+    <string name="response_error_spotify">Spotify service error %1$s</string>
+    <string name="response_error_google">Google service error, could not generate tablature link</string>
+    <string name="response_error_spotify_body_null">, empty response. No song playing was detected.</string>
+    <string name="album_cover">album cover of the song</string>
 </resources>
