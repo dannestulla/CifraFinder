@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,7 +47,7 @@ fun AppContent(
                 viewModel.whatIsPlayingState.collectAsStateWithLifecycle().value
 
             LaunchedEffect(screen) {
-                if (screen != POP_BACK_STACK) {
+                if (screen == POP_BACK_STACK) {
                     navController.popBackStack()
                 } else {
                     navController.navigate(screen)

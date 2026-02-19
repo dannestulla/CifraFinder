@@ -1,6 +1,5 @@
 package br.gohan.cifrafinder.presenter.ui.screens
 
-import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
@@ -98,10 +97,6 @@ fun TablatureWebScreen(
                 }
 
                 Spacer(Modifier.height(10.dp))
-                CifraFAB(type = FABType.BACK) {
-                    backScreen.invoke()
-                }
-                Spacer(Modifier.height(10.dp))
                 CifraFAB(type = FABType.REFRESH) {
                     event.invoke(AppEvents.MusicFetch)
                 }
@@ -158,7 +153,7 @@ fun WebViewComponent(
         }
     )
     val targetScroll = pageHeight * 0.75f // 3/4 da página
-    val scrollDuration = musicDurationInMiliSeconds.div(4) // Duração proporcional
+    val scrollDuration = musicDurationInMiliSeconds.div(2) // Duração proporcional (metade da música)
 
     LaunchedEffect(pageHeight, showScrollButton) {
         if (pageHeight > 0 && !showScrollButton) {

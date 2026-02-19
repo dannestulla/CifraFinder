@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.VariantDimension
 import java.util.Properties
 
 plugins {
@@ -17,10 +16,17 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
-            keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-            storeFile = file(System.getenv("HOME") + "/release.jks")
-            storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+            // Use local.properties for local builds, env vars for CI/CD
+            keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+                ?: System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+            keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
+                ?: System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+            storeFile = file(
+                localProperties.getProperty("RELEASE_STORE_FILE")
+                    ?: (System.getenv("HOME") ?: ".") + "/release.jks"
+            )
+            storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+                ?: System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
         }
     }
     buildFeatures {
@@ -34,7 +40,7 @@ android {
 
     defaultConfig {
         applicationId = "br.gohan.cifrafinder"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
         versionCode = 13
         versionName = "13.0"
@@ -52,13 +58,8 @@ android {
         )
         buildConfigField(
             "String",
-            "GOOGLE_API_KEY",
-            localProperties.getProperty("GOOGLE_API_KEY")
-        )
-        buildConfigField(
-            "String",
-            "SEARCH_ENGINE_ID",
-            localProperties.getProperty("SEARCH_ENGINE_ID")
+            "SERP_API_KEY",
+            localProperties.getProperty("SERP_API_KEY")
         )
     }
 
@@ -106,8 +107,8 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Firebase
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // Navigation
     implementation(libs.navigation.fragment.ktx)

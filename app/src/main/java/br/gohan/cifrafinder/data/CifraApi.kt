@@ -1,10 +1,14 @@
 package br.gohan.cifrafinder.data
 
 import br.gohan.cifrafinder.data.model.GoogleJson
+import br.gohan.cifrafinder.data.model.SerperRequest
+import br.gohan.cifrafinder.data.model.SerpApiResponse
 import br.gohan.cifrafinder.data.model.SpotifyJson
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -22,4 +26,11 @@ interface CifraApi {
         @Query("cx") cx: String,
         @Query("q") q: String
     ): Response<GoogleJson>
+
+    @POST
+    suspend fun getSerperSearchResult(
+        @Url url: String,
+        @Header("X-API-KEY") apiKey: String,
+        @Body request: SerperRequest
+    ): Response<SerpApiResponse>
 }

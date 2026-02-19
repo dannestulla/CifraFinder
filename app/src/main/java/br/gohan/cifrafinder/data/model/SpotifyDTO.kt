@@ -22,11 +22,13 @@ data class ArtistX(
     val name: String,
 )
 
+@Keep
 data class Album(
     val images: List<Image>,
     val name: String,
 ) : Serializable
 
+@Keep
 data class Image(
     val url: String,
 ) : Serializable

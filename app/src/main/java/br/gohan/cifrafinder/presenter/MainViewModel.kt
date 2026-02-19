@@ -1,5 +1,6 @@
 package br.gohan.cifrafinder.presenter
 
+import android.util.Log
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import br.gohan.cifrafinder.domain.usecase.GoogleService
 import br.gohan.cifrafinder.domain.usecase.SpotifyService
 import br.gohan.cifrafinder.presenter.model.SCREEN_STATE
 import br.gohan.cifrafinder.presenter.model.WhatIsPlayingState
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -39,7 +41,11 @@ class MainViewModel(
 
     var currentScreen = MutableStateFlow(LOGIN)
 
+    private val crashlytics = FirebaseCrashlytics.getInstance()
+
     fun startMusicFetch() {
+        Log.d(TAG, "Starting music fetch")
+        crashlytics.log("ViewModel: Starting music fetch")
         viewModelScope.launch {
             update(whatIsPlayingState.value.copy(loading = true))
             val song = getCurrentPlaying(dataState.value).let { songData ->
@@ -51,7 +57,10 @@ class MainViewModel(
                 ))
                 songData
             }
+            Log.d(TAG, "Got song: ${song.name}, fetching tablature")
+            crashlytics.log("ViewModel: Got song, fetching tablature")
             getTablatureLink(song.name).let { url ->
+                Log.d(TAG, "Got tablature URL: $url")
                 update(
                     whatIsPlayingState.value.copy(
                         searchUrl = url,
@@ -60,24 +69,23 @@ class MainViewModel(
                     )
                 )
                 currentScreen.emit(TABLATURE_WEB)
-                /*update(
-                    AppEvents.ShowSnackbar(
-                        R.string.searching_for,
-                        song.name
-                    )
-                )*/
             }
             update(whatIsPlayingState.value.copy(loading = false))
         }
     }
 
     suspend fun getCurrentPlaying(dataState: DataState): SongData {
+        Log.d(TAG, "Invoking Spotify service")
         return spotifyService.invoke(dataState.spotifyToken).fold(
             onSuccess = { data ->
+                Log.d(TAG, "Spotify service success: ${data.name}")
                 data
             },
-            onFailure = {
-                update(AppEvents.ShowSnackbar(it.message))
+            onFailure = { error ->
+                Log.e(TAG, "Spotify service failed", error)
+                crashlytics.log("ViewModel: Spotify service failed - ${error.message}")
+                crashlytics.recordException(error)
+                update(AppEvents.ShowSnackbar(error.message))
                 update(whatIsPlayingState.value.copy(
                     loading = false,
                     songName = null
@@ -87,17 +95,23 @@ class MainViewModel(
         )
     }
 
-    suspend fun getTablatureLink(songName: String): String =
-        googleService.invoke(songName).fold(
+    suspend fun getTablatureLink(songName: String): String {
+        Log.d(TAG, "Invoking Google service for: $songName")
+        return googleService.invoke(songName).fold(
             onSuccess = { data ->
+                Log.d(TAG, "Google service success: $data")
                 data
             },
-            onFailure = {
-                update(AppEvents.ShowSnackbar(it.message))
+            onFailure = { error ->
+                Log.e(TAG, "Google service failed", error)
+                crashlytics.log("ViewModel: Google service failed - ${error.message}")
+                crashlytics.recordException(error)
+                update(AppEvents.ShowSnackbar(error.message))
                 update(whatIsPlayingState.value.copy(loading = false))
                 throw CancellationException("Erro ao buscar a tablatura atual")
             }
         )
+    }
 
     fun <T> update(state: T) {
         viewModelScope.launch {
@@ -125,5 +139,9 @@ class MainViewModel(
         viewModelScope.launch {
             _events.emit(event)
         }
+    }
+
+    companion object {
+        private const val TAG = "MainViewModel"
     }
 }
