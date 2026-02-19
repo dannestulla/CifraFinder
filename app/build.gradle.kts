@@ -55,11 +55,13 @@ android {
             "String",
             "SPOTIFY_CLIENT_ID",
             localProperties.getProperty("SPOTIFY_CLIENT_ID")
+                ?: "\"${System.getenv("SPOTIFY_CLIENT_ID") ?: ""}\""
         )
         buildConfigField(
             "String",
             "SERP_API_KEY",
             localProperties.getProperty("SERP_API_KEY")
+                ?: "\"${System.getenv("SERP_API_KEY") ?: ""}\""
         )
     }
 
