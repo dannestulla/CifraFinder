@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import androidx.core.content.edit
 
 class MainActivity : ComponentActivity(), KoinComponent {
     private val viewModel: MainViewModel by viewModel()
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
 
     private var userLoggedBefore: Boolean
         get() = sharedPreferences.getBoolean(LOGGEDIN, false)
-        set(logged) = sharedPreferences.edit().putBoolean(LOGGEDIN, logged).apply()
+        set(logged) = sharedPreferences.edit { putBoolean(LOGGEDIN, logged) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

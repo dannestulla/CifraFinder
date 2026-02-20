@@ -1,19 +1,19 @@
 <resources>
     <string name="login_greeting">Olá!</string>
-    <string name="first_step_description">Este aplicativo mostra ao vivo a tablatura de qualquer música que estiver tocando no seu Spotify.</string>
-    <string name="first_step_description_subtitle">Feito para músicos que querem acompanhar uma música sendo tocada.</string>
+    <string name="first_step_description">Este aplicativo mostra a tablatura de qualquer música que estiver tocando no seu Spotify.</string>
+    <string name="first_step_description_subtitle">Assim você pode acompanhar e tocá-la no violão :)</string>
     <string name="continue_button">Continuar</string>
-    <string name="first_step_description2">Para isso precisamos nos conectar ao seu Spotify.</string>
+    <string name="first_step_description2">Para isso precisamos nos conectar ao seu Spotify. Assim vamos monitorar qual música está tocando no momento.</string>
     <string name="first_step_warning">Nenhuma informação sensível como senha ou login é compartilhada conosco.</string>
     <string name="first_step_button">Conectar ao Spotify</string>
 
     <string name="second_step_description">Logando…</string>
 
     <string name="third_step_title">Toque uma música no Spotify para buscar sua tablatura</string>
-    <string name="third_step_button_search_music">Buscar tablatura!</string>
+    <string name="third_step_button_search_music">Buscar tablatura</string>
 
     <string name="fourth_step_title">%1$s</string>
-    <string name="playing">Tocando:</string>
+    <string name="playing">Tocando no momento:</string>
     <string name="app_name">CifraFinder</string>
 
     <string name="log_off_dialog_title">Deseja fazer logoff do Spotify?</string>

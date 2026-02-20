@@ -42,8 +42,8 @@ android {
         applicationId = "br.gohan.cifrafinder"
         minSdk = 23
         targetSdk = 35
-        versionCode = 13
-        versionName = "13.0"
+        versionCode = 14
+        versionName = "14.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("debug")
         vectorDrawables.useSupportLibrary = true
@@ -111,6 +111,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     // Firebase
     implementation(libs.firebase.analytics)

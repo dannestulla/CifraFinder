@@ -68,7 +68,7 @@ fun BottomNavigationBar(
                     icon = Icons.Default.MusicNote,
                     contentDescription = "Tablature",
                     onClick = onTablatureClick,
-                    tint = Primary
+                    tint = TextSecondary.copy(alpha = 0.6f)
                 )
             }
         }

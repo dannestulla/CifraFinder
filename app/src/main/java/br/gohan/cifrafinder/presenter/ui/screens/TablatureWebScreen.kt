@@ -43,7 +43,6 @@ import br.gohan.cifrafinder.presenter.ui.components.CifraFAB
 import br.gohan.cifrafinder.presenter.ui.components.FABType
 import br.gohan.cifrafinder.presenter.model.WhatIsPlayingState
 import br.gohan.cifrafinder.presenter.ui.components.webViewClientConfig
-import br.gohan.cifrafinder.presenter.ui.theme.Background
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 

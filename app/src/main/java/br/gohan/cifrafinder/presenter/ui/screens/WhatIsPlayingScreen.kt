@@ -73,20 +73,8 @@ fun WhatIsPlayingScreen(
                 .padding(horizontal = 24.dp)
                 .padding(top = 60.dp, bottom = 100.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceAround
         ) {
-            // Header
-            Text(
-                text = if (whatIsPlayingState.songName.isNullOrEmpty()) {
-                    ""
-                } else {
-                    stringResource(id = R.string.playing)
-                },
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                color = TextSecondary,
-                letterSpacing = 1.sp
-            )
 
             // Album Art
             Box(
@@ -135,12 +123,23 @@ fun WhatIsPlayingScreen(
                     ?: stringResource(id = R.string.third_step_title)
 
                 Text(
+                    text = if (whatIsPlayingState.songName.isNullOrEmpty()) {
+                        ""
+                    } else {
+                        stringResource(id = R.string.playing)
+                    },
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = TextSecondary,
+                    letterSpacing = 1.sp
+                )
+
+                Text(
                     text = displayText,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary,
                     textAlign = TextAlign.Center,
-                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
             }
@@ -151,13 +150,7 @@ fun WhatIsPlayingScreen(
                 enabled = !whatIsPlayingState.loading,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-                    .shadow(
-                        elevation = 16.dp,
-                        shape = RoundedCornerShape(12.dp),
-                        ambientColor = Primary.copy(alpha = 0.4f),
-                        spotColor = Primary.copy(alpha = 0.4f)
-                    ),
+                    .height(60.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Primary,
                     contentColor = TextPrimary

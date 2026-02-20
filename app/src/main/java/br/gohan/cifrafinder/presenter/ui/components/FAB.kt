@@ -32,7 +32,7 @@ fun CifraFAB(type: FABType, callback: () -> Unit) {
             containerColor = Primary,
             contentColor = TextPrimary,
             modifier = Modifier
-                .size(70.dp),
+                .size(50.dp),
             shape = RoundedCornerShape(20.dp),
             onClick = {
                 callback.invoke()
