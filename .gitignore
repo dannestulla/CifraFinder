@@ -10,3 +10,6 @@
 local.properties
 /app/google-services.json
 /release.keystore
+/app/release/app-release.aab
+/.claude/settings.local.json
+/upload_certificate.pem
