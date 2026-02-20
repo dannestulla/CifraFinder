@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CifraFinder</string>
+    <string name="login_greeting">Hello!</string>
     <string name="first_step_title">First log into your Spotify account</string>
-    <string name="first_step_description">This way we know which song is being played so we can get the tablature</string>
+    <string name="first_step_description">Find the tablature for the song playing on Spotify!</string>
     <string name="first_step_button">Sign in to Spotify</string>
     <string name="second_step_description">Logging in...</string>
     <string name="third_step_title">Play a song on Spotify to get your tablature</string>

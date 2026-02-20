@@ -100,7 +100,7 @@ fun LoginScreen(
 
             // Title
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.login_greeting),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = TextPrimary
