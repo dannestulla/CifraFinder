@@ -8,6 +8,7 @@
     <string name="third_step_title">Play a song on Spotify to get your tablature</string>
     <string name="fourth_step_title">%1$s</string>
     <string name="log_off_dialog_title">Want to log out of Spotify?</string>
+    <string name="log_off_dialog_subtitle">You will need to sign in again to continue using the app.</string>
     <string name="log_off_yes">Yes</string>
     <string name="log_off_no">No</string>
     <string name="third_step_button_search_music">Search song!</string>

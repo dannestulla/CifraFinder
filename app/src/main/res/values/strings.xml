@@ -13,6 +13,7 @@
     <string name="app_name">CifraFinder</string>
 
     <string name="log_off_dialog_title">Deseja fazer logoff do Spotify?</string>
+    <string name="log_off_dialog_subtitle">Você precisará fazer login novamente para continuar usando o app.</string>
     <string name="log_off_yes">Sim</string>
     <string name="log_off_no">Não</string>
 

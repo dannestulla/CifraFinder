@@ -6,6 +6,7 @@ const val SCREEN_STATE = "screenState"
 
 data class WhatIsPlayingState(
     val songName: String? = null,
+    val artistName: String? = null,
     val searchUrl: String? = null,
     val loading: Boolean = false,
     val musicDurationInMiliSec: Int? = null,
