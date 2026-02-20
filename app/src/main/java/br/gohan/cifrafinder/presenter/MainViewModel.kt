@@ -39,7 +39,7 @@ class MainViewModel(
     private var _events = MutableSharedFlow<AppEvents>()
     var events = _events.asSharedFlow()
 
-    var currentScreen = MutableStateFlow(LOGIN)
+    var currentScreen = MutableStateFlow(WELCOME)
 
     private val crashlytics = FirebaseCrashlytics.getInstance()
 
