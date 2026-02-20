@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         is AppEvents.LogOff -> {
                             spotifyLoginHelper.logOff()
                             userLoggedBefore = false
-                            viewModel.updateScreen(LOGIN)
+                            viewModel.updateScreen(WELCOME)
                         }
 
                         is AppEvents.MusicFetch -> {

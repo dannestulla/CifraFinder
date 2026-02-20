@@ -16,11 +16,8 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -32,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.gohan.cifrafinder.R
-import br.gohan.cifrafinder.presenter.AppEvents
 import br.gohan.cifrafinder.presenter.ui.theme.Background
 import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 import br.gohan.cifrafinder.presenter.ui.theme.GradientBottom
@@ -43,9 +39,8 @@ import br.gohan.cifrafinder.presenter.ui.theme.TextPrimary
 import br.gohan.cifrafinder.presenter.ui.theme.TextSecondary
 
 @Composable
-fun LoginScreen(
-    snackbarHost: SnackbarHostState = remember { SnackbarHostState() },
-    event: (AppEvents) -> Unit
+fun WelcomeScreen(
+    onContinue: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -60,11 +55,6 @@ fun LoginScreen(
                 )
             )
     ) {
-        SnackbarHost(
-            hostState = snackbarHost,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -98,21 +88,31 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Description
+            // Title
             Text(
-                text = stringResource(id = R.string.first_step_description2),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Normal,
-                color = TextPrimary,
-                textAlign = TextAlign.Center,
-                lineHeight = 26.sp
+                text = stringResource(id = R.string.login_greeting),
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Login Button
+            // Description
+            Text(
+                text = stringResource(id = R.string.first_step_description),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = TextSecondary,
+                textAlign = TextAlign.Center,
+                lineHeight = 24.sp
+            )
+
+            Spacer(modifier = Modifier.height(80.dp))
+
+            // Continue Button
             Button(
-                onClick = { event(AppEvents.SpotifyLogin) },
+                onClick = onContinue,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
@@ -129,22 +129,11 @@ fun LoginScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text = stringResource(id = R.string.first_step_button),
+                    text = stringResource(id = R.string.continue_button),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Warning text
-            Text(
-                text = stringResource(id = R.string.first_step_warning),
-                fontSize = 12.sp,
-                color = TextSecondary.copy(alpha = 0.7f),
-                textAlign = TextAlign.Center,
-                lineHeight = 18.sp
-            )
         }
     }
 }
@@ -156,8 +145,8 @@ fun LoginScreen(
     heightDp = 844
 )
 @Composable
-fun LoginScreenPreview() {
+fun WelcomeScreenPreview() {
     CifraFinderTheme {
-        LoginScreen { }
+        WelcomeScreen { }
     }
 }

@@ -1,8 +1,10 @@
 <resources>
     <string name="login_greeting">Olá!</string>
-    <string name="first_step_title">Logue na sua conta do Spotify</string>
-    <string name="first_step_description">Encontre a tablatura da música que está tocando no Spotify!</string>
-    <string name="first_step_button">Fazer login no Spotify</string>
+    <string name="first_step_description">Este aplicativo mostra ao vivo a tablatura de qualquer música que estiver tocando no seu Spotify.</string>
+    <string name="continue_button">Continuar</string>
+    <string name="first_step_description2">Para isso precisamos nos conectar ao seu Spotify.</string>
+    <string name="first_step_warning">Nenhuma informação sensível como senha ou login é compartilhada conosco.</string>
+    <string name="first_step_button">Conectar ao Spotify</string>
 
     <string name="second_step_description">Logando…</string>
 

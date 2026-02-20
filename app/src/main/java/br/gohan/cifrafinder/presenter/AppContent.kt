@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import br.gohan.cifrafinder.presenter.ui.screens.LoginScreen
 import br.gohan.cifrafinder.presenter.ui.screens.SettingsScreen
 import br.gohan.cifrafinder.presenter.ui.screens.TablatureWebScreen
+import br.gohan.cifrafinder.presenter.ui.screens.WelcomeScreen
 import br.gohan.cifrafinder.presenter.ui.screens.WhatIsPlayingScreen
 import br.gohan.cifrafinder.presenter.ui.theme.CifraFinderTheme
 import kotlinx.coroutines.flow.update
@@ -56,12 +57,17 @@ fun AppContent(
 
             NavHost(
                 navController = navController,
-                startDestination = LOGIN,
+                startDestination = WELCOME,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },
                 popExitTransition = { ExitTransition.None }
             ) {
+                composable(route = WELCOME) {
+                    WelcomeScreen(
+                        onContinue = { viewModel.updateScreen(LOGIN) }
+                    )
+                }
                 composable(route = LOGIN) {
                     LoginScreen(snackBarHost, events)
                 }
@@ -85,6 +91,7 @@ fun AppContent(
 
 }
 
+const val WELCOME = "WELCOME_SCREEN"
 const val LOGIN = "LOGIN_SCREEN"
 const val WHAT_IS_PLAYING = "WHAT_IS_PLAYING_SCREEN"
 const val POP_BACK_STACK = "POP_BACK_STACK"

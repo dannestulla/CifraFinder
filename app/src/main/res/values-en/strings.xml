@@ -2,9 +2,11 @@
 <resources>
     <string name="app_name">CifraFinder</string>
     <string name="login_greeting">Hello!</string>
-    <string name="first_step_title">First log into your Spotify account</string>
-    <string name="first_step_description">Find the tablature for the song playing on Spotify!</string>
-    <string name="first_step_button">Sign in to Spotify</string>
+    <string name="first_step_description">This app shows you the live tablature for any song playing on your Spotify.</string>
+    <string name="continue_button">Continue</string>
+    <string name="first_step_description2">To do this, we need to connect to your Spotify.</string>
+    <string name="first_step_warning">No sensitive information like password or login is shared with us.</string>
+    <string name="first_step_button">Connect to Spotify</string>
     <string name="second_step_description">Logging in...</string>
     <string name="third_step_title">Play a song on Spotify to get your tablature</string>
     <string name="fourth_step_title">%1$s</string>
