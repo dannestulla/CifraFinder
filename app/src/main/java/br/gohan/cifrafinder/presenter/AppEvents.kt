@@ -7,5 +7,6 @@ sealed class AppEvents {
     data object Settings : AppEvents()
     data object SpotifyLogin : AppEvents()
     data object BackScreen : AppEvents()
+    data object OpenTablature : AppEvents()
     data class ShowSnackbar(val message: String?) : AppEvents()
 }

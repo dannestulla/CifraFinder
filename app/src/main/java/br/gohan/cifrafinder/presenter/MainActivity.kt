@@ -91,7 +91,11 @@ class MainActivity : ComponentActivity(), KoinComponent {
                         }
 
                         AppEvents.BackScreen -> {
-                            viewModel.updateScreen(WHAT_IS_PLAYING)
+                            viewModel.updateScreen(POP_BACK_STACK)
+                        }
+
+                        AppEvents.OpenTablature -> {
+                            viewModel.updateScreen(TABLATURE_WEB)
                         }
 
                         AppEvents.Initial -> {}

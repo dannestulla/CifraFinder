@@ -14,8 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -33,12 +33,14 @@ import br.gohan.cifrafinder.presenter.ui.theme.TextSecondary
 fun BottomNavigationBar(
     onLogoutClick: () -> Unit,
     onHomeClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hasTablature: Boolean = false,
+    onTablatureClick: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(70.dp)
             .background(Surface)
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
@@ -60,6 +62,15 @@ fun BottomNavigationBar(
                 onClick = onHomeClick,
                 tint = Primary
             )
+
+            if (hasTablature) {
+                NavBarIcon(
+                    icon = Icons.Default.MusicNote,
+                    contentDescription = "Tablature",
+                    onClick = onTablatureClick,
+                    tint = Primary
+                )
+            }
         }
     }
 }

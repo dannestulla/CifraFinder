@@ -78,7 +78,7 @@ fun WhatIsPlayingScreen(
             // Header
             Text(
                 text = if (whatIsPlayingState.songName.isNullOrEmpty()) {
-                    stringResource(id = R.string.third_step_title)
+                    ""
                 } else {
                     stringResource(id = R.string.playing)
                 },
@@ -190,7 +190,9 @@ fun WhatIsPlayingScreen(
         BottomNavigationBar(
             onLogoutClick = { showLogoutDialog = true },
             onHomeClick = { /* Already on home */ },
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
+            hasTablature = !whatIsPlayingState.searchUrl.isNullOrEmpty(),
+            onTablatureClick = { event(AppEvents.OpenTablature) }
         )
 
         // Snackbar
