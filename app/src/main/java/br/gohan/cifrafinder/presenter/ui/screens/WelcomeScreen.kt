@@ -108,6 +108,18 @@ fun WelcomeScreen(
                 lineHeight = 24.sp
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Subtitle
+            Text(
+                text = stringResource(id = R.string.first_step_description_subtitle),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = TextSecondary.copy(alpha = 0.8f),
+                textAlign = TextAlign.Center,
+                lineHeight = 20.sp
+            )
+
             Spacer(modifier = Modifier.height(80.dp))
 
             // Continue Button

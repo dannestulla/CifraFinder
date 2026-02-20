@@ -3,6 +3,7 @@
     <string name="app_name">CifraFinder</string>
     <string name="login_greeting">Hello!</string>
     <string name="first_step_description">This app shows you the live tablature for any song playing on your Spotify.</string>
+    <string name="first_step_description_subtitle">Made for musicians who want to play along with a song.</string>
     <string name="continue_button">Continue</string>
     <string name="first_step_description2">To do this, we need to connect to your Spotify.</string>
     <string name="first_step_warning">No sensitive information like password or login is shared with us.</string>

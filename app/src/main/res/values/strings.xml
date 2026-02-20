@@ -1,6 +1,7 @@
 <resources>
     <string name="login_greeting">Olá!</string>
     <string name="first_step_description">Este aplicativo mostra ao vivo a tablatura de qualquer música que estiver tocando no seu Spotify.</string>
+    <string name="first_step_description_subtitle">Feito para músicos que querem acompanhar uma música sendo tocada.</string>
     <string name="continue_button">Continuar</string>
     <string name="first_step_description2">Para isso precisamos nos conectar ao seu Spotify.</string>
     <string name="first_step_warning">Nenhuma informação sensível como senha ou login é compartilhada conosco.</string>
