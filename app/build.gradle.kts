@@ -42,8 +42,8 @@ android {
         applicationId = "br.gohan.cifrafinder"
         minSdk = 23
         targetSdk = 35
-        versionCode = 14
-        versionName = "14.0"
+        versionCode = 22
+        versionName = "2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         signingConfig = signingConfigs.getByName("debug")
         vectorDrawables.useSupportLibrary = true
@@ -71,6 +71,13 @@ android {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
+            firebaseCrashlytics {
+                mappingFileUploadEnabled = true
+                nativeSymbolUploadEnabled = true
+            }
         }
     }
 

@@ -54,6 +54,7 @@ fun TablatureWebScreen(
     backScreen: () -> Unit,
 ) {
     var showContinueScrollButton by remember { mutableStateOf(false) }
+    var refreshTrigger by remember { mutableIntStateOf(0) }
 
     BackHandler {
         backScreen()
@@ -103,7 +104,7 @@ fun TablatureWebScreen(
 
                 Spacer(Modifier.height(10.dp))
                 CifraFAB(type = FABType.REFRESH) {
-                    event.invoke(AppEvents.MusicFetch)
+                    refreshTrigger++
                 }
             }
 
@@ -115,7 +116,8 @@ fun TablatureWebScreen(
                 WebViewComponent(
                     whatIsPlayingState.searchUrl!!,
                     whatIsPlayingState.musicDurationInMiliSec!!,
-                    showContinueScrollButton
+                    showContinueScrollButton,
+                    refreshTrigger
                 ) { showScrollButton ->
                     showContinueScrollButton = showScrollButton
                 }
@@ -130,11 +132,13 @@ fun WebViewComponent(
     searchUrl: String,
     musicDurationInMiliSeconds: Int,
     showScrollButton: Boolean,
+    refreshTrigger: Int,
     showContinueScrollButton: (Boolean) -> Unit
 ) {
     var pageHeight by remember { mutableIntStateOf(0) }
     val animator = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
+    var lastRefreshTrigger by remember { mutableIntStateOf(0) }
 
     AndroidView(
         factory = { context ->
@@ -143,6 +147,10 @@ fun WebViewComponent(
             }
         },
         update = { webView ->
+            if (refreshTrigger != lastRefreshTrigger) {
+                lastRefreshTrigger = refreshTrigger
+                webView.reload()
+            }
             webView.scrollTo(0, animator.value.toInt())
         },
         modifier = Modifier.pointerInteropFilter { motionEvent ->

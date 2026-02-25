@@ -11,17 +11,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import br.gohan.cifrafinder.Constants.LOGGEDIN
 import br.gohan.cifrafinder.R
 import br.gohan.cifrafinder.presenter.helpers.SpotifyLoginHelper
+import br.gohan.cifrafinder.presenter.helpers.SpotifyLoginResult
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import androidx.core.content.edit
+import android.widget.Toast
 
 class MainActivity : ComponentActivity(), KoinComponent {
     private val viewModel: MainViewModel by viewModel()
     private lateinit var spotifyLoginHelper: SpotifyLoginHelper
     private val sharedPreferences: SharedPreferences by inject()
+    private val crashlytics = FirebaseCrashlytics.getInstance()
 
     private var userLoggedBefore: Boolean
         get() = sharedPreferences.getBoolean(LOGGEDIN, false)
@@ -46,23 +50,27 @@ class MainActivity : ComponentActivity(), KoinComponent {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        spotifyLoginHelper.handleLoginResponse(requestCode, resultCode, data) { token ->
-            handleLoginResponse(token) { isLogged ->
-                userLoggedBefore = isLogged
-                viewModel.updateScreen(WHAT_IS_PLAYING)
+        spotifyLoginHelper.handleLoginResponse(requestCode, resultCode, data) { result ->
+            when (result) {
+                is SpotifyLoginResult.Success -> {
+                    viewModel.update(viewModel.dataState.value.copy(spotifyToken = result.token))
+                    userLoggedBefore = true
+                    viewModel.updateScreen(WHAT_IS_PLAYING)
+                }
+                is SpotifyLoginResult.Error -> {
+                    userLoggedBefore = false
+                    crashlytics.recordException(
+                        SpotifyLoginException("Spotify login failed: ${result.error}, type: ${result.type}, resultCode: ${result.resultCode}")
+                    )
+                    // Show detailed error in toast for debugging
+                    Toast.makeText(this, "Spotify error: ${result.error} (${result.type})", Toast.LENGTH_LONG).show()
+                    viewModel.update(AppEvents.ShowSnackbar(getString(R.string.toast_login_error)))
+                }
             }
         }
     }
 
-    private fun handleLoginResponse(token: String?, userIsLogged: (Boolean) -> Unit) {
-        if (!token.isNullOrEmpty()) {
-            viewModel.update(viewModel.dataState.value.copy(spotifyToken = token))
-            userIsLogged(true)
-        } else {
-            userIsLogged(false)
-            viewModel.update(AppEvents.ShowSnackbar(getString(R.string.toast_login_error)))
-        }
-    }
+    private class SpotifyLoginException(message: String) : Exception(message)
 
     private fun observeEvents() {
         lifecycleScope.launch {

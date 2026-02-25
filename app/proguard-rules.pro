@@ -60,3 +60,8 @@
 # OkHttp
 -dontwarn okhttp3.**
 -dontwarn okio.**
+
+# Spotify Auth SDK
+-keep class com.spotify.** { *; }
+-keepclassmembers class com.spotify.** { *; }
+-dontwarn com.spotify.**
