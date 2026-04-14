@@ -37,9 +37,9 @@ Finds the tablature of the song being played on Spotify. A great app for playing
 ## Screenshots
 
 <p float="left">
-  <img src="https://github.com/dannestulla/CifraFinder/assets/62083486/c9e7eee8-0505-45fc-bbcc-bd8fa7cfb65d" width="300" />
-  <img src="https://github.com/dannestulla/CifraFinder/assets/62083486/f8664917-0033-4afc-a7d9-3c0613696710" width="300" />
-  <img src="https://github.com/dannestulla/CifraFinder/assets/62083486/04b45da5-33f4-49fe-966d-fa3ad8490ebb" width="300" />
+  <img src="https://github.com/user-attachments/assets/044c27a2-9a25-4491-9a96-bd5c76252fa7" width="300" />
+  <img src="https://github.com/user-attachments/assets/26f24a1d-f470-4f8c-8249-7c2c8c56a115" width="300" />
+  <img src="https://github.com/user-attachments/assets/a55ad822-3608-4a26-90e2-ea1668251104" width="300" />
 </p>
 
 
